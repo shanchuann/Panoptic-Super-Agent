@@ -1,6 +1,6 @@
 # STATUS — 万象超级智能体（Panoptic Super）
 
-- 当前阶段：**P1 启动**（架构已定、基线已通过、内容层重构待开始）
+- 当前阶段：**P1 暂停 · 等待用户设计文档**（架构已定；本仓库已由用户完成 install/运行，按指示不推进）
 - 日期：2026-11-05
 - 项目库：`D:\Code\SuperAgent`（远端 **https://github.com/shanchuann/Panoptic-Super-Agent.git**）
 - 基座：已 squash 导入本仓库（基座 HEAD `22ddee3792`，上游历史未并入；`D:\Code\deepseek-harness` 保留为只读参照）
@@ -15,7 +15,7 @@
   - 证据：`.ome/evidence/B-001/`
 - 文档更新：BROWNFIELD-BASELINE §4 已回填；SCOPE/PLAN/SPEC/STATUS 同步
 
-## 下一步（本阶段）
+## 下一步（等设计文档到位后）
 1. 读实现：`core/session`（会话）、`llm/llm`（模型 seam）、`goal/*`（目标驱动）→ 写重构设计（R-001/R-002/R-003 任务卡细化）；
 2. 品牌替换清点 R-005（先出清单再动手）；
 3. 开始 R-001 记忆子系统（先接口与开关，后后端）。
@@ -44,3 +44,8 @@
 - 推送失败一次（HTTPS 大包 connection reset）→ 改用 SSH push 成功：`22645f7b..375d3e19`；
 - 远端 main 含全部代码与文档（19,215 个跟踪文件），本地/远端一致；
 - 推送 URL 已设为 SSH，fetch 仍走 HTTPS。
+
+## 用户报告（2026-11-05）
+- 本仓库（D:\Code\SuperAgent）已执行 `pnpm install` 且运行成功（**用户口头报告，未由我复验**；按用户指示暂不执行任何下一步命令）。
+- 等待用户提供设计文档与相关内容（记忆存储/模型调用/会话管理/UI 等），到位后再开始开发。
+- 开发启动顺序（设计文档 → 扩展点映射 → ADR/任务卡 → 实现）见 HANDOFF。
