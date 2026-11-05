@@ -49,3 +49,21 @@
 - 本仓库（D:\Code\SuperAgent）已执行 `pnpm install` 且运行成功（**用户口头报告，未由我复验**；按用户指示暂不执行任何下一步命令）。
 - 等待用户提供设计文档与相关内容（记忆存储/模型调用/会话管理/UI 等），到位后再开始开发。
 - 开发启动顺序（设计文档 → 扩展点映射 → ADR/任务卡 → 实现）见 HANDOFF。
+
+## 分支保护（2026-11-05）
+- `main` 已开启保护：要求 PR、0 个必需审批、enforce admins、禁 force push、禁删除、要求对话解决。
+- 副作用：直接 push 被禁，文档/代码变更一律走 PR。
+
+## PR 处理（Dependabot 涌入）
+- 已合并 18 个依赖升级 PR（#1、#2、#6–#19、#22、#24 等），主分支随之推进。
+- 剩余：
+  - #3/#4/#5（GitHub Actions 升级）：合并被拒，根因是 gh OAuth token 缺 `workflow` 作用域（改动 `.github/workflows/*` 需要）；需 `gh auth refresh -s workflow` 后重试。
+  - #20/#25/#26：冲突，已请求 Dependabot rebase。
+  - #21/#23：major 版本升级（@types/big.js、which），需本地 typecheck/build 验证后再合。
+- 根因：导入基座 `.github/dependabot.yml`（每日 04:00 扫描、30 天冷却）触发历史依赖积压；CI 工作流继承自上游、缺 secrets/runners，检查结果不可信。
+- 建议：CI 策略确定前，先给 Dependabot 加分组/限流，避免 PR 洪水。
+
+## GitHub MCP（2026-11-05）
+- 已在 desktop profile 配置远程 GitHub MCP（`mcp__github__*`），详见 `.ome/MCP-GITHUB.md`；
+- 端点用同 token 实测 `initialize` 返回 200；YAML 已解析校验；备份 `cordis.patch.yml.bak-before-github-mcp`；
+- 生效需 DSH 重载配置或重启；token 仅存本机 profile，不在仓库。
