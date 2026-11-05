@@ -117,7 +117,7 @@
     "@deepseek-ai/dsh-tool-ralph": "workspace:*",
     "@deepseek-ai/dsh-hooks-codex": "workspace:*",
     "@deepseek-ai/dsh-hooks-claude-code": "workspace:*",
-    "@agentclientprotocol/sdk": "1.4.0",
+    "@agentclientprotocol/sdk": "1.7.0",
     "@deepseek-ai/dsh-acp": "workspace:*",
     "@deepseek-ai/dsh-agent": "workspace:*",
     "@deepseek-ai/dsh-agent-loop": "workspace:*",
@@ -161,10 +161,10 @@
     "@deepseek-ai/dsh-tools": "workspace:*",
     "@deepseek-ai/dsh-user-approval": "workspace:*",
     "@types/js-yaml": "^4.0.9",
-    "@types/ws": "8.18.1",
+    "@types/ws": "8.18.2",
     "ajv": "^8.20.0",
-    "execa": "^10.0.1",
-    "ws": "8.21.3"
+    "execa": "^10.1.0",
+    "ws": "8.22.0"
   },
   "exports": {
     "./profile-boot": {

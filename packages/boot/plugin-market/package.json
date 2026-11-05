@@ -60,11 +60,11 @@
     "@deepseek-ai/dsh-timeout": "workspace:*",
     "@deepseek-ai/dsh-util-values": "workspace:*",
     "@deepseek-ai/schemastery": "workspace:~",
-    "execa": "^10.0.1",
+    "execa": "^10.1.0",
     "hosted-git-info": "^9.0.3",
     "minisearch": "^7.2.0",
     "semver": "^7.8.5",
-    "zod": "^4.4.3"
+    "zod": "^4.6.5"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "workspace:~",
