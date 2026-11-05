@@ -44,3 +44,14 @@
 | F-12 NVD 156 条 | **已核**（NVD API totalResults=156，2026-11-05） |
 | Claude Agent SDK 许可 | **无法核实条款实质**（npm 元数据仅指向 README；GitHub/raw 不可达）→ 不假设可商用 |
 | Manus/Genspark 定价 | **无法核实**（JS 渲染/反爬）→ 不写具体价格 |
+
+## 4. 基座事实（DSH · 已核目录/元数据）
+| # | 事实 | 值 | 证据 |
+|---|---|---|---|
+| F-18 | 基座版本与成熟度 | `@deepseek-ai/dsh-root` 0.2.1-rc.3；README 注明「开发者预览，将有破坏性变更」 | package.json / README.zh.md |
+| F-19 | 许可 | MIT，Copyright (c) 2026 DeepSeek | LICENSE |
+| F-20 | 运行时 | Node >= 24.9.0；pnpm 11.28.5（Corepack） | package.json / docs/development.zh.md |
+| F-21 | 规模 | `packages/*/*` 363 个包；apps：cli/desktop/desktop-host/web/plugin-market-generator | 目录统计 2026-11-05 |
+| F-22 | 当前代码状态 | 分支 master，HEAD 22ddee3792，工作区干净 | git status/log 2026-11-05 |
+| F-23 | 架构范式 | Cordis 插件树 + profile/组合包/patch；agent-loop、session 日志、tools、mcp、sandbox、deliverables 均为插件 | docs/architecture.zh.md |
+| F-24 | 品牌规范 | 项目名不得使用「DeepSeek Harness」商标；可用「基于…构建」或 DSH 缩写；不得暗示背书 | BRAND_GUIDELINES.zh.md |

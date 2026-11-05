@@ -28,3 +28,11 @@
 - [ ] T-002 签字，SCOPE 定稿
 - [ ] ADR-0001 由用户确认（Proposed → Accepted）
 - [ ] 五项指标阈值从「假设值」变「已确认」
+
+## P0.5 基座基线（等用户放行；用户已要求架构确认前不开工）
+| 编号 | 任务 | 验证器 | 完成判据 | 写域 | 状态 |
+|---|---|---|---|---|---|
+| B-001 | 跑通构建 | 强 | `pnpm run build` 退出码 0，记录耗时 | 构建产物 | blocked（等放行） |
+| B-002 | 类型检查与 focused 测试 | 强 | `pnpm run typecheck` 0；相关包 focused vitest 全绿 | — | blocked |
+| B-003 | 起 Web 冒烟 | 强 | `pnpm dsh web --no-open` 可访问，首页渲染 | — | blocked（需 API key） |
+| B-004 | 写出「能跑吗」结论 | 中 | BROWNFIELD-BASELINE §4 全部由「未验证」变「已验证 + 输出」 | `.ome/BROWNFIELD-BASELINE.md` | blocked |
