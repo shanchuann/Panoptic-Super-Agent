@@ -12,6 +12,24 @@ updates:
       timezone: "Asia/Shanghai"
     cooldown:
       default-days: 30
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      # Pinned by pnpm-workspace.yaml (3.3.2 fails source build under GCC 13).
+      - dependency-name: "koffi"
+      # Patched baseline; bump breaks the lexical patch and duplicates versions.
+      - dependency-name: "lexical"
+      - dependency-name: "@lexical/*"
+      # scripts/dev-web.ts depends on the 0.22 TsdownHandle API.
+      - dependency-name: "tsdown"
+      # packageManager pin is 11.28.5; 12.x breaks install in this fork.
+      - dependency-name: "pnpm"
+      # Keep the 5.x aggregate compiler behavior.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
     labels:
       - "kind/dependency"
       - "area/infra"
@@ -24,6 +42,11 @@ updates:
       timezone: "Asia/Shanghai"
     cooldown:
       default-days: 30
+    open-pull-requests-limit: 3
+    groups:
+      uv-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
     labels:
       - "kind/dependency"
       - "area/infra"
@@ -36,6 +59,11 @@ updates:
       timezone: "Asia/Shanghai"
     cooldown:
       default-days: 30
+    open-pull-requests-limit: 3
+    groups:
+      actions-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
     labels:
       - "kind/dependency"
       - "area/infra"
