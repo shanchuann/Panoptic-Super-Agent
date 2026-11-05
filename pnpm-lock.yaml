@@ -170,8 +170,8 @@ importers:
         specifier: 6.21.0
         version: 6.21.0(patch_hash=4d4861969595629311f7d90a0b34b15481c96d5682d828a151a104c69d4616d3)(supports-color@9.4.0)
       '@yarnpkg/cli-dist':
-        specifier: 4.18.0
-        version: 4.18.0
+        specifier: 4.18.1
+        version: 4.18.1
       eslint-plugin-sonarjs:
         specifier: ^4.2.0
         version: 4.2.0(eslint@10.5.0(jiti@2.7.0)(supports-color@9.4.0))
@@ -21064,8 +21064,8 @@ packages:
     engines: {node: '>=22.0.0'}
     hasBin: true
 
-  '@yarnpkg/cli-dist@4.18.0':
-    resolution: {integrity: sha512-WV9H+/O8BPElO7GKzrKipTtCNt8/gBCUJaNAEOw4U/x2k17aZjseYzll4QhpZE4xIsEvo8bK6KvjhsXuHrclPg==}
+  '@yarnpkg/cli-dist@4.18.1':
+    resolution: {integrity: sha512-EH+A4TxAtBWXKE0DGQxW9Bo9crXHLJ73mfxjTQJuv8XonNWWTpei8BQ5JjczHJNU9GROTycwMFn8iOvRIZXUcA==}
     engines: {node: '>=18.12.0'}
     hasBin: true
 
@@ -28530,7 +28530,7 @@ snapshots:
       - react-native-b4a
       - supports-color
 
-  '@yarnpkg/cli-dist@4.18.0': {}
+  '@yarnpkg/cli-dist@4.18.1': {}
 
   '@yarnpkg/parsers@3.1.0':
     dependencies:
