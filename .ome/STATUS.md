@@ -2,8 +2,8 @@
 
 - 当前阶段：**P1 启动**（架构已定、基线已通过、内容层重构待开始）
 - 日期：2026-11-05
-- 项目库：`D:\Code\SuperAgent`（远端 **https://github.com/shanchuann/Panoptic-Super-Agent.git**，main @ 06d20bd）
-- 基座：`D:\Code\deepseek-harness`（MIT，HEAD 22ddee3792，源码零改动；代码尚未导入远端仓库）
+- 项目库：`D:\Code\SuperAgent`（远端 **https://github.com/shanchuann/Panoptic-Super-Agent.git**）
+- 基座：已 squash 导入本仓库（基座 HEAD `22ddee3792`，上游历史未并入；`D:\Code\deepseek-harness` 保留为只读参照）
 
 ## 已完成
 - 架构落 **ADR-0002**（Fork + 内容层重构；Web→桌面→移动远程；不跟进上游；MIT + 品牌替换）
@@ -28,12 +28,14 @@
 ## 交付物一致性
 | 项 | 状态 |
 |---|---|
-| 代码 | 基座源码零改动（仅构建产物） |
+| 代码 | 基座代码已导入（19,215 个文件）；本仓库尚未 `pnpm install` / 构建 |
 | 文档 | + ADR-0002、基线证据、SPEC §9/§10 |
 | 部署 | 无 |
 | 版本号 | v0.2.1-p1-baseline |
 
-## 远端状态（2026-11-05）
-- 已推送：README / LICENSE / `.ome` 治理文档 / `docs/adr` / `scripts` / logo；
-- 远端 main = `06d20bd`（本地与远端一致）；
-- **基座代码尚未导入**：待定导入方式（A 压缩单提交导入，快、仓库小；B 全历史推送，23,934 commits / ~330MB，可追溯）。
+## 基座导入（2026-11-05）
+- 方式：**A · squash 导入**（用户确认：不跟进上游；合规靠 MIT 许可证 + DeepSeek 版权声明）
+- 导入提交：`ad2de09`；跟踪文件 19,215；.git pack ≈ 40.7MB
+- 许可：LICENSE 双版权（DeepSeek + 山川不念旧）；NOTICE 记录来源 commit `22ddee37`
+- 基座 README 存档于 `docs/upstream/`（根 README 保留本项目版本）
+- 注意：B-001..B-004 基线是在 `D:\Code\deepseek-harness` 验证的；本仓库需 `pnpm install` 后重跑基线。

@@ -33,13 +33,17 @@
 ## 仓库结构
 
 ```
+packages/           DSH 基座包（363 个，@deepseek-ai/dsh-*）
+apps/               cli / desktop / desktop-host / web / plugin-market-generator
+vendor/ native/ python/ benchmarks/ website/ patches/   基座配套
+docs/               DSH 文档 + docs/adr/（本项目 ADR）+ docs/upstream/（基座 README 存档）
 .ome/               项目治理：立项/范围/规格/计划/状态/交接、调研、评测集、证据
-docs/adr/           架构决策记录（ADR-0001 六条架构决策、ADR-0002 二次开发与路线）
-scripts/            仓库级工具（评测集校验）
+scripts/            DSH 门禁脚本 + 评测集校验（validate-evals.mjs）
+AGENTS.md           基座贡献规范（随代码导入，后续按本项目需要调整）
 Panoptic Super logo.png   品牌标识
 ```
 
-> 基座代码（`packages/`、`apps/` 等）暂未导入本仓库；导入方式见 `.ome/STATUS.md` 与 ADR-0002（保留上游历史）。
+> 基座代码已以 **squash** 方式导入（基座 `22ddee37`，上游历史未并入，见 [NOTICE](NOTICE)）；本项目不跟进上游更新。
 
 ## 文档索引
 
@@ -49,4 +53,4 @@ Panoptic Super logo.png   品牌标识
 
 ## 许可
 
-本项目采用 MIT 许可，见 [LICENSE](LICENSE)。基于 DeepSeek Harness（MIT，Copyright (c) 2026 DeepSeek）构建；导入基座代码后将保留其版权声明与第三方依赖通告。
+本项目采用 MIT 许可，见 [LICENSE](LICENSE)（双版权：DeepSeek + 山川不念旧）。基于 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（MIT）构建，来源与导入方式见 [NOTICE](NOTICE)，第三方依赖通告见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
