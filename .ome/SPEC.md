@@ -85,3 +85,20 @@ type Approval = { id: string; taskId: string; action: "write"|"pay"|"send"; targ
 | TBD-2 | 首版模型档位与供应商 | 成本/质量 | Lead（P1 基线后） |
 | TBD-3 | 沙箱供应商（E2B/Daytona/Modal） | 成本、锁定风险 | Lead（ADR-0002） |
 | TBD-4 | 记忆供应商或自写 | 架构耦合 | Lead（ADR-0003） |
+
+## 9. 阶段验收（ADR-0002 B · P1 Web）
+- [ ] 基座基线通过（B-001..B-004）→ 已完成（见 BROWNFIELD-BASELINE §4）
+- [ ] 品牌替换：可见文案/图标/标题不再出现「DeepSeek Harness」商标（R-005 清单）
+- [ ] 记忆子系统：写入/检索/删除 + 开关（R-001）
+- [ ] 模型网关：3 模型切换 + 降级 + 多模态配置入口（R-002）
+- [ ] 会话管理：目标驱动连续工作 + 预算熔断（R-003）
+- [ ] Autopilot：停止条件/人工接管用例通过（R-004）
+- [ ] Web 端核心链路演示：会话 → 规划 → 工具 → 交付物
+
+## 10. 基座接口映射（待按实现核实）
+| 本产品概念 | 基座落点（待读实现确认） |
+|---|---|
+| 记忆存储 | 新增 memory 插件 + `storage/*` |
+| 模型调用 | `llm/llm` seam + 适配器 + 设置页 |
+| 会话管理 | `core/session` + `goal/*` + `session-query/*` |
+| Autopilot | `core/agent-loop` hook（`agent/turn-stopping`）+ `goal-round-driver` |

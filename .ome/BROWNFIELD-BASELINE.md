@@ -51,14 +51,18 @@ docs/                架构、子系统、cookbook（加包/加工具/加 LLM �
 | D6 评测判据 | `benchmarks/`、`test:expected`、`test:snapshot` | 基座有测试基础设施，但**产品级任务评测仍需自建** |
 | 多智能体后置 | `experimental/agent-team`（显式启用） | 默认关闭，与调研结论一致 |
 
-## 4. 能跑吗（未验证，按用户要求未执行）
-| 检查 | 命令 | 状态 |
-|---|---|---|
-| 依赖已装 | `node_modules/` 存在 | 看到存在 |
-| 构建 | `pnpm run build` | **未验证**（会写产物，等架构确认后作为基线第一步） |
-| 类型检查 | `pnpm run typecheck` | 未验证 |
-| 测试 | `pnpm run test` | 未验证（全量可能很慢，先做 focused） |
-| 起服务 | `pnpm dsh web` | 未验证（需 `DEEPSEEK_API_KEY` 才可真实跑） |
+## 4. 能跑吗（已验证 · 2026-11-05）
+| 检查 | 命令 | 结果 | 证据 |
+|---|---|---|---|
+| 依赖已装 | `node_modules/` | 存在（41 个顶层目录） | — |
+| 构建 | `pnpm run build` | **PASS**：10 gates 全过，63.38s | `.ome/evidence/B-001/build.log` |
+| 类型检查 | `pnpm run typecheck` | **PASS**：5 gates 全过，16.28s | `.ome/evidence/B-001/typecheck.log` |
+| focused 测试 | `pnpm exec vitest run packages/core/session` | **PASS**：20 文件 / 574 用例，2.85s | `.ome/evidence/B-001/test-core-session.log` |
+| 起 Web | `pnpm dsh web --no-open` | **PASS**：3080 监听；无 token 401，带 token 302→200；HTML 39KB，title `DSH Local Build`（品牌未替换） | `.ome/evidence/B-001/web.log`、`web-index.html` |
+| 全量测试 | `pnpm run test` | 未跑（AGENTS 要求不默认全量，CI 负责） | — |
+| 构建后仓库状态 | `git status --porcelain` | 0 行（构建产物被 ignore，基座源码未被污染） | git |
+
+**结论：基座在本机可构建、可类型检查、可测、可起 Web。基线成立，允许进入内容层重构（R-001..R-004）。**
 
 ## 5. 文档可信度（待交叉验证）
 - `docs/architecture.zh.md`：与目录结构一致（core/session、agent-loop、mcp、sandbox 均存在）→ 暂判可信；
