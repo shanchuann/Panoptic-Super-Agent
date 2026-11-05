@@ -2,7 +2,8 @@
 
 - 当前阶段：**P1 启动**（架构已定、基线已通过、内容层重构待开始）
 - 日期：2026-11-05
-- 项目库：`D:\Code\SuperAgent`；基座：`D:\Code\deepseek-harness`（MIT，HEAD 22ddee3792，源码零改动）
+- 项目库：`D:\Code\SuperAgent`（远端 **https://github.com/shanchuann/Panoptic-Super-Agent.git**，main @ 06d20bd）
+- 基座：`D:\Code\deepseek-harness`（MIT，HEAD 22ddee3792，源码零改动；代码尚未导入远端仓库）
 
 ## 已完成
 - 架构落 **ADR-0002**（Fork + 内容层重构；Web→桌面→移动远程；不跟进上游；MIT + 品牌替换）
@@ -31,3 +32,8 @@
 | 文档 | + ADR-0002、基线证据、SPEC §9/§10 |
 | 部署 | 无 |
 | 版本号 | v0.2.1-p1-baseline |
+
+## 远端状态（2026-11-05）
+- 已推送：README / LICENSE / `.ome` 治理文档 / `docs/adr` / `scripts` / logo；
+- 远端 main = `06d20bd`（本地与远端一致）；
+- **基座代码尚未导入**：待定导入方式（A 压缩单提交导入，快、仓库小；B 全历史推送，23,934 commits / ~330MB，可追溯）。
