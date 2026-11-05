@@ -39,3 +39,8 @@
 - 许可：LICENSE 双版权（DeepSeek + 山川不念旧）；NOTICE 记录来源 commit `22ddee37`
 - 基座 README 存档于 `docs/upstream/`（根 README 保留本项目版本）
 - 注意：B-001..B-004 基线是在 `D:\Code\deepseek-harness` 验证的；本仓库需 `pnpm install` 后重跑基线。
+
+## 远端推送（2026-11-05）
+- 推送失败一次（HTTPS 大包 connection reset）→ 改用 SSH push 成功：`22645f7b..375d3e19`；
+- 远端 main 含全部代码与文档（19,215 个跟踪文件），本地/远端一致；
+- 推送 URL 已设为 SSH，fetch 仍走 HTTPS。
