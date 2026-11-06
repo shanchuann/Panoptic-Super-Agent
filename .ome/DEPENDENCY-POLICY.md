@@ -25,6 +25,7 @@ pnpm run build:web
 | `tsdown` | 0.22.x | `scripts/dev-web.ts` 依赖 `TsdownHandle` 旧 API；0.23 类型已变更 |
 | `pnpm` | 11.28.5 | 2.x/12.x 与 `packageManager` 固定值冲突，会导致 install 失败 |
 | `typescript` | 5.x | 6.x 会改变聚合编译器行为（peer 允许 >=5 <7） |
+| `chrome-devtools-frontend` | 1.0.1638082 | `packages/experimental/inspector/scripts/devtools/source.ts` 断言精确版本，升级即构建失败（已 ignore） |
 
 ## Dependabot 建议配置
 - 分组：patch/minor 一组、major 各自一组；
