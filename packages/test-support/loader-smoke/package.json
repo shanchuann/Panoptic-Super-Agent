@@ -27,8 +27,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "execa": "^10.0.1",
-    "tsx": "^4.23.13"
+    "execa": "^10.1.0",
+    "tsx": "^4.23.15"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "workspace:~",
