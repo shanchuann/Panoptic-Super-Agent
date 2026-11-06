@@ -30,6 +30,8 @@ updates:
       # Keep the 5.x aggregate compiler behavior.
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
+      # Inspector build gate asserts this exact version (scripts/devtools/source.ts).
+      - dependency-name: "chrome-devtools-frontend"
     labels:
       - "kind/dependency"
       - "area/infra"
