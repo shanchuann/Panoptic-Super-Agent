@@ -13,13 +13,10 @@ export function OfficialBrandMark({ size }: SidebarBrandMarkOwnerProps) {
 }
 
 /**
- * Render the bilingual Panoptic Super trademark.
+ * Render the Panoptic Super wordmark.
  * @param props - Framework-bound brand translations.
  * @returns the product wordmark.
  */
 export function OfficialBrandName({ t }: PropsLocale<'panoptic.brand'>) {
-  return <span aria-label={t('name')} style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.3 }}>
-    <span>{t('name')}</span>
-    <span style={{ fontSize: 11, letterSpacing: '0.04em', opacity: 0.75 }}>{t('subtitle')}</span>
-  </span>
+  return <span aria-label={t('name')} style={{ whiteSpace: 'nowrap', fontSize: 18, letterSpacing: '-0.02em', fontWeight: 500 }}>{t('name')}</span>
 }

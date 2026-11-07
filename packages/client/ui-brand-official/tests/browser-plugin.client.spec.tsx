@@ -83,7 +83,7 @@ describe('official browser-brand plugin', () => {
 
   it('renders the official name independently from both requested mark sizes', () => {
     const name = render(<OfficialBrandName t={key => zh[key as keyof typeof zh]} />)
-    expect(name.container.textContent).toContain('万象超级智能体')
+    expect(name.container.textContent).toBe('Panoptic Super')
     name.unmount()
 
     const mark = render(<OfficialBrandMark size={34} />)

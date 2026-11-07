@@ -9,7 +9,7 @@ English | [中文](README.zh.md)
 
 ## Summary
 
-This package supplies the Panoptic Super orbital mark and bilingual name in the sidebar and the conversation hero, in development and release builds. It owns no runtime state and does not affect model requests.
+This package supplies the Panoptic Super orbital mark and English wordmark in the sidebar and the conversation hero, in development and release builds. It owns no runtime state and does not affect model requests.
 
 ## Table of Contents
 
