@@ -412,7 +412,7 @@ describe('Tooltip', () => {
     )
     fireEvent.pointerEnter(screen.getByText('anchor'))
 
-    expect(screen.getByRole('tooltip').style.maxWidth).toBe('min(360px, calc(100vw - 24px))')
+    expect(screen.getByRole('tooltip').style.maxWidth).toBe('min(360px, -24px + 100vw)')
   })
 
   it('clamps a bubble overflowing the right viewport edge back inside', () => {
