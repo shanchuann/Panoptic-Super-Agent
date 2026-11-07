@@ -10,6 +10,8 @@
 
 ### 前置条件
 
+Web 和 Desktop 的浏览器产物使用 Vite 8 及其 Rolldown 构建器。文档站保留与 VitePress 1 匹配的 Vite 5；更改文档站的该依赖前，先升级 VitePress。Web 产品隔离检查遍历输出的模块和资源图，并记录 worker 插件注册的监视输入，不依赖仅 Rollup 提供的输出字段。
+
 - Node.js 要求 24.9 或更高版本。CI 覆盖 24.9、最新的 24 和 26；见 [Node 引擎下限 Agent Note](../.agents/notes/implemented/process/2026-10-15-node-24-runtime-floor.zh.md)。
 - 启用 Node.js TypeScript 类型剥离。仓库构建脚本用 tsdown 的 native 配置加载器加载 `tsdown.config.ts`，因此当 `NODE_OPTIONS` 含 `--no-experimental-strip-types` 或 Node.js 构建缺少 TypeScript 支持时会失败；`pnpm run build` 会先检查这一条件并指出原因。
 - 启用了 Corepack 的 pnpm。仓库在 `package.json` 中固定使用 `pnpm@11.28.5`；如果 `pnpm --version` 无法通过 Corepack 解析，请先运行 `corepack enable`。
