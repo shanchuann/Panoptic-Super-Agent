@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process'
-import { existsSync, mkdirSync, readdirSync, symlinkSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { expect, it } from 'vitest'
@@ -29,8 +29,13 @@ function repository() {
       writeFileSync(join(dir, path), contents)
     }
   }
-  const commit = (time: number) => {
+  const commit = (time: number, symlinks: Readonly<Record<string, string>> = {}) => {
     git(['add', '--all'])
+    // Git object readers need a symlink tree entry, without Windows filesystem privileges.
+    for (const [path, target] of Object.entries(symlinks)) {
+      const blob = execFileSync('git', ['hash-object', '-w', '--stdin'], { cwd: dir, env, input: target, encoding: 'utf8' }).trim()
+      git(['update-index', '--add', '--cacheinfo', `120000,${blob},${path}`])
+    }
     git(['commit', '--quiet', '--message', `at ${time}`], time)
     return git(['rev-parse', 'HEAD'])
   }
@@ -89,8 +94,6 @@ it('lists Git versions from release tags and the default branch by reading objec
   repo.git(['tag', '1.0.0'])
   repo.git(['tag', '@s/missing@1.0.0'])
   repo.git(['tag', 'broken@'])
-  mkdirSync(join(repo.dir, 'packages/c'), { recursive: true })
-  symlinkSync('../a/package.json', join(repo.dir, 'packages/c/package.json'))
   repo.write({
     'packages/a/package.json': JSON.stringify({ ...JSON.parse(bundle('@s/a', '1.1.0')), author: 'Ann', icon: 'icon.svg', keywords: ['alpha'] }),
     'packages/a/locale/en.json': JSON.stringify({ meta: { title: 'Alpha', description: 'Does A' } }),
@@ -100,7 +103,8 @@ it('lists Git versions from release tags and the default branch by reading objec
     // A package that turns private on the default branch is not listed, not even at its earlier public tag.
     'packages/e/package.json': bundle('@s/e', '1.0.1', { private: true }),
   })
-  const head = repo.commit(1790000300)
+  const head = repo.commit(1790000300, { 'packages/c/package.json': '../a/package.json' })
+  expect(repo.git(['ls-tree', 'HEAD', 'packages/c/package.json'])).toMatch(/^120000 blob /u)
   repo.git(['tag', 'v2.0.0'])
   repo.git(['tag', '@s/a@1.1.0'])
   const cacheDir = scratch()
