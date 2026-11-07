@@ -8516,8 +8516,8 @@ importers:
         specifier: 3.2.3
         version: 3.2.3(yauzl@3.4.0)
       zod:
-        specifier: 4.6.5
-        version: 4.6.5
+        specifier: 4.4.3
+        version: 4.4.3
     devDependencies:
       '@deepseek-ai/cordis':
         specifier: workspace:~
