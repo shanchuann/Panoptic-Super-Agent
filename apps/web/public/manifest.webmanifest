@@ -1,11 +1,11 @@
 {
-  "name": "DeepSeek Harness",
-  "short_name": "DSH",
+  "name": "万象超级智能体 · Panoptic Super",
+  "short_name": "Panoptic Super",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#f5f7fc",
+  "theme_color": "#172b49",
   "icons": [
     {
       "src": "icon-192.png",

@@ -269,7 +269,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 24px;
+  height: 40px;
   min-width: 0;
 }
 
@@ -285,10 +285,10 @@
   align-items: center;
   gap: 6px;
   min-width: 0;
-  height: 24px;
+  height: 40px;
   font-size: 18px;
   font-weight: 600;
-  line-height: 24px;
+  line-height: 40px;
   letter-spacing: 0.04em;
 }
 
