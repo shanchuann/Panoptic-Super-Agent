@@ -37,7 +37,7 @@
 | 18 | 开源替代：OpenHands 提供自托管 agent 平台与 SDK，2026-06 发布自托管/开源 agent 横向对比 | openhands.dev | 2026-06-25 | 高 |
 | 19 | Claude 产品线已含 Claude Code、Cowork、Managed Agents | claude.com/pricing | 抓取 2026-11-05 | 中（导航可见，价格未渲染） |
 
-**口径冲突需并列**：GAIA 分数在不同脚手架/快照下从 52.3%（裸模型评测站）到 92.36%（官方提交），OSWorld 1.0-Verified 头部约 90% 而 2.0 仅 20.6%——**不同版本与不同脚手架的数字不能直接对比**（#2 #4，二手口径见 benchlm.ai、decodethefuture.org，可信度低，不作为结论依据）。
+**口径冲突需并列**：GAIA 分数在不同脚手架/快照下从 52.3%（裸模型评测站）到 92.36%（官方提交），OSWorld 1.0-Verified 头部约 90% 而 2.0 仅 20.6%，**不同版本与不同脚手架的数字不能直接对比**（#2 #4，二手口径见 benchlm.ai、decodethefuture.org，可信度低，不作为结论依据）。
 
 ## ③ 候选方案对比（"怎么证明能用"）
 

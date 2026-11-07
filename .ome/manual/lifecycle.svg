@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" font-family="Microsoft YaHei, Segoe UI, sans-serif">
+<rect width="1400" height="1000" fill="#FFFFFF"/>
+<text x="60" y="64" font-size="30" font-weight="700" fill="#1B2A41">四阶段生命周期与三个循环</text>
+<text x="60" y="94" font-size="15" fill="#5B6B7C">交互循环先判断意图，日常问答直接回答；需要执行或修改项目时才进入四阶段。</text>
+<line x1="60" y1="118" x2="1340" y2="118" stroke="#C9D2DE"/>
+
+<g>
+<rect x="60" y="140" width="1280" height="86" rx="8" fill="#E8F1FB" stroke="#5B8DB8"/>
+<text x="80" y="168" font-size="14" font-weight="600" fill="#1B4B72">交互循环</text>
+<text x="80" y="192" font-size="11.5" fill="#5B6B7C">直接回答：不创建任务，不进入问询</text>
+<text x="380" y="192" font-size="11.5" fill="#5B6B7C">创建任务：目标与判据齐全才建项</text>
+<text x="720" y="192" font-size="11.5" fill="#5B6B7C">修改任务：进入变更影响评估</text>
+<text x="1040" y="192" font-size="11.5" fill="#5B6B7C">澄清请求：最多三个关键问题</text>
+<text x="80" y="216" font-size="11" fill="#8A97A6">四阶段只约束需要交付的工作，日常问答与轻量操作不进入下面的流程。</text>
+</g>
+
+<g>
+<rect x="60" y="260" width="300" height="500" rx="10" fill="#F3F6FB" stroke="#B9C6D8"/>
+<rect x="60" y="260" width="300" height="56" rx="10" fill="#1E3A5F"/>
+<rect x="60" y="300" width="300" height="16" fill="#1E3A5F"/>
+<text x="80" y="294" font-size="16" font-weight="600" fill="#FFFFFF">问询</text>
+<text x="80" y="340" font-size="11.5" fill="#5B6B7C">复述目标与误解点</text>
+<text x="80" y="366" font-size="11.5" fill="#5B6B7C">每轮最多三个关键问题</text>
+<text x="80" y="392" font-size="11.5" fill="#5B6B7C">生成 Brief 与规格</text>
+<text x="80" y="418" font-size="11.5" fill="#5B6B7C">列出排除项与验收判据</text>
+<text x="80" y="444" font-size="11.5" fill="#5B6B7C">确认一次后锁定范围</text>
+<text x="80" y="484" font-size="11.5" fill="#5B6B7C">产出：Brief，Spec，计划摘要</text>
+<rect x="80" y="520" width="260" height="120" rx="6" fill="#FFFFFF" stroke="#9FB0C6"/>
+<text x="96" y="546" font-size="12.5" font-weight="600" fill="#1B2A41">门禁</text>
+<text x="96" y="570" font-size="11" fill="#5B6B7C">目标可复述</text>
+<text x="96" y="590" font-size="11" fill="#5B6B7C">至少一条客观判据</text>
+<text x="96" y="610" font-size="11" fill="#5B6B7C">排除清单非空</text>
+<text x="96" y="630" font-size="11" fill="#8A97A6">不通过则继续澄清</text>
+</g>
+
+<g>
+<rect x="390" y="260" width="300" height="500" rx="10" fill="#F3F6FB" stroke="#B9C6D8"/>
+<rect x="390" y="260" width="300" height="56" rx="10" fill="#0F766E"/>
+<rect x="390" y="300" width="300" height="16" fill="#0F766E"/>
+<text x="410" y="294" font-size="16" font-weight="600" fill="#FFFFFF">任务</text>
+<text x="410" y="340" font-size="11.5" fill="#5B6B7C">图谱与看板呈现进度</text>
+<text x="410" y="366" font-size="11.5" fill="#5B6B7C">删除，改进，插入，改派</text>
+<text x="410" y="392" font-size="11.5" fill="#5B6B7C">变更影响评估与记录</text>
+<text x="410" y="418" font-size="11.5" fill="#5B6B7C">验证器独立于执行者</text>
+<text x="410" y="444" font-size="11.5" fill="#5B6B7C">收件箱承接人工决策</text>
+<text x="410" y="484" font-size="11.5" fill="#5B6B7C">产出：任务，产物，证据</text>
+<rect x="410" y="520" width="260" height="120" rx="6" fill="#FFFFFF" stroke="#9FB0C6"/>
+<text x="426" y="546" font-size="12.5" font-weight="600" fill="#1B2A41">门禁</text>
+<text x="426" y="570" font-size="11" fill="#5B6B7C">任务完成或显式放弃</text>
+<text x="426" y="590" font-size="11" fill="#5B6B7C">产物带证据</text>
+<text x="426" y="610" font-size="11" fill="#5B6B7C">无未处理阻塞</text>
+<text x="426" y="630" font-size="11" fill="#8A97A6">执行循环在此运行</text>
+</g>
+
+<g>
+<rect x="720" y="260" width="300" height="500" rx="10" fill="#F3F6FB" stroke="#B9C6D8"/>
+<rect x="720" y="260" width="300" height="56" rx="10" fill="#B45309"/>
+<rect x="720" y="300" width="300" height="16" fill="#B45309"/>
+<text x="740" y="294" font-size="16" font-weight="600" fill="#FFFFFF">交付</text>
+<text x="740" y="340" font-size="11.5" fill="#5B6B7C">逐条核对验收判据</text>
+<text x="740" y="366" font-size="11.5" fill="#5B6B7C">交付物同一次构建产出</text>
+<text x="740" y="392" font-size="11.5" fill="#5B6B7C">维护计划与已知问题</text>
+<text x="740" y="418" font-size="11.5" fill="#5B6B7C">回滚点与导出包</text>
+<text x="740" y="444" font-size="11.5" fill="#5B6B7C">冷启动交接测试</text>
+<text x="740" y="484" font-size="11.5" fill="#5B6B7C">产出：交付物，变更记录</text>
+<rect x="740" y="520" width="260" height="120" rx="6" fill="#FFFFFF" stroke="#9FB0C6"/>
+<text x="756" y="546" font-size="12.5" font-weight="600" fill="#1B2A41">门禁</text>
+<text x="756" y="570" font-size="11" fill="#5B6B7C">验收通过</text>
+<text x="756" y="590" font-size="11" fill="#5B6B7C">交付清单齐全</text>
+<text x="756" y="610" font-size="11" fill="#5B6B7C">回滚演练通过</text>
+<text x="756" y="630" font-size="11" fill="#8A97A6">不可逆操作需审批</text>
+</g>
+
+<g>
+<rect x="1050" y="260" width="300" height="500" rx="10" fill="#F3F6FB" stroke="#B9C6D8"/>
+<rect x="1050" y="260" width="300" height="56" rx="10" fill="#7C3AED"/>
+<rect x="1050" y="300" width="300" height="16" fill="#7C3AED"/>
+<text x="1070" y="294" font-size="16" font-weight="600" fill="#FFFFFF">迭代</text>
+<text x="1070" y="340" font-size="11.5" fill="#5B6B7C">继承 Brief，Spec 与记忆</text>
+<text x="1070" y="366" font-size="11.5" fill="#5B6B7C">复用产物与任务基线</text>
+<text x="1070" y="392" font-size="11.5" fill="#5B6B7C">只确认本次改动范围</text>
+<text x="1070" y="418" font-size="11.5" fill="#5B6B7C">仅执行差异与受影响任务</text>
+<text x="1070" y="444" font-size="11.5" fill="#5B6B7C">旧版本保留可回退</text>
+<text x="1070" y="484" font-size="11.5" fill="#5B6B7C">产出：新版本，变更记录</text>
+<rect x="1070" y="520" width="260" height="120" rx="6" fill="#FFFFFF" stroke="#9FB0C6"/>
+<text x="1086" y="546" font-size="12.5" font-weight="600" fill="#1B2A41">门禁</text>
+<text x="1086" y="570" font-size="11" fill="#5B6B7C">差异任务完成</text>
+<text x="1086" y="590" font-size="11" fill="#5B6B7C">回归通过</text>
+<text x="1086" y="610" font-size="11" fill="#5B6B7C">继承率不低于六成</text>
+<text x="1086" y="630" font-size="11" fill="#8A97A6">学习循环在此沉淀</text>
+</g>
+
+<g stroke="#8CA0B8" stroke-width="1.2" fill="none">
+<line x1="360" y1="400" x2="390" y2="400"/>
+<line x1="690" y1="400" x2="720" y2="400"/>
+<line x1="1020" y1="400" x2="1050" y2="400"/>
+<line x1="1200" y1="760" x2="1200" y2="850"/>
+<line x1="1200" y1="850" x2="210" y2="850"/>
+<line x1="210" y1="850" x2="210" y2="760"/>
+</g>
+
+<g>
+<rect x="330" y="820" width="740" height="50" rx="25" fill="#FFFFFF" stroke="#9FB0C6"/>
+<text x="700" y="851" font-size="13.5" fill="#1B2A41" text-anchor="middle">迭代回到问询，只重走差异部分，已完成任务不再执行</text>
+<text x="60" y="920" font-size="12" fill="#5B6B7C">执行循环负责规划、工具、检查点与验证；学习循环在任务结束或迭代时抽取记忆，异步处理，不阻塞主流程。</text>
+<text x="60" y="948" font-size="11.5" fill="#8A97A6">图 2　生命周期 v1.2：交互循环决定是否进入四阶段，执行循环与学习循环分别负责运行与沉淀。</text>
+</g>
+</svg>
