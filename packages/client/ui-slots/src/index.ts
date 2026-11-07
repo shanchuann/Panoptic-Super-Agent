@@ -405,7 +405,7 @@ export type PropsRenderSlots<S extends keyof SlotMap & string> = {
  * constraints check through clean parameter contravariance (FC statics add
  * covariant noise rejecting legitimate narrowings).
  */
-export type SlotComponent<P> = (props: P) => ReactNode
+export type SlotComponent<P> = (props: P) => ReactNode | Promise<ReactNode>
 
 type FactoryDefOf<F extends keyof SlotFactoryMap & string> = SlotFactoryMap[F] & SlotFactoryDef
 type FactoryInputPropsOf<F extends keyof SlotFactoryMap & string> =
