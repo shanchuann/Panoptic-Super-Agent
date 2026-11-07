@@ -2,6 +2,7 @@
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { stripVTControlCharacters } from 'node:util'
 import { Context } from '@deepseek-ai/cordis'
 import { expect, it, onTestFinished, vi } from 'vitest'
 import { handleError } from '../src/error.ts'
@@ -29,5 +30,9 @@ it('formats compiler source locations and reports unavailable source files', asy
   ] })
   expect(warn).toHaveBeenCalledWith('without location')
   expect(warn).toHaveBeenCalledWith(expect.stringContaining('unexpected token'))
+  const diagnostic = warn.mock.calls.map(([message]) => typeof message === 'string' ? stripVTControlCharacters(message) : '').join('\n')
+  expect(diagnostic).toContain(`File: ${file}:1:15`)
+  expect(diagnostic).toContain('> 1 | const broken = ;')
+  expect(diagnostic).toMatch(/\|\s+\^ unexpected token/u)
   expect(warn).toHaveBeenCalledWith(expect.objectContaining({ code: 'ENOENT' }))
 })
