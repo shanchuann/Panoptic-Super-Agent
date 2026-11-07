@@ -147,3 +147,5 @@ These limits define the theme extension surface and the color authority; they ar
 None.
 
 </details>
+
+The Panoptic Super palette uses mist-white and midnight-blue surfaces with blue primary actions. Semantic warning and error colors retain their meanings.
