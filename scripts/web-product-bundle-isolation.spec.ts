@@ -73,7 +73,7 @@ describe('default Web bundle input isolation', () => {
       resolveId(id: string) { return id === 'external-lib' ? { id, external: true } : null },
     }
     await expect(test.run({ plugins: [...productWebBundleIsolation(test.root, test.web), externalize] }))
-      .rejects.toThrow(/external module external-lib has no bundled input proof/)
+      .rejects.toThrow(/referenced output external-lib is missing/)
     await expect(test.run({ plugins: [
       ...productWebBundleIsolation(test.root, test.web), browserDependencyAnalysis(), externalize,
     ] })).resolves.toBeDefined()
@@ -196,6 +196,24 @@ describe('default Web bundle input isolation', () => {
     test.write('apps/web/src/worker.js', 'import "../../../packages/experimental/prototype/index.js"')
     await expect(test.run()).rejects.toThrow(/Web product isolation: experimental input/)
   })
+
+  it.each(['load', 'transform', 'resolveId', 'buildStart'] as const)(
+    'rejects experimental worker inputs registered by %s', async (hook) => {
+      const test = fixture()
+      test.write('apps/web/src/main.js', 'new Worker(new URL("./worker.js", import.meta.url), { type: "module" })')
+      test.write('apps/web/src/worker.js', 'import \"./worker-dep.js\"; globalThis.worker = true')
+      test.write('apps/web/src/worker-dep.js', 'globalThis.dependency = true')
+      const watched = join(test.root, 'packages/experimental/prototype/index.js')
+      await expect(test.run({ worker: { plugins: () => [{
+        name: 'fixture-worker-input',
+        enforce: 'pre',
+        [hook](this: { addWatchFile(file: string): void }) {
+          this.addWatchFile(watched)
+          return null
+        },
+      }] } })).rejects.toThrow(/Web product isolation: experimental input/)
+    },
+  )
 
   it('allows an experimental worker loaded only by preview', async () => {
     const test = fixture()
