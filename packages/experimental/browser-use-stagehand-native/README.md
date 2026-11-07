@@ -11,6 +11,8 @@ English | [中文](README.zh.md)
 
 Navigate browser tabs, capture screenshots, and ask Stagehand to act, find actions, or extract page data. Stagehand uses a separately configured native model for its AI-assisted operations. Each live Session gets a fresh browser, or one Session exclusively attaches to an explicitly configured existing browser. This public experimental package is opt-in.
 
+The extraction adapter passes Zod schema objects to Stagehand. Its direct Zod dependency matches Stagehand's declared Zod version; upgrading either requires a clean typecheck of this package so distinct Zod types do not cross the SDK call.
+
 ## Table of Contents
 
 - [Use this package](#use-this-package)

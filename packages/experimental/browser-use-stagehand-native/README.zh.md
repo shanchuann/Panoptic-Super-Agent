@@ -11,6 +11,8 @@ kind: "package-reference"
 
 导航浏览器标签页、截图，并让 Stagehand 执行操作、查找可用操作或提取页面数据。Stagehand 的 AI（人工智能）辅助操作使用单独配置的原生模型。每个活动 Session 获得独立浏览器，也可由一个 Session 独占连接到显式配置的现有浏览器。这个公开的实验性包需要显式启用。
 
+提取适配器将 Zod schema 对象传给 Stagehand，因此本包的直接 Zod 依赖与 Stagehand 声明的版本一致。升级任一依赖时，需对本包执行干净的类型检查，避免不同 Zod 版本的类型进入 SDK 调用。
+
 ## 目录
 
 - [使用此包](#use-this-package)
