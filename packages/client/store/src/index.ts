@@ -9,7 +9,7 @@
  */
 import { createStore, type StoreApi } from 'zustand/vanilla'
 import { subscribeWithSelector } from 'zustand/middleware'
-import { shallow } from 'zustand/shallow'
+import { shallow } from 'zustand/vanilla/shallow'
 import { freeze, produce } from 'immer'
 import type {
   ActionsDecl, BakedActions, ObservableSnapshot, StoreHandle, StoreInstance, StoreSpec,
