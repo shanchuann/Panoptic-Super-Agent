@@ -73,6 +73,7 @@
 | W-001 | 事件驱动运行时 MVP（触发器 + Watchdog） | [tasks/W-001.md](tasks/W-001.md) | 5 类来源；分诊 ≥85%；死循环/无进展拦截 | 新 runtime 包 + project 事件 | ADR-0009、P-001 | 待开始 |
 | P-003 | 执行账本、检查点与崩溃恢复 | —（待写卡） | 已提交副作用不重复；恢复说明已完成与下一步；取消无孤儿进程 | 新 runtime 包 + project 域 | ADR-0010、P-001 | 待开始 |
 | O-001 | OpenTelemetry 链路追踪 | —（待写卡） | 项目至工具链路可串联；敏感信息不记录 | 观测适配包 | ADR-0010、P-003 | 待开始 |
+| S-001 | 旁路智能体（快照、只读、带入主线） | [tasks/S-001.md](tasks/S-001.md) | 旁路不影响主线；带入需确认带来源；跨项目读取被拒绝 | client 侧栏 + project 存储 + api | ADR-0011、P-001 | 待开始 |
 
 写域冲突：M-* 只写 memory 包；P-* 只写 project 包与 api；U-* 写 client/host/api 投影；G-* 只写 llm 包；C-* 写 coordination 包 + project 读取接口。可并行，但 P-001 与 U-001 有数据依赖（先 P 后 U）。
 

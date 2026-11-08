@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" font-family="Microsoft YaHei, Segoe UI, sans-serif">
+<rect width="1400" height="1000" fill="#FFFFFF"/>
+<text x="60" y="64" font-size="30" font-weight="700" fill="#1B2A41">旁路智能体</text>
+<text x="60" y="94" font-size="15" fill="#5B6B7C">共享主会话快照的只读侧通道，旁路消息不进入主线，不改变主线未读与滚动位置。</text>
+<line x1="60" y1="118" x2="1340" y2="118" stroke="#C9D2DE"/>
+
+<g>
+<rect x="60" y="146" width="760" height="520" rx="10" fill="#F8FAFC" stroke="#B9C6D8"/>
+<rect x="60" y="146" width="760" height="56" rx="10" fill="#1E3A5F"/>
+<rect x="60" y="186" width="760" height="16" fill="#1E3A5F"/>
+<text x="80" y="180" font-size="16" font-weight="600" fill="#FFFFFF">主工作区</text>
+<text x="240" y="180" font-size="12" fill="#D7E1EC">主 Agent 与主线时间线</text>
+<rect x="620" y="162" width="180" height="26" rx="13" fill="#FFFFFF" opacity="0.15"/>
+<text x="710" y="180" font-size="11" fill="#FFFFFF" text-anchor="middle">主 Agent 运行中</text>
+
+<rect x="84" y="226" width="420" height="70" rx="6" fill="#FFFFFF" stroke="#9DBAD3"/>
+<text x="100" y="250" font-size="12" fill="#8A97A6">用户</text>
+<text x="100" y="272" font-size="12.5" fill="#1B2A41">先优化导航和布局，其他部分暂时不动。</text>
+<rect x="84" y="310" width="560" height="70" rx="6" fill="#FFFFFF" stroke="#A9CCAA"/>
+<text x="100" y="334" font-size="12" fill="#8A97A6">主 Agent</text>
+<text x="100" y="356" font-size="12.5" fill="#1B2A41">已读取导航组件，准备修改布局并运行测试。</text>
+<rect x="84" y="394" width="470" height="70" rx="6" fill="#FFFFFF" stroke="#9DBAD3"/>
+<text x="100" y="418" font-size="12" fill="#8A97A6">工具结果</text>
+<text x="100" y="440" font-size="12.5" fill="#1B2A41">测试通过，产物已登记，等待验收。</text>
+
+<rect x="84" y="500" width="560" height="76" rx="6" fill="#FFFFFF" stroke="#C9D2DE" stroke-dasharray="5 4"/>
+<text x="100" y="524" font-size="12" fill="#8A97A6">主线状态</text>
+<text x="100" y="546" font-size="12.5" fill="#5B6B7C">滚动位置保持不动，未读计数不因旁路改变。</text>
+<text x="100" y="564" font-size="12.5" fill="#5B6B7C">旁路消息不进入这条时间线。</text>
+
+<rect x="84" y="596" width="700" height="52" rx="6" fill="#EEF3F8"/>
+<text x="100" y="618" font-size="12" fill="#5B6B7C">输入框</text>
+<text x="100" y="638" font-size="11.5" fill="#8A97A6">主会话输入保持原有行为</text>
+</g>
+
+<g>
+<rect x="860" y="146" width="480" height="520" rx="10" fill="#FBFAFF" stroke="#B7A6DD"/>
+<rect x="860" y="146" width="480" height="56" rx="10" fill="#7C3AED"/>
+<rect x="860" y="186" width="480" height="16" fill="#7C3AED"/>
+<text x="880" y="180" font-size="16" font-weight="600" fill="#FFFFFF">旁路侧栏</text>
+<text x="1010" y="180" font-size="12" fill="#EDE9FE">旁 Agent 与旁路记录</text>
+<circle cx="1310" cy="174" r="9" fill="#FFFFFF"/>
+<text x="1310" y="178" font-size="10" fill="#7C3AED" text-anchor="middle">2</text>
+
+<rect x="884" y="226" width="432" height="54" rx="6" fill="#FFFFFF" stroke="#D8CDEE"/>
+<text x="900" y="248" font-size="11.5" fill="#8A97A6">快照版本 2026-11-08 14:20</text>
+<text x="900" y="268" font-size="11.5" fill="#5B6B7C">项目，任务，判据，决策，近期事件</text>
+
+<rect x="884" y="296" width="360" height="62" rx="6" fill="#FFFFFF" stroke="#D8CDEE"/>
+<text x="900" y="318" font-size="12" fill="#8A97A6">用户旁路提问</text>
+<text x="900" y="340" font-size="12.5" fill="#1B2A41">这个函数为什么这样写，有替代方案吗。</text>
+<rect x="884" y="368" width="400" height="80" rx="6" fill="#FFFFFF" stroke="#D8CDEE"/>
+<text x="900" y="390" font-size="12" fill="#8A97A6">旁 Agent 回复</text>
+<text x="900" y="412" font-size="12.5" fill="#1B2A41">它承担了旧接口兼容。替代方案需要同时改三处调用。</text>
+<text x="900" y="432" font-size="11.5" fill="#5B6B7C">引用快照 2026-11-08 14:20，未写入主线。</text>
+
+<rect x="884" y="466" width="432" height="46" rx="6" fill="#F5F2FB" stroke="#D8CDEE"/>
+<text x="900" y="494" font-size="12" fill="#5B6B7C">旁路未读与滚动独立，主线不受影响。</text>
+
+<rect x="884" y="530" width="300" height="44" rx="22" fill="#FFFFFF" stroke="#B7A6DD"/>
+<text x="900" y="557" font-size="12" fill="#4B3A78">带入主线，需要确认</text>
+<rect x="1200" y="530" width="116" height="44" rx="6" fill="#7C3AED"/>
+<text x="1258" y="557" font-size="12" fill="#FFFFFF" text-anchor="middle">确认带入</text>
+
+<rect x="884" y="596" width="432" height="52" rx="6" fill="#F5F2FB"/>
+<text x="900" y="618" font-size="12" fill="#5B6B7C">旁路输入</text>
+<text x="900" y="638" font-size="11.5" fill="#8A97A6">只读工具，独立配额，不影响主线</text>
+</g>
+
+<g stroke="#8CA0B8" stroke-width="1.3" fill="none">
+<line x1="820" y1="300" x2="860" y2="300"/>
+<line x1="860" y1="552" x2="820" y2="552"/>
+</g>
+<g font-size="11.5" fill="#5B6B7C">
+<text x="716" y="292" text-anchor="middle">快照</text>
+<text x="716" y="316" text-anchor="middle">单向</text>
+<text x="716" y="544" text-anchor="middle">带入</text>
+<text x="716" y="568" text-anchor="middle">需确认</text>
+</g>
+
+<g>
+<rect x="60" y="700" width="1280" height="86" rx="8" fill="#FDF0E3" stroke="#C98A4B"/>
+<text x="80" y="726" font-size="13.5" font-weight="600" fill="#7A4A18">项目域（主会话与旁路共享）</text>
+<text x="80" y="752" font-size="11.5" fill="#5B6B7C">任务，判据，约束，决策，产物句柄。旁路只读，写入仍走主线的能力网关与审批。</text>
+<text x="80" y="772" font-size="11.5" fill="#8A97A6">旁路看到的是打开时的快照；主会话结束后仍可提问，但会提示上下文可能过期。</text>
+</g>
+
+<g>
+<rect x="60" y="808" width="1280" height="112" rx="8" fill="#F1F3F5" stroke="#8A97A6"/>
+<text x="80" y="834" font-size="13.5" font-weight="600" fill="#1B2A41">隔离规则</text>
+<text x="80" y="860" font-size="11.5" fill="#5B6B7C">一，旁路消息不写入主会话事件日志。二，主 Agent 上下文不含旁路记录。</text>
+<text x="80" y="882" font-size="11.5" fill="#5B6B7C">三，旁路默认只读，写操作只能生成建议。四，带入主线由用户确认，写入来源与快照版本。</text>
+<text x="80" y="904" font-size="11.5" fill="#8A97A6">旁路线程按项目隔离，删除级联清理消息，快照与待确认带入记录。</text>
+</g>
+
+<text x="60" y="962" font-size="11.5" fill="#8A97A6">图 6　旁路智能体：主工作区与侧栏记录分离，快照单向进入旁路，带入主线需要用户确认。</text>
+</svg>

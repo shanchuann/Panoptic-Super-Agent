@@ -48,6 +48,7 @@
 | DEC-26 | 三循环分离（交互、执行、学习）；执行账本与幂等语义；检查点与恢复；第一阶段发布门槛加入崩溃恢复演示 | 已确认 | 2026-11-08 | ADR-0010、contracts/agent-runtime.md | SCOPE M19/PLAN P-003 |
 | DEC-27 | 能力授权替代简单读写分级；项目工作区内已授权写可连续执行，越界与不可逆操作审批；权限在可信代码判定 | 已确认 | 2026-11-08 | ADR-0010、contracts/capability-approval.md | tools.md/SCOPE M08 |
 | DEC-28 | 第一阶段本地优先存储，PostgreSQL/pgvector 延后；OpenTelemetry 纳入第一阶段 | 已确认 | 2026-11-08 | ADR-0010 D6/D7 | SCOPE M20/PLAN O-001 |
+| DEC-29 | 旁路智能体：共享主会话快照的只读侧通道，旁路记录与主线分离，显式带入主线 | 已确认 | 2026-11-08 | ADR-0011、contracts/side-agent.md | SCOPE M21/PLAN S-001 |
 
 ## 3. 未决（不计入已确认）
 

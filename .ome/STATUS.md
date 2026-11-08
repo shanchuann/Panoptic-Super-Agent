@@ -245,3 +245,14 @@
 - 生命周期图补交互循环与执行、学习循环说明；数据流图补能力网关、执行账本、幂等键、检查点与恢复分支。
 - 记忆图补作用域与有效性；协作图补能力网关与账本约束；总体架构图补三循环、账本、网关与可观测性。
 - 说明书同步更新分层职责与 M19、M20，重新排版为二十五页。
+
+## 旁路智能体（2026-11-08）
+
+- 新增 [design/side-agent.md](design/side-agent.md)、[ADR-0011](../docs/adr/ADR-0011-side-agent.md)、[contracts/side-agent.md](contracts/side-agent.md) 与任务卡 S-001。
+- 旁路共享主会话快照，记录与主线分离，默认只读，带入主线需确认。
+- SCOPE M21、DECISIONS DEC-29、PLAN S-001、DESIGN D23 与模块表同步。
+
+## 旁路智能体落地（2026-11-08）
+
+- 设计、契约、ADR-0011、任务卡 S-001 完成；说明书新增第 4.5 节与图 6，PDF 仍为二十五页。
+- README 增加旁路提问说明；SCOPE M21、DECISIONS DEC-29、PLAN S-001、DESIGN D23 同步。

@@ -19,7 +19,8 @@
 11. [design/p1-release.md](design/p1-release.md)：P1 完整度与发布。
 12. [.ome/contracts/](contracts/README.md)：五份可执行契约。
 13. [ADR-0010](../docs/adr/ADR-0010-runtime-loops-and-execution-ledger.md)：三循环、执行账本与能力授权。
-14. 调研依据：[.ome/research/](research/)。
+14. [design/side-agent.md](design/side-agent.md)：旁路智能体。
+15. 调研依据：[.ome/research/](research/)。
 
 ## 1. 产品定义
 
@@ -117,6 +118,7 @@ v1.2 在状态层加入执行账本，在能力层加入能力网关，在保障
 | 上下文（Context） | 组装、配额、压缩、溢出、记忆注入协同 | 记忆持久化 | [context.md](design/context.md) | `system-prompt`/`compaction`/`spill`/`ptc-runtime` | 复用+扩展 |
 | 工具（Tools） | 注册、发现、执行、权限、审批、MCP、PTC | 模型推理 | [tools.md](design/tools.md) | `core/tools`/`mcp`/`sandbox`/`guard` | 复用+扩展 |
 | 执行账本（Execution Ledger） | 副作用记录、幂等键、检查点、崩溃恢复 | 业务规则 | [contracts/agent-runtime.md](../.ome/contracts/agent-runtime.md)、[ADR-0010](../docs/adr/ADR-0010-runtime-loops-and-execution-ledger.md) | 新 runtime 包 | 待建（P-003） |
+| 旁路智能体（Side Agent） | 共享主会话快照的只读侧通道；旁路记录隔离；显式带入主线 | 主会话状态 | [design/side-agent.md](design/side-agent.md)、[ADR-0011](../docs/adr/ADR-0011-side-agent.md) | client 侧栏 + project 存储 | 待建（S-001） |
 | 可观测性（Observability） | 项目至工具链路追踪、指标与审计关联 | 业务状态 | [contracts/agent-runtime.md](../.ome/contracts/agent-runtime.md) | OpenTelemetry 适配 | 待建（O-001） |
 | 协调策略（Coordination） | 拓扑选择、上下文包路由、模式审计、人工覆盖 | 具体执行、模型推理 | [evolution.md](design/evolution.md)、[ADR-0006](../docs/adr/ADR-0006-collaboration-model.md) | 新 coordination 插件 | 待建（C-001） |
 | 扩展契约（Extensibility） | 契约分级、版本兼容、升级演练、provider 替换 | 业务功能 | [extensibility.md](design/extensibility.md)、[ADR-0007](../docs/adr/ADR-0007-evolvability-contract.md) | 跨包契约测试 + scripts | 待建（X-001） |
@@ -188,6 +190,7 @@ v1.2 在状态层加入执行账本，在能力层加入能力网关，在保障
 | D20 | 任务范式路由：类型定 playbook、规模定拓扑；事件驱动运行时与 Watchdog（ADR-0008/0009） | 已定 | 用户 2026-11-07 确认 |
 | D21 | 三循环分离（交互、执行、学习）；执行账本、检查点与恢复；发布门槛含崩溃恢复演示（ADR-0010） | 已定 | 2026-11-08 评审采纳 |
 | D22 | 能力授权模型与 OpenTelemetry 可观测性；本地优先存储，PostgreSQL 延后（ADR-0010） | 已定 | 2026-11-08 评审采纳 |
+| D23 | 旁路智能体：独立旁路线程与记录，快照上下文，默认只读，显式带入主线（ADR-0011） | 已定 | 用户 2026-11-08 提出 |
 
 ## 8. 演进路线
 

@@ -9,5 +9,6 @@
 | P0 | [context-assembly.md](context-assembly.md) | 上下文来源、预算、优先级、不可裁剪项与溯源 |
 | P1 | [memory-lifecycle.md](memory-lifecycle.md) | 记忆的作用域、有效性、写入、冲突、失效与删除 |
 | P1 | [capability-approval.md](capability-approval.md) | 能力授权的范围、有效期、审批与审计 |
+| P1 | [side-agent.md](side-agent.md) | 旁路线程、快照、带入主线与隔离不变量 |
 
 契约变更需要同步更新对应设计文档、[DECISIONS](../DECISIONS.md) 与测试。
