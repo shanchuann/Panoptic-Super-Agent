@@ -277,9 +277,9 @@ describe('gate graph validation', () => {
       displayCommand: 'pnpm exec tsx scripts/run-ci-bench.ts',
       args: ['/private/pnpm.cjs', 'exec', 'tsx', 'scripts/run-ci-bench.ts'],
     })
-    expect(scripts['test:bench']).toBe('npm run build:bench && npm run build:web && npm run test:bench:built')
+    expect(scripts['test:bench']).toBe('pnpm run build:bench && pnpm run build:web && pnpm run test:bench:built')
     expect(scripts['build:bench']).toBe(
-      'npm run build:native-system && npm run build:lib && tsdown --config-loader native --config benchmarks/tsdown.config.ts',
+      'pnpm run build:native-system && pnpm run build:lib && tsdown --config-loader native --config benchmarks/tsdown.config.ts',
     )
     expect(scripts['build:native-system']).toBe('tsx native/system/scripts/build.ts --host-addon-only')
     expect(scripts['test:bench:built']).toBe('vitest run --config vitest.bench.config.ts')

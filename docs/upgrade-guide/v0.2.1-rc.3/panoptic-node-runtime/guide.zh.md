@@ -1,6 +1,6 @@
 ---
-description: "万象超级智能体开发与 CLI 安装的 Node 要求。"
-kind: "upgrade-guide"
+kind: upgrade-guide
+description: Panoptic Super 开发与 CLI 安装的 Node 运行时要求。
 ---
 
 # Node 运行时
@@ -9,10 +9,10 @@ kind: "upgrade-guide"
 
 ## 变更
 
-万象超级智能体要求 Node 24.x 系列的 24.15.0 或更新版本，或 Node 26 及后续版本；升级后的依赖不支持 Node 25。
+Panoptic Super 支持 Node 24.x 系列的 24.15.0 或更新版本，或 Node 26 及后续版本，不支持 Node 25。开发仓库通过 `devEngines.runtime` 固定 Node 24.15.0；`.node-version` 与 CI 使用相同版本。现有 profile 和 Session 数据保留原位置。
 
 ## 迁移
 
-安装依赖或启动 CLI 前，先升级 Node 并通过 `node --version` 确认版本。仓库的 `.node-version` 与 CI 使用 24.15.0，然后运行 `pnpm install` 和 `pnpm run typecheck`。
-
-此要求适用于开发仓库和外部 CLI 运行时，不会迁移现有 profile 或 Session 数据。桌面发行包采用要求此最低版本的依赖前，必须验证其 Electron 内嵌的 Node 版本。
+1. 在开发仓库中使用 pnpm 11.28.5，执行 `pnpm install`。pnpm 安装固定的项目运行时，不替换系统 Node。用 `pnpm node --version` 确认版本，再执行 `pnpm run typecheck` 和 `pnpm run build`。
+2. 独立安装 CLI 时，升级用于安装和启动它的 Node 可执行程序，并用 `node --version` 确认版本符合支持范围。
+3. 构建 Desktop 发行包前，确认 Electron 内嵌的 Node 版本符合随包依赖的要求。

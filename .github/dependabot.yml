@@ -32,6 +32,13 @@ updates:
       - dependency-name: "@vitest/coverage-v8"
       # The native Stagehand SDK and adapter must share Zod 4.4.3.
       - dependency-name: "zod"
+      # The documentation tools retain Vite 5 and React 18 until their consumers migrate.
+      - dependency-name: "vite"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
       # Keep the current aggregate compiler behavior.
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
