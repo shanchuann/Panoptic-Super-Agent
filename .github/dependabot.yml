@@ -27,7 +27,12 @@ updates:
       - dependency-name: "tsdown"
       # packageManager pin is 11.28.5; 12.x breaks install in this fork.
       - dependency-name: "pnpm"
-      # Keep the 5.x aggregate compiler behavior.
+      # Blob compatibility patch is bound to Vitest 4.1.11 and jsdom 30.1.2.
+      - dependency-name: "vitest"
+      - dependency-name: "@vitest/coverage-v8"
+      # The native Stagehand SDK and adapter must share Zod 4.4.3.
+      - dependency-name: "zod"
+      # Keep the current aggregate compiler behavior.
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
       # Inspector build gate asserts this exact version (scripts/devtools/source.ts).

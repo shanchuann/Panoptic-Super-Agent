@@ -21,10 +21,12 @@ pnpm run build:web
 ## 已知必须钉住的版本（导入基线）
 | 依赖 | 版本 | 原因 |
 |---|---|---|
+| `vitest` / `@vitest/coverage-v8` | 4.1.11 | `patches/vitest@4.1.11.patch` 适配 jsdom 30 的 Blob 绑定；升级时同步评估并移除或重做补丁 |
+| Stagehand native 适配器的 `zod` | 4.4.3 | 与 Stagehand SDK 的类型版本一致；自动升级会使类型检查失败 |
 | `lexical` / `@lexical/*` | 0.49.x | `patches/lexical@0.49.0.patch` 绑定该版本；升 0.52 会出现双版本类型不兼容 |
 | `tsdown` | 0.22.x | `scripts/dev-web.ts` 依赖 `TsdownHandle` 旧 API；0.23 类型已变更 |
 | `pnpm` | 11.28.5 | 2.x/12.x 与 `packageManager` 固定值冲突，会导致 install 失败 |
-| `typescript` | 5.x | 6.x 会改变聚合编译器行为（peer 允许 >=5 <7） |
+| `typescript` | 6.0.3 | 以当前清单和锁文件为准；后续 major 需验证聚合编译器（peer 允许 >=5 <7） |
 | `chrome-devtools-frontend` | 1.0.1638082 | `packages/experimental/inspector/scripts/devtools/source.ts` 断言精确版本，升级即构建失败（已 ignore） |
 
 ## Dependabot 建议配置

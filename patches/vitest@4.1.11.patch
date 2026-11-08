@@ -1,0 +1,45 @@
+diff --git a/dist/chunks/index.DC7d2Pf8.js b/dist/chunks/index.DC7d2Pf8.js
+index 0b0934f9465dc7d05b9ff04bb8245a30bdbc7399..d4947c418202e50a8879f5baf48c47a3b36a641c 100644
+--- a/dist/chunks/index.DC7d2Pf8.js
++++ b/dist/chunks/index.DC7d2Pf8.js
+@@ -453,7 +453,7 @@ var jsdom = {
+ 		});
+ 		const clearAddEventListenerPatch = patchAddEventListener(dom.window);
+ 		const clearWindowErrors = catchWindowErrors(dom.window);
+-		const utils = createCompatUtils(dom.window);
++		const utils = await createCompatUtils(dom.window);
+ 		// TODO: browser doesn't expose Buffer, but a lot of dependencies use it
+ 		dom.window.Buffer = Buffer;
+ 		dom.window.jsdom = dom;
+@@ -522,7 +522,7 @@ var jsdom = {
+ 		const clearAddEventListenerPatch = patchAddEventListener(dom.window);
+ 		const { keys, originals } = populateGlobal(global, dom.window, { bindFunctions: true });
+ 		const clearWindowErrors = catchWindowErrors(global);
+-		const utils = createCompatUtils(dom.window);
++		const utils = await createCompatUtils(dom.window);
+ 		global.jsdom = dom;
+ 		global.Request = createCompatRequest(utils);
+ 		global.URL = createJSDOMCompatURL(utils);
+@@ -568,10 +568,9 @@ function createJSDOMCompatURL(utils) {
+ 	}
+ 	return URL;
+ }
+-function createCompatUtils(window) {
+-	// this returns a hidden Symbol(impl)
+-	// this is cursed, and jsdom should just implement fetch API itself
+-	const implSymbol = Object.getOwnPropertySymbols(Object.getOwnPropertyDescriptors(new window.Blob()))[0];
++async function createCompatUtils(window) {
++	const { implForWrapper } = (await import("jsdom/lib/generated/idl/utils.js")).default;
++	// jsdom 30 stores Blob bytes behind its generated WebIDL wrapper map.
+ 	const utils = {
+ 		window,
+ 		makeCompatFormData(formData) {
+@@ -583,7 +582,7 @@ function createCompatUtils(window) {
+ 			return nodeFormData;
+ 		},
+ 		makeCompatBlob(blob) {
+-			const buffer = blob[implSymbol]._buffer;
++			const buffer = implForWrapper(blob)._bytes;
+ 			return new NodeBlob_([buffer], { type: blob.type });
+ 		}
+ 	};
