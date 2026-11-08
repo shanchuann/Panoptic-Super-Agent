@@ -1,6 +1,6 @@
 /** VitePress configuration for the locally projected documentation site. */
 
-import { readFileSync, writeFileSync } from 'node:fs'
+import { writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import type { DefaultTheme, PageData, SiteConfig } from 'vitepress'
 import type { ViteDevServer } from 'vite'
@@ -158,14 +158,14 @@ const sharedTheme: Pick<DefaultTheme.Config, 'search' | 'socialLinks' | 'editLin
     },
   },
   socialLinks: [
-    { icon: 'github', link: 'https://github.com/deepseek-ai/deepseek-harness' },
+    { icon: 'github', link: 'https://github.com/shanchuann/Panoptic-Super-Agent' },
   ],
   editLink: {
     pattern: ({ frontmatter }: PageData) => {
       const data: unknown = frontmatter
       const editSource: unknown = typeof data === 'object' && data !== null ? Reflect.get(data, 'editSource') : undefined
       if (typeof editSource !== 'string') throw new Error('Projected documentation page has no editSource frontmatter.')
-      return `https://github.com/deepseek-ai/deepseek-harness/edit/master/${editSource}`
+      return `https://github.com/shanchuann/Panoptic-Super-Agent/edit/main/${editSource}`
     },
     text: '在 GitHub 上编辑此页',
   },
@@ -176,22 +176,14 @@ const base = process.env.DOCS_BASE ?? '/'
 
 /** Site identity shared by the VitePress configuration and the llms.txt index. */
 const siteIdentity = {
-  title: 'DeepSeek Harness',
+  title: 'Panoptic Super',
   description: '用于构建 Agent Harness 的插件化 SDK',
 }
 
 /**
- * The DeepSeek wordmark, inlined so its `currentColor` fills follow the active
- * theme. An `<img>` would freeze the mark at the colors the file declares.
- */
-const wordmark = readFileSync(resolve(import.meta.dirname, '../public/wordmark.svg'), 'utf8')
-  .trim()
-  .replace('<svg ', '<svg class="dsh-wordmark" ')
-
-/**
  * Head-injected styles for the site identity and sidebar scrollbar.
  *
- * The navigation-bar lockup pairs with `siteTitle`. The scrollbar rules replace
+ * The scrollbar rules replace
  * the sidebar's platform bar, which reserves 15px of a 265px column and draws a
  * track the rest of the navigation has no border for; `scrollbarScript` supplies
  * the marker that reveals the thumb. Chrome drops `::-webkit-scrollbar` once
@@ -199,19 +191,21 @@ const wordmark = readFileSync(resolve(import.meta.dirname, '../public/wordmark.s
  * stay behind a query only Firefox answers.
  */
 const siteStyle = `
-.dsh-lockup { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
-.dsh-wordmark { display: block; height: 22px; width: auto; color: var(--vp-c-text-1); }
-.dsh-tag {
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid var(--vp-c-brand-soft);
-  border-radius: 999px;
-  padding: 1px 9px;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 18px;
-  white-space: nowrap;
-  color: var(--vp-c-brand-1);
+:root {
+  --vp-c-brand-1: #4f6d99;
+  --vp-c-brand-2: #405d88;
+  --vp-c-brand-3: #4f6d99;
+  --vp-c-brand-soft: rgb(79 109 153 / 14%);
+  --vp-c-bg: #f5f7fc;
+  --vp-c-bg-alt: #edf1f8;
+}
+.dark {
+  --vp-c-brand-1: #b8c8e2;
+  --vp-c-brand-2: #93abcc;
+  --vp-c-brand-3: #4f6d99;
+  --vp-c-bg: #111e32;
+  --vp-c-bg-alt: #15243a;
+  --vp-button-brand-hover-bg: #405d88;
 }
 
 .VPSidebar::-webkit-scrollbar { width: 6px; }
@@ -251,17 +245,6 @@ const scrollbarScript = `
 })()
 `
 
-/**
- * Navigation-bar title: the DeepSeek wordmark and the release-stage tag.
- * VitePress renders `siteTitle` as HTML.
- *
- * @param previewTag - Localized release-stage label.
- * @returns Markup placed beside the navigation-bar home link.
- */
-function siteTitle(previewTag: string): string {
-  return `<span class="dsh-lockup">${wordmark}<span class="dsh-tag">${previewTag}</span></span>`
-}
-
 export default withMermaid({
   title: siteIdentity.title,
   description: siteIdentity.description,
@@ -274,7 +257,7 @@ export default withMermaid({
   },
   head: [
     // VitePress leaves head hrefs untouched, so the base belongs here explicitly.
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}favicon.svg` }],
+    ['link', { rel: 'icon', type: 'image/png', href: `${base}panoptic-logo.png` }],
     ['style', {}, siteStyle],
     ['script', {}, scrollbarScript],
   ],
@@ -287,7 +270,7 @@ export default withMermaid({
       label: '简体中文',
       lang: 'zh-CN',
       themeConfig: {
-        siteTitle: siteTitle('技术预览'),
+        siteTitle: siteIdentity.title,
         nav: [
           { text: '入门', link: landingLink('root', guideModules.root.guide), activeMatch: '^/guide/' },
           ...moduleNav('root'),
@@ -313,7 +296,7 @@ export default withMermaid({
       lang: 'en-US',
       link: '/en/',
       themeConfig: {
-        siteTitle: siteTitle('Preview'),
+        siteTitle: siteIdentity.title,
         nav: [
           { text: 'Guide', link: landingLink('en', guideModules.en.guide), activeMatch: '^/en/guide/' },
           ...moduleNav('en'),
@@ -328,7 +311,7 @@ export default withMermaid({
             const data: unknown = frontmatter
             const editSource: unknown = typeof data === 'object' && data !== null ? Reflect.get(data, 'editSource') : undefined
             if (typeof editSource !== 'string') throw new Error('Projected documentation page has no editSource frontmatter.')
-            return `https://github.com/deepseek-ai/deepseek-harness/edit/master/${editSource}`
+            return `https://github.com/shanchuann/Panoptic-Super-Agent/edit/main/${editSource}`
           },
           text: 'Edit this page on GitHub',
         },
@@ -343,7 +326,7 @@ export default withMermaid({
     publicDir: resolve(import.meta.dirname, '../public'),
     plugins: [
       {
-        name: 'deepseek-harness-doc-projector',
+        name: 'panoptic-super-doc-projector',
         configureServer(server) {
           watchCanonicalDocs(server)
           serveRawMarkdown(server)
@@ -382,5 +365,5 @@ export default withMermaid({
     },
   },
   mermaid: {},
-  themeConfig: sharedTheme,
+  themeConfig: { ...sharedTheme, logo: { src: `${base}panoptic-logo.png`, alt: siteIdentity.title } },
 })

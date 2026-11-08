@@ -10,7 +10,7 @@
 
 ### 前置条件
 
-- Node.js 要求 24.9 或更高版本。CI 覆盖 24.9、最新的 24 和 26；见 [Node 引擎下限 Agent Note](../.agents/notes/implemented/process/2026-10-15-node-24-runtime-floor.zh.md)。
+- pnpm 11.28.5 和项目管理的 Node.js 24.15.0 运行时。`pnpm install` 安装固定运行时，`pnpm node --version` 确认版本。独立 CLI 安装需要 Node 24.x 系列的 24.15 或更新版本，或 Node 26 及后续版本；不支持 Node 25。
 - 启用 Node.js TypeScript 类型剥离。仓库构建脚本用 tsdown 的 native 配置加载器加载 `tsdown.config.ts`，因此当 `NODE_OPTIONS` 含 `--no-experimental-strip-types` 或 Node.js 构建缺少 TypeScript 支持时会失败；`pnpm run build` 会先检查这一条件并指出原因。
 - 启用了 Corepack 的 pnpm。仓库在 `package.json` 中固定使用 `pnpm@11.28.5`；如果 `pnpm --version` 无法通过 Corepack 解析，请先运行 `corepack enable`。
 - Git 2.26 或更高版本；钩子设置会启用 Git 的 worktree 专属配置扩展。
@@ -106,7 +106,7 @@ pnpm run build:web
 
 PR 产物 builder 运行 `build:artifacts`；必需的 Linux 与 Windows 普通构建以及公开 `typecheck` 还检查仓库级测试和脚本 program。CI benchmark 准备阶段还对其临时 library 输出使用 `--noCheck`，由这些必需构建负责诊断；其他产物 builder 保留包检查（[理由](../.agents/notes/implemented/process/2026-10-05-pr-artifact-typechecks.zh.md)）。
 
-Web 和 Desktop 的浏览器产物使用 Vite 8 及其 Rolldown 构建器。文档站保留与 VitePress 1 匹配的 Vite 5；更改文档站的该依赖前，先升级 VitePress。Web 产品隔离检查遍历输出的模块和资源图，并记录 worker 插件注册的监视输入，不依赖仅 Rollup 提供的输出字段。
+Web 和 Desktop 的浏览器产物使用 Vite 8 及其 Rolldown 构建器。文档站保留 VitePress 1 所需的 Vite 5，以及 DocSearch 3 所需的独立 React 18；它们与应用的 React 19 运行时分开。Web 产品隔离检查遍历输出的模块和资源图，并记录 worker 插件注册的监视输入，不依赖仅 Rollup 提供的输出字段。
 
 两次 tsdown 都匹配 `vendor/*`、`packages/*/*` 与 `apps/cli`，Host 阶段另外匹配 `apps/desktop-host`；两者都不扫描构建产物来发现 Client 包，也不维护 Host/Client 包过滤表。包内 tsdown 配置根据 `DSH_BUILD_FACE` 决定当前阶段的入口：普通 Client 插件在 Client 阶段同时生成 Node loader 与 browser bundle；`api-remotes` 通过 `hostPhase: true` 提前生成 Host 入口，再在 Client 阶段只生成 browser bundle。tsdown 只消费 `lib/types` 中由前置 tsc 发射的 JavaScript。tsdown 并发构建匹配到的 workspace 成员；`apps/desktop` 的主进程 bundle 需要从工作区 devDependencies 的 `lib/` 产物内联这些包，因此在 Host 阶段之后单独一步打 bundle（[Desktop README](../apps/desktop/README.zh.md#bundled-workspace-dependencies)）。
 
@@ -162,9 +162,9 @@ pi-ai 检查会在内存中重新生成预期元数据。数据过期时，检�
 
 ### CI 门禁
 
-keyless [CI 工作流](../.github/workflows/ci.yml) 将独立门禁分组到若干宽粒度 lane，并在受支持的 Node 版本上运行一组较小的兼容性检查。产物消费方在各自 lane 内等待一次 build。覆盖率分区复用按平台和运行器池隔离的文件耗时，在配置的 worker 上限内均衡工作量。原生 Windows lane 运行在独立的 [CI Windows 工作流](../.github/workflows/ci-windows.yml)中，Python 检查运行在独立的 [CI Python 工作流](../.github/workflows/ci-python.yml)中，两者都可单独重新运行。必需 benchmark 在标准 GitHub 托管 Linux 上独立运行；[benchmark 运行器说明](../benchmarks/AGENTS.md)拥有路由及 job 超时。单独的真实 API 工作流按其配置的 worker 上限运行 `pnpm run test:e2e`。当前门禁和 job 清单以 [scripts/run-gates.ts](../scripts/run-gates.ts) 和工作流文件为准。
+本仓库自建的 [CI 工作流](../.github/workflows/ci.yml) 在 GitHub 托管的 Windows 运行器上处理拉取请求、`main` 推送和手动触发。它使用 Node 24.15.0 与 pnpm 11.28.5，按冻结锁文件安装依赖，再执行 `typecheck`、完整 `build` 和品牌图标测试。其令牌只有仓库内容读取权限。
 
-不带凭据的 dsh 依赖布局检查与 dsh/vendor 打包演练仅在 `DSH_CI_FAILOVER_LINUX=selfhosted`，且事件为受信任的 master 推送或同仓库、非 fork、非 Dependabot 拉取请求时使用现有 Linux 自托管池。其余情况（包括手动触发）均使用 `ubuntu-24.94`；手动发布仍使用托管运行器。持久化存储隔离与回退限制见[发布演练运行器说明](../.agents/notes/implemented/process/2026-07-26-ci-failover-runbook.zh.md)。
+改动涉及其他测试、文档、lint 或 hygiene 时，在本地执行相应检查；[scripts/run-gates.ts](../scripts/run-gates.ts) 定义这些命令。发行签名、发布和外部部署资源由本项目自行配置，不属于该验证工作流。
 
 ### 日常命令
 
