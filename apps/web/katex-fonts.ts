@@ -27,7 +27,7 @@ export function katexWoff2Fonts(): Plugin {
           return rule
         } } },
       })
-      return { code: result.code.toString(), map: result.map?.toString() }
+      return { code: result.code.toString(), map: result.map?.toString() ?? null }
     },
   }
 }

@@ -12,8 +12,9 @@ export interface WebOutputChunk {
   modules: Record<string, unknown>
   imports: string[]
   dynamicImports: string[]
-  implicitlyLoadedBefore: string[]
-  referencedFiles: string[]
+  /** Rollup output edges; Rolldown exposes assets through Vite metadata and URL hooks. */
+  implicitlyLoadedBefore?: string[]
+  referencedFiles?: string[]
   viteMetadata?: { importedCss: Set<string>; importedAssets: Set<string> }
 }
 
@@ -32,8 +33,8 @@ export type WebOutputBundle = Record<string, WebOutputChunk | WebOutputAsset>
 export interface WebModuleInfo {
   importedIds: readonly string[]
   dynamicallyImportedIds: readonly string[]
-  isExternal: boolean
-  isIncluded: boolean | null
+  isExternal?: boolean
+  isIncluded?: boolean | null
 }
 
 interface AssetReference {
@@ -88,8 +89,8 @@ export class WebProductBundleIsolation {
         modules: { ...item.modules },
         imports: [...item.imports],
         dynamicImports: [...item.dynamicImports],
-        implicitlyLoadedBefore: [...item.implicitlyLoadedBefore],
-        referencedFiles: [...item.referencedFiles],
+        implicitlyLoadedBefore: [...item.implicitlyLoadedBefore ?? []],
+        referencedFiles: [...item.referencedFiles ?? []],
         ...(item.viteMetadata === undefined ? {} : { viteMetadata: {
           importedCss: new Set(item.viteMetadata.importedCss),
           importedAssets: new Set(item.viteMetadata.importedAssets),
@@ -145,6 +146,7 @@ export class WebProductBundleIsolation {
     }
     const visitedOutputs = new Set<string>()
     const visitedModules = new Set<string>()
+    const includedModules = new Set([...this.chunks.values()].flatMap(chunk => Object.keys(chunk.modules)))
     const queue = ['index.html']
     const checkWorker = (key: string): void => {
       const inputs = this.workerInputs.get(key)
@@ -152,7 +154,8 @@ export class WebProductBundleIsolation {
       for (const input of inputs) this.inputs.assertInput(input)
     }
     const checkModule = (id: string): void => {
-      if (visitedModules.has(id)) return
+      // Rolldown emits this synthetic module without exposing a module-info record.
+      if (id === '\0rolldown/runtime.js' || visitedModules.has(id)) return
       visitedModules.add(id)
       this.inputs.assertInput(id)
       const info = moduleInfo(id)
@@ -166,7 +169,7 @@ export class WebProductBundleIsolation {
       for (const child of [...info.importedIds, ...info.dynamicallyImportedIds]) {
         const childInfo = moduleInfo(child)
         if (childInfo === null) throw new Error(`Web product isolation: module ${child} has no Rollup module record`)
-        if (childInfo.isIncluded || childInfo.isExternal) checkModule(child)
+        if ((childInfo.isIncluded ?? includedModules.has(child)) || childInfo.isExternal) checkModule(child)
       }
     }
     for (const name of queue) {
@@ -178,7 +181,7 @@ export class WebProductBundleIsolation {
       if (this.workerInputs.has(file)) checkWorker(file)
       else if (item.type === 'chunk') {
         for (const id of Object.keys(item.modules)) checkModule(id)
-        queue.push(...item.imports, ...item.dynamicImports, ...item.implicitlyLoadedBefore, ...item.referencedFiles)
+        queue.push(...item.imports, ...item.dynamicImports, ...item.implicitlyLoadedBefore ?? [], ...item.referencedFiles ?? [])
         queue.push(...item.viteMetadata?.importedCss ?? [], ...item.viteMetadata?.importedAssets ?? [])
       } else if (cssOwners.has(file)) {
         for (const id of cssOwners.get(file) ?? []) checkModule(id)
