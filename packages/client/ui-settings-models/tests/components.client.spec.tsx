@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { es, fr, de, ru, pt } from '../src/client/locales.ts'
 // @vitest-environment jsdom
 /** Section, setup-card, and hand-written editor behavior over a scripted wire face. */
@@ -296,7 +297,7 @@ type RenderSlotCall = [name: string, owner: Record<string, unknown>, opts?: { en
 
 /** Child-slot dispatch stub: records every seat occurrence, renders nothing. */
 function stubRenderSlot() {
-  return vi.fn((..._call: RenderSlotCall) => null)
+  return vi.fn((..._call: RenderSlotCall): ReactNode => null)
 }
 
 /** The provider-card seat dispatches a stub recorded, as (route id, configured, keyConfigured, entryKey). */
@@ -703,7 +704,10 @@ describe('ModelsSection', () => {
 
   it('skips the draft seat when a refresh drops the dormant row', async () => {
     const { renderSlot, face, controller } = await mountSection()
+    renderSlot.mockImplementation((name, owner) => name === 'settings.models.provider-card'
+      ? <span data-testid={`provider-card-${(owner['provider'] as { provider: string }).provider}`} /> : null)
     fireEvent.click(screen.getByRole('button', { name: en.add }))
+    expect(screen.getByTestId('provider-card-anthropic')).toBeTruthy()
     const directory = [
       { provider: 'deepseek-official', displayName: 'DeepSeek', settingsNs: 'llm-deepseek', settingsPath: [], active: true },
       { provider: 'openai', displayName: 'openai', settingsNs: 'llm-pi-ai', settingsPath: ['providers', 'openai'], active: true },
@@ -713,7 +717,7 @@ describe('ModelsSection', () => {
     await act(async () => { await controller.load() })
     // The draft card is still open while its row is gone from the directory.
     expect(screen.getByLabelText(en.keyInput)).toBeTruthy()
-    expect(cardSeatCalls(renderSlot).some(([provider]) => provider === 'anthropic')).toBe(false)
+    expect(screen.queryByTestId('provider-card-anthropic')).toBeNull()
   })
   it('renders the unkeyed whole-section provider as an open setup card in the first-run posture', async () => {
     await mountFirstRun()

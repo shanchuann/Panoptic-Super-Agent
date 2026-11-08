@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for guide.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/upgrade-guide/v0.2.1-rc.3/react-19-client/guide.md
+/:
+  en: 741ac5948f01858b
+  zh: 1160714fcb70f803
+/react-19-client-plugins:
+  en: e23aa8faecc943ac
+  zh: 2da8da80ac1e2c2e
+/react-19-client-plugins/change:
+  en: 5c9aed9d3c466864
+  zh: 8f09c2c3dc226d45
+/react-19-client-plugins/migration:
+  en: b6f07d033ef3f0c6
+  zh: 5e32127fcf7a6b81

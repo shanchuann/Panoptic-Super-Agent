@@ -333,6 +333,8 @@ describe('sidebar focus targets', () => {
     const release = observeSidebarFocus(document)
     releases.push(release)
     input.focus()
+    // Chrome emits focusin for iframe focus; jsdom 30 only updates activeElement.
+    if (kind === 'iframe') input.dispatchEvent(new FocusEvent('focusin', { bubbles: true }))
     input.replaceWith(document.createElement(kind))
     await Promise.resolve()
     expect(document.activeElement).toBe(pane)

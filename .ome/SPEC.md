@@ -1,38 +1,54 @@
-# SPEC — 超级智能体 v0.1 需求规格（P0 草案 · 未签字）
+# SPEC ， 超级智能体 v0.2 需求规格（P1 基线 ， 未签字）
 
-> 版本 v0.1 · 2026-11-05 · 依据 BRIEF v0.2 / SCOPE v0.2 / .ome/research/00-synthesis.md
-> 所有「假设」均标 A-xx（见 FACTS.md §2），未签字前不作为承诺。
-> 定位（假设 A-03）：面向个人开发者的「研究 + 代码/文档交付」窄场景智能体；形态 Web UI + CLI 内核（A-02）。
+> 版本 v0.2 ， 2026-11-07 ， 依据 BRIEF v0.3 / SCOPE v0.3 / DESIGN / ADR-0001…0006 / research 00–09
+> 所有“假设”均标 A-xx（见 FACTS.md §2），未签字前不作为承诺。
+> 定位（假设 A-03）：面向个人开发者的“研究 + 代码/文档交付”窄场景智能体；形态 Web UI + CLI 内核（A-02）。
 
 ## 1. 用户与场景
-目标用户：需要把「查资料 / 读代码 / 出文档 / 做表」串成一条自动流水线的个人开发者（A-01）。
+目标用户：需要把“查资料 / 读代码 / 出文档 / 做表”串成一条自动流水线的个人开发者（A-01）。
 三个用户故事（每条都要能被下面的 FR 支持）：
-- US-1：我说「调研 X 并与 Y 对比，给我一页结论」，10 分钟内拿到带来源的文档产物。
-- US-2：我说「仓库里这个测试挂了，修好并且别弄坏别的」，拿到 diff + 通过的测试输出。
+- US-1：我说“调研 X 并与 Y 对比，给我一页结论”，10 分钟内拿到带来源的文档产物。
+- US-2：我说“仓库里这个测试挂了，修好并且别弄坏别的”，拿到 diff + 通过的测试输出。
 - US-3：我让它在已有产物上继续（换数据重跑、改格式），它能复用上一步的上下文与文件，而不是从零开始。
 
 ## 2. 功能需求（每条带验收判据）
 | ID | 需求 | 验收判据（可执行/可复核） | 优先级 |
 |---|---|---|---|
-| FR-01 | 任务接入：一条命令或 Web 表单提交目标，生成 taskId | `superagent run "..." ` 返回 taskId，事件日志出现 task.created | P0 |
+| FR-01 | 任务接入：一条命令或 Web 表单提交目标，生成 taskId | `panoptic run "..." ` 返回 taskId，事件日志出现 task.created | P0 |
 | FR-02 | 计划：执行前产出显式计划（步骤、工具、预期产物） | 事件流含 plan.created；计划可被用户查看 | P0 |
 | FR-03 | 执行循环：单 agent 循环，工具调用可中断 | 每步产生 tool.call/tool.result 事件；Ctrl-C 后状态可恢复 | P0 |
 | FR-04 | 工具层：内置工具 ≥6（fs.read/write、shell、fetch、search、artifact.put、finish） | 工具清单可列出；每个工具有 schema 与最小权限声明 | P0 |
 | FR-05 | MCP 客户端：可接入远程 MCP server（2026-07-28 规范） | 用 1 个公开 server 成功调用工具并记录 trace | P0 |
 | FR-06 | 沙箱：代码执行在隔离环境，网络默认拒绝 | 默认断网时 `curl` 失败、白名单域名成功；凭证不出现在沙箱文件 | P0 |
 | FR-07 | 交付物：artifact 落盘，可预览/下载/回溯版本 | artifact.list 返回版本；同任务重跑生成新版本而非覆盖 | P0 |
-| FR-08 | 轨迹：全链路事件可回放 | `superagent replay <taskId>` 按序打印事件；事件含 token/耗时/重试标记 | P0 |
+| FR-08 | 轨迹：全链路事件可回放 | `panoptic replay <taskId>` 按序打印事件；事件含 token/耗时/重试标记 | P0 |
 | FR-09 | 审批门：写/付款/外发三类动作需人工确认 | 未 approval 时动作挂起；approve/reject 都写审计事件 | P0 |
-| FR-10 | 预算熔断：任务级 token/费用上限 | 超限任务状态为 budget_exceeded 并保留中间产物 | P0 |
-| FR-11 | 记忆：项目级文件式长期记忆，可关闭/可删除 | 关闭后不写记忆；删除后检索不到（测试用例证明） | P1 |
-| FR-12 | 评测入口：跑 held-out 集并输出五项指标 | `superagent eval --set .ome/evals/tasks.jsonl` 产出 report.json | P0 |
+| FR-10 | 资源限制：任务级时长/步数/重试上限（不计费用） | 超限任务状态为 limit_stopped 并保留中间产物 | P0 |
+| FR-11 | 记忆：五层记忆域（L0 证据至L4 画像）+ 显式读写删 + 可关闭；`MEMORY.md` 仅作 L4 索引投影 | 关闭后不写；删除后检索不到；索引可重建 | P1 |
+| FR-12 | 评测入口：跑 held-out 集并输出五项指标 | `panoptic eval --set .ome/evals/tasks.jsonl` 产出 report.json | P0 |
+| FR-13 | 项目容器：创建 / 归档 / 导出 / 删除 | 创建返回 projectId；导出 JSON 可再导入；删除级联项目域与记忆并保留审计元数据 | P0 |
+| FR-14 | 任务树与状态机：合法迁移通过、非法迁移拒绝 | 参数化测试覆盖 ≥12 条迁移；blocked 必须列出缺失项 | P0 |
+| FR-15 | 图优先交互：项目主页默认图谱，无全局聊天页 | 路由断言无聊天主页；节点 ≤2 次点击到结果与证据、≤3 次到记录；状态与投影一致 | P0 |
+| FR-16 | 记忆分层与证据：召回带 evidence id 且可下钻原文 | 召回结果 100% 带 evidence；下钻返回原文摘要；删除后 60s 内检索命中为 0 | P0 |
+| FR-17 | 记忆权重与衰竭：pin 恒为 1、按标签分档衰减、权重改变保留周期 | 单测：pin 不衰减；相同时间下不同标签权重不同；TTL 随权重变化 | P0 |
+| FR-18 | 模型网关：按角色路由、故障降级、用量记录、资源限制 | 3 模型可切换；降级记录原因；每请求记录 token/耗时；超限 limit_stopped | P0 |
+| FR-19 | 收件箱：审批 / 阻塞 / 待验收 / 超时告警聚合 | 四类条目出现与处理后消失；无强制弹窗打扰 | P0 |
+| FR-20 | 计划确认策略：默认风险自适应 | 首次确认一次；四类强制确认触发；其余自动并留通知记录 | P1 |
+| FR-21 | 模型接入配置（BYOK）：请求地址 + 密钥 + 协议 + 三档映射 | 保存前连通性测试通过；密钥不出现在配置/日志；切换档位后下一次请求生效 | P0 |
+| FR-22 | 产物双视图：节点内产物 + 项目级产物库 | 两处读同一数据源；节点 ≤2 次点击见产物；产物库含版本/来源/证据 | P0 |
+| FR-23 | 协调策略层：按任务规模选模式（solo/orchestrator/blackboard）、决策审计、人工覆盖 | 路由一致率 ≥75%；误升级 ≤10%；决策 <10ms；调度器只认决策对象 | P0 |
+| FR-24 | 黑板视图：项目协作状态的只读投影（看板/事件流/决策日志） | 看板与项目域状态 100% 一致；≤1 次点击到详情；无直接编辑入口 | P0 |
+| FR-25 | 三循环与交互路由：直接回答、创建任务、修改任务、澄清四类判定 | 20 条样本分类准确率不低于 95%；任务型请求必须带判据 | P0 |
+| FR-26 | 执行账本与恢复：副作用记录、幂等键、检查点、崩溃恢复 | 崩溃前后不重复已提交副作用；恢复后说明已完成与下一步 | P0 |
+| FR-27 | 能力授权：按项目、能力、资源、有效期授权，越界与不可逆操作审批 | 未授权写操作 100% 拒绝；已授权工作区写不被反复打断 | P0 |
+| FR-28 | 可观测性：项目、任务、上下文、模型、工具、验证链路追踪 | 同一项目链路可串联；默认不记录密钥与敏感原文 | P1 |
 
 ## 3. 非功能需求
 | ID | 类别 | 要求 | 判据 |
 |---|---|---|---|
 | NFR-01 | 可靠性 | 同任务连续 3 次全对（pass^3）| 20–30 条 held-out 集报告 |
 | NFR-02 | 时延 | P95 完成时长按任务时长分档报告 | report.json 含分档 |
-| NFR-03 | 成本 | 单任务 ≤¥2 目标、¥10 硬熔断 | 事件日志累计成本 |
+| NFR-03 | 资源 | 单次运行 ≤30 分钟、步数/重试上限 | 事件日志累计时长与步数（不计费用） |
 | NFR-04 | 安全 | 5 类攻击用例全拦截 | evals/attack 测试输出 |
 | NFR-05 | 可观测 | 每步事件含：工具名、参数哈希、结果摘要、token、耗时 | schema 校验脚本通过 |
 | NFR-06 | 隐私 | 默认本地存储；未授权不外发用户文件 | 审计：网络出口白名单 + 配置项 |
@@ -40,65 +56,69 @@
 
 ## 4. 数据与状态模型（事件日志 schema v1）
 ```ts
-type Event = {
-  id: string; taskId: string; seq: number; ts: string;   // ISO8601
-  type: "task.created" | "plan.created" | "step.started" | "tool.call" | "tool.result"
-      | "approval.requested" | "approval.decided" | "artifact.put" | "task.finished" | "task.failed";
-  payloadHash: string; payloadRef: string;               // 大对象入文件，事件只存引用
-  tokens?: { in: number; out: number; cached?: number };
-  costCny?: number; durationMs?: number; retry?: number;
-};
-type Artifact = { id: string; taskId: string; path: string; mime: string; version: number;
-                  sha256: string; provenance: { eventIds: string[] } };
-type Approval = { id: string; taskId: string; action: "write"|"pay"|"send"; target: string;
-                  risk: "low"|"medium"|"high"; evidenceRef: string; decision: "pending"|"approved"|"rejected" };
-```
-规则：事件 append-only；compaction 只生成视图文件，不删除事件；payloadRef 指向 `.ome/sessions/<taskId>/`。
+事件模型**复用基座 DSH 的 SessionEvent（V4）**，不自建第二套日志：
+
+- 会话执行轨迹：`SessionEventMap`（`packages/core/session`，v4 generation 文件名），新增事件类型走声明合并 + 持久化类型变更记录（见 [06-repo-seams §1](research/06-repo-seams.md)）；
+- 项目业务事件：project 域的 `audit_event` 表（任务/审批/产物/验证），不写入会话 JSONL；
+- 字段映射：`type` 至 `SessionEvent.type`（命名约定 `domain/action`，如 `memory/recalled`、`tool/call`）；`seq/time` 至 信封字段；大对象用 `payloadRef` 句柄（spill/产物）；`usage = { tokens, steps, durationMs, retry }`，**不换算金额**；
+- 产物与审批：项目域 `artifact` / `approval` 表，事件只存 id 与哈希。
 
 ## 5. 接口契约（CLI 先行，Web 后置）
 | 命令 | 作用 | 成功判据 |
 |---|---|---|
-| `superagent run "<goal>" [--budget 2] [--max-min 30]` | 创建任务并执行 | 退出码 0 且有 artifact |
-| `superagent status <taskId>` | 查看状态与当前步骤 | 输出状态 + 最后 5 条事件 |
-| `superagent approve <approvalId> --yes` | 审批挂起动作 | 任务继续或按决策终止 |
-| `superagent replay <taskId>` | 回放事件 | 输出与事件日志条数一致 |
-| `superagent eval --set <jsonl> [--k 3]` | 跑评测 | 生成 report.json，五项指标齐全 |
-| `superagent tools list` | 列工具与权限 | 输出 JSON，schema 校验通过 |
+| `panoptic run "<goal>" [--max-min 30] [--max-steps 120]` | 创建任务并执行 | 退出码 0 且有 artifact |
+| `panoptic status <taskId>` | 查看状态与当前步骤 | 输出状态 + 最后 5 条事件 |
+| `panoptic approve <approvalId> --yes` | 审批挂起动作 | 任务继续或按决策终止 |
+| `panoptic replay <taskId>` | 回放事件 | 输出与事件日志条数一致 |
+| `panoptic eval --set <jsonl> [--k 3]` | 跑评测 | 生成 report.json，五项指标齐全 |
+| `panoptic tools list` | 列工具与权限 | 输出 JSON，schema 校验通过 |
 工具执行统一接口：`execute(name: string, input: unknown) => Promise<string>`（返回字符串摘要，细节进 artifact）。
 
-## 6. 排除（继承 SCOPE v0.2）
-多智能体、开放桌面/网页 GUI 自主操作、图谱记忆、多租户、企业 RBAC、自研模型、移动端、插件市场、私有化部署、语音多模态。
+## 6. 排除（继承 SCOPE v0.3）
+自由多智能体（群聊/自由协商）、开放桌面/网页 GUI 自主操作、图谱数据库作为记忆主存、多租户/计费、企业 RBAC、自研模型、移动端、插件市场、私有化部署、语音与音视频输入输出（图像输入纳入）。受控拓扑按 M13 分阶段交付。
 
-## 7. 追溯矩阵（FR ↔ 评测任务 ↔ 证据）
-| FR | 评测任务 | 证据位置 |
-|---|---|---|
-| FR-01/02/03 | TASK-001, TASK-014 | `.ome/evidence/T-005/` |
-| FR-04/05/06 | TASK-003, TASK-016 | `.ome/evidence/T-005/` |
-| FR-07/08 | TASK-020 | `.ome/evidence/T-005/` |
-| FR-09/10 | TASK-017 + attack 用例 | `.ome/evidence/T-007/` |
-| FR-12/NFR-01/02 | 全部 20 条 | `.ome/evidence/T-006/report.json` |
+## 7. 追溯矩阵（v0.3：FR ↔ SCOPE 模块 ↔ 任务 ↔ 证据）
 
-## 8. 待定（TBD，必须有 owner）
-| # | 问题 | 影响 | Owner |
+> 证据目录统一为 `.ome/evidence/<任务ID>/`，开工时创建；标“待建卡”的为 P1 后续任务。
+
+| FR | SCOPE 模块 | 任务卡 | 证据位置 |
 |---|---|---|---|
-| TBD-1 | 定位 A/B/C 最终选择 | 场景、评测集、定价 | 用户 |
-| TBD-2 | 首版模型档位与供应商 | 成本/质量 | Lead（P1 基线后） |
-| TBD-3 | 沙箱供应商（E2B/Daytona/Modal） | 成本、锁定风险 | Lead（ADR-0002） |
-| TBD-4 | 记忆供应商或自写 | 架构耦合 | Lead（ADR-0003） |
+| FR-01…FR-03 任务接入/计划/执行 | M01、M03、M11 | P-001、P-002（待建卡） | `.ome/evidence/P-001/` |
+| FR-04…FR-06 工具/MCP/执行环境 | M04、M05 | G-001、P-001；工具层基座复用 | `.ome/evidence/G-001/` |
+| FR-07、FR-15、FR-22 交付/图交互/产物双视图 | M07、M11 | U-001、U-002（待建卡） | `.ome/evidence/U-001/` |
+| FR-08、FR-13、FR-14 回放/项目容器/状态机 | M01、M11 | P-001 | `.ome/evidence/P-001/` |
+| FR-09、FR-19 审批/收件箱 | M07、M08 | U-001、G-002（待建卡） | `.ome/evidence/U-001/` |
+| FR-10、FR-18、FR-21 资源限制/网关/BYOK | M10、M12 | G-001 | `.ome/evidence/G-001/` |
+| FR-11、FR-16、FR-17 记忆/证据/权重 | M06 | M-001…M-004 | `.ome/evidence/M-001/` |
+| FR-12、FR-20 评测/计划确认 | M03、M09 | P-002（待建卡）、M-004 | `.ome/evidence/` 评测报告 |
+| FR-23 协调策略层 | M13 | C-001 | `.ome/evidence/C-001/` |
+| FR-24 黑板视图 | M07、M13 | U-003 | `.ome/evidence/U-003/` |
+## 8. 待定与已关闭（TBD）
 
-## 9. 阶段验收（ADR-0002 B · P1 Web）
-- [ ] 基座基线通过（B-001..B-004）→ 已完成（见 BROWNFIELD-BASELINE §4）
-- [ ] 品牌替换：可见文案/图标/标题不再出现「DeepSeek Harness」商标（R-005 清单）
-- [ ] 记忆子系统：写入/检索/删除 + 开关（R-001）
-- [ ] 模型网关：3 模型切换 + 降级 + 多模态配置入口（R-002）
-- [ ] 会话管理：目标驱动连续工作 + 预算熔断（R-003）
-- [ ] Autopilot：停止条件/人工接管用例通过（R-004）
-- [ ] Web 端核心链路演示：会话 → 规划 → 工具 → 交付物
+| # | 问题 | 状态 | 影响 | Owner |
+|---|---|---|---|---|
+| TBD-1 | 定位 A/B/C 最终选择 | **已关闭**：按 B 推进（用户 2026-11-07 确认按建议），A 作为后续抽象 | 场景、评测集 | 用户 |
+| TBD-2 | 首版模型档位与接入方式 | **接入方式已定**：BYOK/订阅端点；三档映射由用户配置，默认档位基线后定 | 质量/可用性 | Lead |
+| TBD-3 | 沙箱供应商 | **首版本地隔离已定**；云沙箱上线前再评估 | 锁定风险 | Lead |
+| TBD-4 | 记忆供应商或自写 | **已关闭**：自建薄层 + `storageDomain` 独立域（ADR-0005） | 架构耦合 | Lead |
+## 9. 阶段验收（P1 Web，按最新设计）
 
-## 10. 基座接口映射（待按实现核实）
-| 本产品概念 | 基座落点（待读实现确认） |
+- [~] 基座基线通过（B-001..B-004，基座仓库 2026-11-05；本仓库待 B-005 复验）
+- [x] 品牌替换：PR #60/#63 已合并（证据 `.ome/evidence/branding/`）
+- [ ] 项目域与状态机（P-001）：创建/计划/状态迁移/导出删除；SessionHeader 未变
+- [ ] 自然语言建项（P-002）：一句话 至 Brief 至 计划 至 确认
+- [ ] 图优先交互（U-001）：图谱为默认、节点详情、收件箱；无全局聊天页
+- [ ] 黑板视图（U-003）：看板按状态分组、卡片操作走命令、状态一致
+- [ ] 记忆子系统（M-001…M-004）：写入/检索/删除/开关；权重与衰减；评测接入
+- [ ] 模型网关（G-001）：BYOK 配置 + 连通性 + 按角色路由 + 降级 + 用量记录
+- [ ] 协调策略层（C-001）：solo/orchestrator/blackboard 路由 + 决策审计 + 人工覆盖
+- [ ] 安全与审批（G-002）：默认只读、三类审批、5 类攻击用例全拦截
+- [ ] 评测（M-004/metrics）：基线 20 条 + P1 出口扩到 30 条、pass^k、分档报告
+## 10. 基座接口映射（已按 06-repo-seams 核对，2026-11-07）
+| 本产品概念 | 基座落点（已核对） |
 |---|---|
-| 记忆存储 | 新增 memory 插件 + `storage/*` |
-| 模型调用 | `llm/llm` seam + 适配器 + 设置页 |
-| 会话管理 | `core/session` + `goal/*` + `session-query/*` |
+| 记忆存储 | `ctx.storageDomain` 独立 memory 域 + Host service + `agent/pre-step` 注入（[ADR-0005](../docs/adr/ADR-0005-memory-weight-forgetting.md)） |
+| 模型调用 | 新模型网关 + `packages/llm` adapter seam + `settings/*`（[ADR-0004](../docs/adr/ADR-0004-model-gateway.md)） |
+| 项目与会话 | 新 project storage 域 + Host service + Remote/Client；会话沿用 `core/session`（[ADR-0003](../docs/adr/ADR-0003-session-project-state.md)） |
+| 交互 | Client 图谱投影组件 + Host 图接口；聊天记录为节点属性（[.ome/design/interaction.md](design/interaction.md)） |
 | Autopilot | `core/agent-loop` hook（`agent/turn-stopping`）+ `goal-round-driver` |

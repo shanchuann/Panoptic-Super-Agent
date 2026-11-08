@@ -4,7 +4,7 @@
 > 服务器：官方 [github/github-mcp-server](https://github.com/github/github-mcp-server) 的远程端点（Streamable HTTP）。
 
 ## 配置位置
-`C:\Users\15375\.dsh\profiles\desktop\cordis.patch.yml`（DSH desktop profile 的 patch 层）
+`%USERPROFILE%\.dsh\profiles\desktop\cordis.patch.yml`（Windows；或 `~/.dsh/...`）（DSH desktop profile 的 patch 层）
 
 ```yaml
 - insert:

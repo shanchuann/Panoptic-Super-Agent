@@ -1,47 +1,48 @@
-# HANDOFF — 万象超级智能体（Panoptic Super）
+# 交接说明
 
-## 1. 30 秒现状
-**P0 · 基座已接、架构待定、开发暂停**。
-- 产品：万象超级智能体 / Panoptic Super（释义与品牌见 BRIEF §0）；
-- 基座：DeepSeek Harness（MIT，v0.2.1-rc.3，HEAD `22ddee3792`，`D:\Code\deepseek-harness`）；
-- 已做：调研、P0 文档、DSH 只读勘察、品牌与许可核对；
-- 未做：任何构建/测试/代码改动（用户要求等架构）。
+## 当前状态
 
-## 2. 文件地图
-| 路径 | 作用 |
-|---|---|
-| `.ome/BRIEF.md` | 立项书：身份/释义/logo/基座、目标、成功指标、kill criteria |
-| `.ome/ARCH-DECISIONS.md` | **等用户填的架构决策清单**（6 类），填完才开工 |
-| `.ome/BROWNFIELD-BASELINE.md` | 基座现状模型：事实/结构/ADR 映射/风险/未验证项 |
-| `.ome/FACTS.md` | 事实清单（含 F-18..F-24 基座事实）+ 假设值 |
-| `.ome/SCOPE.md` | 范围、排除、基座与法务边界、签字状态 |
-| `.ome/SPEC.md` | 需求规格/事件 schema/CLI 契约/追溯矩阵（待按 DSH 扩展点重写接口节） |
-| `.ome/PLAN.md` | 任务图 T-001..T-008 + B-001..B-004 基线任务 |
-| `.ome/research/` | 3 份调研 + 综合（D1–D6） |
-| `.ome/evals/` | 20 条 held-out + 指标口径 |
-| `docs/adr/ADR-0001-*.md` | 六条架构决策（与基座映射见 BROWNFIELD-BASELINE §3） |
-| `Panoptic Super logo.png` | 品牌 logo（713×509） |
+设计 v1.2 已确认，P1 处于开工准备。基座仓库的构建、类型检查与聚焦测试已通过，本仓库的复验任务 B-005 尚未执行。客户端品牌替换已经完成，产品功能代码尚未开始。
 
-## 3. 常用命令
-```powershell
-node scripts/validate-evals.mjs .ome/evals/tasks.jsonl
-git log --oneline
-# 基座（放行后才跑）：
-# cd D:\Code\deepseek-harness ; pnpm run build ; pnpm run typecheck ; pnpm dsh web --no-open
-```
+v1.2 相对 v1.1 的变化集中在运行模型与边界。三个循环分离，执行账本与检查点进入设计，能力授权替代简单读写分级，记忆增加作用域与有效性，P1 收敛为可恢复闭环。
 
-## 4. 待决（阻塞开工，决策人＝用户）
-1. 架构输入：二次开发方式（fork / 外挂插件+profile / 混合）、形态、超阶能力落点、复用替换、上游同步 → 填 ARCH-DECISIONS；
-2. 定位 A/B/C 与主场景（BRIEF §3）；
-3. 五项指标阈值确认（metrics.md）。
+## 本轮新增与修改
 
-## 5. 下一步
-架构输入 → ADR-0002（二次开发方式）→ B-001..B-004 基线 → 扩展点映射 → T-005 纵向切片。
+- [ADR-0010](../docs/adr/ADR-0010-runtime-loops-and-execution-ledger.md)：三循环、执行账本、恢复、能力授权、可观测性、存储与延后项。
+- [.ome/contracts](contracts/README.md)：项目状态、Agent Runtime、上下文装配、记忆生命周期、能力授权五份契约。
+- [design/memory.md](design/memory.md)：作用域、有效性、保留与真实性分离。
+- [design/context.md](design/context.md)：不可裁剪项与压缩保真。
+- [design/tools.md](design/tools.md)：能力授权与审批矩阵。
+- [DESIGN.md](DESIGN.md) 更新至 v1.2，增加三个运行循环与契约索引。
+- [SPEC.md](SPEC.md) 增加 FR-25 至 FR-28。
+- [PLAN.md](PLAN.md) 增加 P-003 执行账本与恢复、O-001 可观测性。
+- [manual.pdf](manual/manual.pdf) 更新至 v1.2，二十五页。
+- [README.md](../README.md) 重做版式，使用品牌图与架构图。
 
-## 6. 冷启动测试
-新会话只读本文件 + STATUS + PLAN + ARCH-DECISIONS，应能答出：现在什么阶段？为什么不开发？下一步等什么？
+## 文件地图
 
-## 7. 当前暂停点（2026-11-05）
-- 基座代码已 squash 导入并推送；本仓库已由用户完成 `pnpm install` 与运行（用户报告，未复验）。
-- **暂停开发**，等待用户设计文档（记忆存储 / 模型调用 / 会话管理 / UI / 其他）。
-- 收到设计文档后的顺序：① 通读并映射到 DSH 扩展点（插件/profile/patch）；② 落 ADR + 任务卡（含可执行判据）；③ 按写域单线程实施；④ 每个任务留证据。
+| 路径 | 作用 | 状态 |
+|---|---|---|
+| .ome/DECISIONS.md | 决策登记 DEC-01 至 DEC-28 | 已确认 |
+| .ome/BRIEF.md | 立项书 | v1.2 |
+| .ome/SCOPE.md | 范围与模块 | v0.3，未签字 |
+| .ome/SPEC.md | 需求 FR-01 至 FR-28 | v1.3 |
+| .ome/PLAN.md | 任务图 | v0.5 |
+| .ome/DESIGN.md | 总体设计 | v1.2 |
+| .ome/contracts/ | 五份可执行契约 | 新增 |
+| .ome/design/ | 十一份子系统设计 | v0.2 至 v0.3 |
+| .ome/tasks/ | 十二张任务卡 | 持续更新 |
+| .ome/manual/ | 说明书、图集与 PDF | v1.2 |
+| docs/adr/ | ADR-0001 至 ADR-0010 | Accepted |
+
+## 下一步
+
+1. 执行 B-005，拿到本仓库的构建、类型检查与聚焦测试证据。
+2. 做 P1a 纵切：建项、问询、单任务执行、产物、节点详情、导出。
+3. 写 P-003 执行账本与恢复的最小实现，先覆盖文件写入与外部请求两类副作用。
+4. 建立恢复演示：修改文件、杀进程、重启、恢复、继续、验证，检查副作用是否重复。
+5. 补契约测试，至少覆盖非法状态迁移、越权写入、重复幂等键与上下文裁剪。
+
+## 接手规则
+
+先读 [README.md](../README.md) 与 [DESIGN.md](DESIGN.md)，再读 [contracts](contracts/README.md) 与相关 ADR。改代码前确认写域与契约，改设计前先改 [DECISIONS.md](DECISIONS.md)。任何对外可见的行为变化都要留下测试或证据，没有证据的完成不算完成。

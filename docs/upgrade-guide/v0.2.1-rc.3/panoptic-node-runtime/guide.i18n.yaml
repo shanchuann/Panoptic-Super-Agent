@@ -6,5 +6,11 @@
   en: 7e3ded9afe46ddd0
   zh: 1246bed52c74b852
 /node-runtime:
-  en: f6a65aeb404f95a2
-  zh: 1fdd468fa4029da0
+  en: e5ede19c1fcbce25
+  zh: b914f306e2a72961
+/node-runtime/change:
+  en: 54aee32e895fdcfa
+  zh: d23afc450043a769
+/node-runtime/migration:
+  en: 554a46475cba3f6d
+  zh: e30e89fc0338c78e
