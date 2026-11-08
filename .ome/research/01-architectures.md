@@ -1,4 +1,4 @@
-# 超级智能体 · 架构与编排调研（2025–2026）
+# 超级智能体 ， 架构与编排调研（2025–2026）
 
 日期口径：2026-11-05（Asia/Shanghai）。取证限制：本环境无法直连 github.com / huggingface.co（域名解析到非公网地址），框架事实以官方文档站、PyPI/npm 元数据为准；下文"日期不详"指文档页无发布日期。
 
@@ -6,8 +6,8 @@
 
 1. 【推断】2026 年的生产形态已收敛为"单循环内核 + 外置会话日志 + 可替换手脚"的三层 harness：Anthropic 把 brain / hands / session 拆成三个接口（2026-04），Manus 2.0 把自家 harness 迭代为 Cascade（2026-09），LangChain 把 Deep Agents 直接定义为 harness。
 2. 【事实】会话状态必须与模型上下文窗口解耦：Claude Managed Agents 的 session 是落在 harness 之外的持久事件日志，harness 崩溃后可用 wake(sessionId) 重放，并用 getEvents() 按位置切片重读。
-3. 【事实】多智能体只在三类任务上划算——强并行、信息量超单窗口、工具面复杂；Anthropic 自测 agent 约为 chat 的 4× token、多智能体约 15×，并明确"多数编码任务并行度低、不适合多智能体"；学术侧 MAST 对 1600+ 条轨迹的标注显示，失败集中在系统设计、协作对齐与验证，而非模型能力。
-4. 【事实】工具接口的事实标准已是 MCP（现行规范版本 2026-07-28）；但执行层应收敛为 execute(name, input) → string 的统一抽象，使 MCP server、自有工具、沙箱可互换。
+3. 【事实】多智能体只在三类任务上划算，强并行、信息量超单窗口、工具面复杂；Anthropic 自测 agent 约为 chat 的 4× token、多智能体约 15×，并明确"多数编码任务并行度低、不适合多智能体"；学术侧 MAST 对 1600+ 条轨迹的标注显示，失败集中在系统设计、协作对齐与验证，而非模型能力。
+4. 【事实】工具接口的事实标准已是 MCP（现行规范版本 2026-07-28）；但执行层应收敛为 execute(name, input) 至 string 的统一抽象，使 MCP server、自有工具、沙箱可互换。
 5. 【事实】成本与延迟的主变量是上下文而非模型：Manus 称 agent 的输入/输出 token 比约 100:1，缓存与未缓存输入单价差约 10×；Claude Code 企业均值约 $13/活跃人日。
 6. 【事实】框架差异不在"能不能跑 agent"，而在持久化/中断恢复、工具接口、可观测、沙箱四件事；许可多为 MIT / Apache-2.0，仅 Claude Agent SDK 属非标准开源（npm 元数据：SEE LICENSE IN README.md）。
 7. 【推断】第一版建议：单 agent 循环 + 受控 subagent（只回摘要）+ append-only 事件日志 + MCP 兼容工具层 + 容器沙箱 + 文件工作区作为交付面。
@@ -25,9 +25,9 @@
 | Manus 2.0：Cascade harness、Cloud Computer、事件触发 Automations；单配置下 token −23.2%、耗时 −28.2%、成本 −32% | manus.im/blog/introducing-manus-2-0 | 2026-09-28 | 中（厂商自测） |
 | Claude Agent SDK 复用 Claude Code 的 agent loop，含 sessions（continue/resume/fork）、file checkpointing、hooks、subagents | code.claude.com/docs/en/agent-sdk/overview、/agent-loop、/sessions | 日期不详 | 高 |
 | Claude Code 子代理有独立上下文窗口、只回传摘要；子代理描述合计超 15k token 会告警 | code.claude.com/docs/en/sub-agents | 日期不详 | 高 |
-| Claude Code 的 agent teams 标为 experimental、默认关闭，已知限制含会话恢复与任务协调——多智能体尚未成为其默认架构 | code.claude.com/docs/en/agent-teams | 日期不详 | 高 |
+| Claude Code 的 agent teams 标为 experimental、默认关闭，已知限制含会话恢复与任务协调，多智能体尚未成为其默认架构 | code.claude.com/docs/en/agent-teams | 日期不详 | 高 |
 | Claude Code 上下文管理=compaction + 清理旧工具结果 + prompt caching（文档示例：91% 输入 token 命中缓存，压缩会触发缓存重建） | code.claude.com/docs/en/costs、/prompt-caching | 日期不详 | 高 |
-| Agent loop 被定义为"收集上下文→行动→验证结果"的循环，而非教科书式 plan/act/observe/reflect 四段 | code.claude.com/docs/en/how-claude-code-works | 日期不详 | 高 |
+| Agent loop 被定义为"收集上下文至行动至验证结果"的循环，而非教科书式 plan/act/observe/reflect 四段 | code.claude.com/docs/en/how-claude-code-works | 日期不详 | 高 |
 | Claude Code 按 token 计费；企业均值 ≈$13/活跃人日、$150–250/人月、90% 用户 <$30/日 | code.claude.com/docs/en/costs | 日期不详 | 高 |
 | OpenAI Agents SDK 新增 Sandbox Agents（持久工作区、Manifest、快照恢复）；编排有 agents-as-tools 与 handoffs；内置 tracing | openai.github.io/openai-agents-python/sandbox_agents、/multi_agent、/tracing | 日期不详 | 高 |
 | ChatGPT agent 发布；页面现标注"launch post is outdated"，指向 Workspace agents / ChatGPT Work | openai.com/index/introducing-chatgpt-agent/ | 2025-07-17（原文） | 高 |
@@ -52,7 +52,7 @@
 
 多智能体的产品化程度比宣传低：Anthropic 自家 agent teams 仍默认关闭，说明"单循环 + 受控子代理"才是当前可交付的默认值；多智能体只在并行探索/互查场景按需开启。
 
-【风险提示】compaction 本质是丢弃信息且不可逆；Managed Agents 的做法是把原始事件留在 session、只在 harness 读取时做变换——这是"事件日志（可回放）+ 视图（可压缩）"必须分离的核心理由。
+【风险提示】compaction 本质是丢弃信息且不可逆；Managed Agents 的做法是把原始事件留在 session、只在 harness 读取时做变换，这是"事件日志（可回放）+ 视图（可压缩）"必须分离的核心理由。
 
 **③-2 框架对比**
 
@@ -69,7 +69,7 @@
 
 **③-3 产品形态参考**（均按官方页面）
 
-| 产品 | "目标→成品"如何组织 | 形态/定价线索 |
+| 产品 | "目标至成品"如何组织 | 形态/定价线索 |
 |---|---|---|
 | Manus 2.0 | Cascade harness 按需加载能力；Cloud Computer 给项目常驻环境；Automations 事件触发；Studio 让成品可再编辑（视频时间线） | 订阅 + 额度，另售 Cloud Computer（具体数字官网 JS 渲染，未取到） |
 | Claude Code / Cowork | 终端/桌面/云端会话，subagents 隔离上下文；Cowork 已并入主产品，向 Pro/Max/Ultra 开放 | 订阅（Pro/Max/Ultra/Team）+ API token 计费 |
@@ -81,9 +81,9 @@
 **现在必须定死（返工成本高）**
 1. 状态模型：任务/会话状态外置为 append-only 事件日志（session ≠ 上下文窗口），先定事件 schema 与存储，再写 agent。
 2. 执行骨架：单循环 + 受控 subagent（只回摘要、独立上下文），不上自由多智能体。
-3. 工具协议：对外兼容 MCP，对内统一 execute(name, input) → string 适配层，避免被单一框架绑死。
+3. 工具协议：对外兼容 MCP，对内统一 execute(name, input) 至 string 适配层，避免被单一框架绑死。
 4. 沙箱边界：容器为默认执行环境，凭证不入沙箱（代理/金库），否则后期安全重构代价极高。
-5. 交付面：文件工作区 + artifact 为一等公民（可下载、可预览、可回溯版本）——这是"交付成品"与"聊天"的分界。
+5. 交付面：文件工作区 + artifact 为一等公民（可下载、可预览、可回溯版本），这是"交付成品"与"聊天"的分界。
 6. 上下文策略：稳定前缀（利于 KV-cache）、append-only、compaction + 文件外置记忆三件套同时具备。
 
 **可以后置**
@@ -91,7 +91,7 @@
 
 ## ⑤ 未解决问题
 
-1. **单/多智能体的对照失败率**：MAST 给出失败分类与标注数据，但没有同一任务集上"单智能体 vs 多智能体"的失败率对照；本环境无法访问 GitHub 上的原始 trace。→ 先用自家任务集跑 pass^k 对照。
+1. **单/多智能体的对照失败率**：MAST 给出失败分类与标注数据，但没有同一任务集上"单智能体 vs 多智能体"的失败率对照；本环境无法访问 GitHub 上的原始 trace。至 先用自家任务集跑 pass^k 对照。
 2. **各框架沙箱的真实边界**：文档只写"支持 Docker/托管沙箱"，不写网络隔离与凭证代理的实现细节。
 3. **产品定价硬数字**：Manus / CellCog 定价页为 JS 渲染，Genspark 返回 403，故全文不写具体价格。
 4. **Claude Agent SDK 许可正文**：npm 元数据指向 README，但 README 无许可条款；GitHub 不可达。

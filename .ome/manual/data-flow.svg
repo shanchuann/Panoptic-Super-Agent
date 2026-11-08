@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" font-family="Microsoft YaHei, Segoe UI, sans-serif">
+<rect width="1400" height="1000" fill="#FFFFFF"/>
+<text x="60" y="64" font-size="30" font-weight="700" fill="#1B2A41">一次任务的数据流 v1.2</text>
+<text x="60" y="94" font-size="15" fill="#5B6B7C">日常问答直接回答；需要执行时才进任务。工具调用先过能力网关，有副作用的调用写入执行账本。</text>
+<line x1="60" y1="118" x2="1340" y2="118" stroke="#C9D2DE"/>
+
+<g>
+<rect x="120" y="146" width="250" height="66" rx="6" fill="#F4F6F9" stroke="#8A97A6"/>
+<text x="140" y="172" font-size="13.5" font-weight="600" fill="#1B2A41">用户请求</text>
+<text x="140" y="194" font-size="11.5" fill="#5B6B7C">目标与约束</text>
+<rect x="410" y="146" width="230" height="66" rx="6" fill="#FFFFFF" stroke="#8A97A6" stroke-dasharray="5 4"/>
+<text x="430" y="172" font-size="13.5" font-weight="600" fill="#5B6B7C">直接回答</text>
+<text x="430" y="194" font-size="11.5" fill="#8A97A6">日常问答，不建任务</text>
+<rect x="700" y="146" width="230" height="66" rx="6" fill="#F4F6F9" stroke="#8A97A6"/>
+<text x="720" y="172" font-size="13.5" font-weight="600" fill="#1B2A41">外部事件</text>
+<text x="720" y="194" font-size="11.5" fill="#5B6B7C">后续阶段触发器</text>
+</g>
+
+<g>
+<rect x="60" y="250" width="146" height="110" rx="6" fill="#FFFFFF" stroke="#1E3A5F"/>
+<text x="76" y="278" font-size="13" font-weight="600" fill="#1B2A41">1 触发</text>
+<text x="76" y="300" font-size="11" fill="#5B6B7C">规则过滤</text>
+<text x="76" y="318" font-size="11" fill="#5B6B7C">分诊与归属</text>
+<text x="76" y="336" font-size="11" fill="#8A97A6">去重与限流</text>
+<rect x="221" y="250" width="146" height="110" rx="6" fill="#FFFFFF" stroke="#0F766E"/>
+<text x="237" y="278" font-size="13" font-weight="600" fill="#1B2A41">2 项目域</text>
+<text x="237" y="300" font-size="11" fill="#5B6B7C">任务与判据</text>
+<text x="237" y="318" font-size="11" fill="#5B6B7C">决策与假设</text>
+<text x="237" y="336" font-size="11" fill="#8A97A6">状态唯一权威</text>
+<rect x="382" y="250" width="146" height="110" rx="6" fill="#FFFFFF" stroke="#0369A1"/>
+<text x="398" y="278" font-size="13" font-weight="600" fill="#1B2A41">3 上下文</text>
+<text x="398" y="300" font-size="11" fill="#5B6B7C">上下文包</text>
+<text x="398" y="318" font-size="11" fill="#5B6B7C">不可裁剪项</text>
+<text x="398" y="336" font-size="11" fill="#8A97A6">配额与来源</text>
+<rect x="543" y="250" width="146" height="110" rx="6" fill="#FFFFFF" stroke="#7B61B5"/>
+<text x="559" y="278" font-size="13" font-weight="600" fill="#4B3A78">4 能力网关</text>
+<text x="559" y="300" font-size="11" fill="#5B6B7C">结构校验</text>
+<text x="559" y="318" font-size="11" fill="#5B6B7C">授权与风险</text>
+<text x="559" y="336" font-size="11" fill="#8A97A6">必要审批</text>
+<rect x="704" y="250" width="146" height="110" rx="6" fill="#FFFFFF" stroke="#B45309"/>
+<text x="720" y="278" font-size="13" font-weight="600" fill="#1B2A41">5 执行</text>
+<text x="720" y="300" font-size="11" fill="#5B6B7C">工具与模型</text>
+<text x="720" y="318" font-size="11" fill="#5B6B7C">写域与沙箱</text>
+<text x="720" y="336" font-size="11" fill="#8A97A6">检查点</text>
+<rect x="865" y="250" width="146" height="110" rx="6" fill="#FFFFFF" stroke="#4B3A78"/>
+<text x="881" y="278" font-size="13" font-weight="600" fill="#4B3A78">6 验证</text>
+<text x="881" y="300" font-size="11" fill="#5B6B7C">脚本与评审</text>
+<text x="881" y="318" font-size="11" fill="#5B6B7C">人工签署</text>
+<text x="881" y="336" font-size="11" fill="#8A97A6">独立于执行</text>
+<rect x="1026" y="250" width="146" height="110" rx="6" fill="#FFFFFF" stroke="#15803D"/>
+<text x="1042" y="278" font-size="13" font-weight="600" fill="#1B2A41">7 交付</text>
+<text x="1042" y="300" font-size="11" fill="#5B6B7C">产物与证据</text>
+<text x="1042" y="318" font-size="11" fill="#5B6B7C">版本与导出</text>
+<text x="1042" y="336" font-size="11" fill="#8A97A6">回滚点</text>
+<rect x="1187" y="250" width="146" height="110" rx="6" fill="#FFFFFF" stroke="#B91C1C"/>
+<text x="1203" y="278" font-size="13" font-weight="600" fill="#1B2A41">8 记忆回写</text>
+<text x="1203" y="300" font-size="11" fill="#5B6B7C">事实与证据</text>
+<text x="1203" y="318" font-size="11" fill="#5B6B7C">作用域与有效性</text>
+<text x="1203" y="336" font-size="11" fill="#8A97A6">可删除</text>
+</g>
+
+<g stroke="#8CA0B8" stroke-width="1.2" fill="none">
+<line x1="370" y1="180" x2="410" y2="180" stroke-dasharray="5 4"/>
+<line x1="206" y1="305" x2="221" y2="305"/>
+<line x1="367" y1="305" x2="382" y2="305"/>
+<line x1="528" y1="305" x2="543" y2="305"/>
+<line x1="689" y1="305" x2="704" y2="305"/>
+<line x1="850" y1="305" x2="865" y2="305"/>
+<line x1="1011" y1="305" x2="1026" y2="305"/>
+<line x1="1172" y1="305" x2="1187" y2="305"/>
+<line x1="187" y1="212" x2="187" y2="250"/>
+</g>
+
+<g>
+<rect x="60" y="400" width="1280" height="128" rx="8" fill="#FDF0E3" stroke="#C98A4B"/>
+<text x="80" y="426" font-size="14" font-weight="600" fill="#7A4A18">执行账本与恢复</text>
+<rect x="80" y="440" width="280" height="72" rx="6" fill="#FFFFFF" stroke="#D8B48C"/>
+<text x="96" y="464" font-size="12.5" font-weight="600" fill="#1B2A41">执行记录</text>
+<text x="96" y="484" font-size="11" fill="#5B6B7C">执行标识，工具，输入哈希</text>
+<text x="96" y="502" font-size="11" fill="#5B6B7C">开始与提交时间，结果引用</text>
+<rect x="380" y="440" width="280" height="72" rx="6" fill="#FFFFFF" stroke="#D8B48C"/>
+<text x="396" y="464" font-size="12.5" font-weight="600" fill="#1B2A41">幂等键</text>
+<text x="396" y="484" font-size="11" fill="#5B6B7C">有副作用的调用必须带键</text>
+<text x="396" y="502" font-size="11" fill="#5B6B7C">已提交直接返回结果</text>
+<rect x="680" y="440" width="280" height="72" rx="6" fill="#FFFFFF" stroke="#D8B48C"/>
+<text x="696" y="464" font-size="12.5" font-weight="600" fill="#1B2A41">检查点</text>
+<text x="696" y="484" font-size="11" fill="#5B6B7C">步骤，上下文版本，计划版本</text>
+<text x="696" y="502" font-size="11" fill="#5B6B7C">待执行工具，审批状态</text>
+<text x="990" y="464" font-size="12" fill="#5B6B7C">崩溃恢复顺序</text>
+<text x="990" y="486" font-size="11.5" fill="#5B6B7C">读检查点，查账本</text>
+<text x="990" y="506" font-size="11.5" fill="#5B6B7C">已提交直接返回，未提交才允许重试</text>
+<line x1="777" y1="360" x2="777" y2="400" stroke="#C98A4B" stroke-dasharray="5 4"/>
+</g>
+
+<g>
+<rect x="60" y="558" width="1280" height="140" rx="8" fill="#FBEAEA" stroke="#D9A6A6"/>
+<text x="80" y="584" font-size="14" font-weight="600" fill="#7F1D1D">异常分支</text>
+<text x="80" y="610" font-size="12" fill="#5B2B2B">模型不可用：降级或暂停，保留状态，提示去设置。</text>
+<text x="80" y="632" font-size="12" fill="#5B2B2B">审批被拒：任务进入阻塞，记录决策与替代方案。</text>
+<text x="80" y="654" font-size="12" fill="#5B2B2B">资源超限：停止并保留中间产物，可续跑或转人工。</text>
+<text x="80" y="676" font-size="12" fill="#5B2B2B">运行中断：从事件日志恢复，回到最近检查点，恢复记录写入审计。</text>
+<text x="760" y="610" font-size="12" fill="#5B2B2B">越权写入：能力网关拒绝，记录主体，资源与授权范围。</text>
+<text x="760" y="632" font-size="12" fill="#5B2B2B">重复副作用：幂等键命中，返回已提交结果，不再次执行。</text>
+<text x="760" y="654" font-size="12" fill="#5B2B2B">磁盘不足：暂停写入，提示清理，不静默丢产物。</text>
+<text x="760" y="676" font-size="12" fill="#5B2B2B">验证不通过：退回执行，重试上限两次，仍失败转人工。</text>
+</g>
+
+<g>
+<rect x="60" y="728" width="1280" height="92" rx="8" fill="#F1F3F5" stroke="#8A97A6"/>
+<text x="80" y="754" font-size="13.5" font-weight="600" fill="#1B2A41">状态与可追溯</text>
+<text x="80" y="778" font-size="11.5" fill="#5B6B7C">项目域是协作状态的唯一权威；会话事件只追加并可回放；执行账本单独保存副作用记录。</text>
+<text x="80" y="800" font-size="11.5" fill="#5B6B7C">上下文包记录来源与裁剪结果；验证不通过时必须带失败证据；交付物带版本与回滚点。</text>
+</g>
+
+<text x="60" y="876" font-size="11.5" fill="#8A97A6">图 5　任务数据流 v1.2：能力网关前置授权，执行账本负责恢复；日常问答由交互循环直接回答，不进入任务。</text>
+<text x="60" y="902" font-size="11.5" fill="#8A97A6">至少一次执行，副作用幂等，持久执行账本；不承诺工具调用恰好一次。</text>
+</svg>

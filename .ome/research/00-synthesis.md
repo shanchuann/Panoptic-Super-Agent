@@ -1,10 +1,12 @@
-# 调研综合：超级智能体该怎么造（Lead 汇总 · v0.1）
+# 调研综合：超级智能体该怎么造（Lead 汇总 ， v0.1）
+
+> **勘误（2026-11-07）**：沙箱决策已改为"首版本地隔离"（ADR-0001 D4 调整）；不记预算、不计量费用；协作模型见 ADR-0006。本文为 P0 阶段背景，冲突处以最新 ADR/DECISIONS 为准。
 
 > 输入：3 份并行调研（`01-architectures.md` / `02-capabilities.md` / `03-eval-market.md`，共 79 条证据），Lead 亲自核验 7 个一手来源，并补充 2026 年中文产业口径（新华《环球》2026-04-02）。
-> 日期：2026-11-05 ｜ 结论先行 ｜ 「已核」= Lead fetch 到原文确认关键句。
+> 日期：2026-11-05 ｜ 结论先行 ｜ “已核”= Lead fetch 到原文确认关键句。
 
 ## 0. 一页结论（7 条）
-1. **2026 年的生产形态不是"多智能体"，而是"单循环内核 + 外置事件日志 + 可替换手脚"**。Anthropic 2026-04-08 明确把 brain / hands / session 解耦，session 是 harness 之外的持久事件日志（wake 重放 / getEvents 切片），所有执行统一为 execute(name, input) → string；Manus 2.0（2026-09）的 Cascade、LangChain Deep Agents 是同一思路。多智能体的成本约 15× chat token，连 Anthropic 自家 agent teams 都默认关闭。
+1. **2026 年的生产形态不是"多智能体"，而是"单循环内核 + 外置事件日志 + 可替换手脚"**。Anthropic 2026-04-08 明确把 brain / hands / session 解耦，session 是 harness 之外的持久事件日志（wake 重放 / getEvents 切片），所有执行统一为 execute(name, input) 至 string；Manus 2.0（2026-09）的 Cascade、LangChain Deep Agents 是同一思路。多智能体的成本约 15× chat token，连 Anthropic 自家 agent teams 都默认关闭。
 2. **工具层的事实标准是 MCP，但必须按 2026-07-28 无状态规范写**（已核）：无握手、MRTR、header routing、列表结果可缓存、Sampling/Roots/Logging 弃用。照 2025 年旧教程写，后续 server 接入全部返工。
 3. **成本主变量是上下文，不是模型**。Manus 自述输入/输出比约 100:1、缓存单价差 10×；Claude Code 靠 compaction + 清理旧工具结果 + prompt caching 控本。工具目录本身是固定税：50+ 工具约 72K tokens（已核页面），官方解法是 Tool Search + 代码执行编排（PTC 实测 −37%）。
 4. **记忆/规划不要看榜单**。Mem0 自报 94.4 与独立评测 49.0 差 45 分；无外部反馈的内在自纠错已被证否（ICLR 2024），"计划 + 一轮外部诊断式修订"才稳定增益（APB 2026，已核）。
@@ -18,7 +20,7 @@
 | 一手已核 | Lead 亲自打开原始页面确认 | Anthropic Managed Agents（2026-04-08）、MCP 2026-07-28 规范、advanced tool use（2025-11-24）、MAST（arXiv 2503.13657）、APB（arXiv 2606.04874）、Anthropic《Building effective agents》、Manus 2.0 发布页 |
 | 一手未核（报告转述） | 报告引了 URL 与日期，Lead 未逐句核 | 具体百分比、框架特性、定价 |
 | 二手/厂商自述 | 厂商博客、第三方汇总、榜单聚合 | Manus 性能数字、GAIA 92.36%、MCP 采用率 |
-| 推断 | 研究者或 Lead 的判断 | 「建议第一版单 agent」「先做窄场景」 |
+| 推断 | 研究者或 Lead 的判断 | “建议第一版单 agent”“先做窄场景” |
 
 冲突数字一律并列、不取平均（见 §7）。
 
@@ -31,25 +33,25 @@
 | 记忆 | 收益主要是省 token/延迟，不是"更聪明" | 效果无第三方可复现评测 | 先自写"文件 + 摘要 + 检索"，接口可替换 |
 | 沙箱 | 接现成（E2B / Daytona / Modal），不自研 | 逃逸发生率无统计 | v0.1 云沙箱 + 文件/网络双隔离 + 凭证不入沙箱 |
 | 评测 | 公开榜饱和、口径不可比；要自建金标准 + pass^k + 轨迹 | pass^k 无公开可比数据 | 20–30 条任务 + pass^3 + 五项指标 |
-| 安全 | 不可信输入 → 高权限工具是主要攻击面 | 在野规模无统计 | 默认只读 + 三类动作审批 + 工具白名单 + 全量审计 |
+| 安全 | 不可信输入 至 高权限工具是主要攻击面 | 在野规模无统计 | 默认只读 + 三类动作审批 + 工具白名单 + 全量审计 |
 | 定位 | 付费意愿已验证，但赛道同质化 | 客单价/续费率无公开数据 | 差异化押"可验证交付物 + 成本可见" |
 
 ## 3. 推荐架构（v0 骨架）
 ```
 接入层      Web UI（会话/计划/轨迹/产物）  +  CLI（内核调试/自动化）
-会话层      append-only 事件日志（schema 固定）→ 视图投影（可压缩/可重放）
-循环层      单 agent loop：收集上下文 → 计划 → 执行 → 外部验证 → 修订
-工具层      execute(name, input) → string 适配层：MCP client / 内置工具 / 沙箱
+会话层      append-only 事件日志（schema 固定）至 视图投影（可压缩/可重放）
+循环层      单 agent loop：收集上下文 至 计划 至 执行 至 外部验证 至 修订
+工具层      execute(name, input) 至 string 适配层：MCP client / 内置工具 / 沙箱
 执行层      云沙箱（文件 + 网络白名单）、浏览器（确定性脚本兜底）
 记忆层      会话压缩 + 项目文件式长期记忆（可关闭、可删除）
-治理层      审批门（写/付款/外发）、工具白名单、预算熔断、全链路 trace
+治理层      审批门（写/付款/外发）、工具白名单、资源上限、全链路 trace
 交付面      artifact 工作区（版本、预览、下载）+ 轨迹回放
 ```
 关键接口（先定，后实现）：
-- `Event { id, taskId, seq, type, ts, payloadHash, payloadRef }` —— 只追加；compaction 只写视图，不删事件；
-- `execute(name, input) → string` —— 统一所有手脚，MCP server 与内置工具同构；
-- `Approval { action, target, risk, evidence, decision }` —— 三类高危动作的审批记录；
-- `Artifact { id, taskId, path, mime, version, provenance }` —— 交付物一等公民。
+- `Event { id, taskId, seq, type, ts, payloadHash, payloadRef }` ， 只追加；compaction 只写视图，不删事件；
+- `execute(name, input) 至 string` ， 统一所有手脚，MCP server 与内置工具同构；
+- `Approval { action, target, risk, evidence, decision }` ， 三类高危动作的审批记录；
+- `Artifact { id, taskId, path, mime, version, provenance }` ， 交付物一等公民。
 
 ## 4. 现在必须定死的 6 个决策（返工成本高）
 | # | 决策 | 建议 | 依据 | 反悔成本 |
@@ -79,7 +81,7 @@
 1. 任务成功率（20–30 条 held-out，人工判据）；
 2. pass^3（同任务 3 次全对比例）；
 3. 人工接管率；
-4. 单任务成本上限（含重试，硬熔断）；
+4. 资源上限（时长/步数/重试，硬熔断；不计量费用）；
 5. P95 完成时长（按任务时长分档报，不看平均值）。
 
 安全底线（P0 就写进架构）：
@@ -98,9 +100,9 @@
 | Manus/Genspark 定价 | JS 渲染/反爬，无数字 | 不写具体价格 |
 | Claude Agent SDK 许可 | npm 仅 SEE LICENSE IN README.md | 待核；不假设可商用 |
 
-## 8. 下一步（P0 → P1，命令级）
+## 8. 下一步（P0 至 P1，命令级）
 1. 你回答两个阻塞问题（定位 A/B/C、交付形态）；
-2. `T-001` 一手核实剩余待核事实（长程任务数据、benchmark 官方页、许可）→ 写入 FACTS；
-3. `T-002` 场景收敛并签字 → 锁 SCOPE；
-4. `T-004` 写 ADR-0001（D1–D6 六条决策）→ 人审；
-5. `T-003` 20–30 条评测集 → `T-005` 纵向切片（CLI 端到端）→ `T-006` pass^3 报告。
+2. `T-001` 一手核实剩余待核事实（长程任务数据、benchmark 官方页、许可）至 写入 FACTS；
+3. `T-002` 场景收敛并签字 至 锁 SCOPE；
+4. `T-004` 写 ADR-0001（D1–D6 六条决策）至 人审；
+5. `T-003` 20–30 条评测集 至 `T-005` 纵向切片（CLI 端到端）至 `T-006` pass^3 报告。
