@@ -137,7 +137,7 @@ importers:
         version: 10.4.2
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@types/js-yaml':
         specifier: ^4.0.9
         version: 4.0.9
@@ -202,8 +202,8 @@ importers:
         specifier: 30.1.2
         version: 30.1.2(@noble/hashes@2.4.0)
       lefthook:
-        specifier: ^2.1.17
-        version: 2.1.17
+        specifier: ^2.2.1
+        version: 2.2.1
       lightningcss:
         specifier: ^1.33.0
         version: 1.33.0
@@ -802,10 +802,10 @@ importers:
         version: 11.28.5
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
       sharp:
         specifier: 0.35.5
         version: 0.35.5(@types/node@22.20.1)
@@ -1044,14 +1044,14 @@ importers:
         specifier: ^14.1.1
         version: 14.1.1(debug@4.4.3(supports-color@9.4.0))(supports-color@9.4.0)
       playwright:
-        specifier: ^1.63.0
-        version: 1.63.0
+        specifier: ^1.64.0
+        version: 1.64.0
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
       sharp:
         specifier: 0.35.5
         version: 0.35.5(@types/node@22.20.1)
@@ -1194,8 +1194,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       playwright:
-        specifier: ^1.63.0
-        version: 1.63.0
+        specifier: ^1.64.0
+        version: 1.64.0
       zod:
         specifier: ^4.6.5
         version: 4.6.5
@@ -3474,7 +3474,7 @@ importers:
         version: link:../../settings/settings
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/modules:
     devDependencies:
@@ -3611,7 +3611,7 @@ importers:
         version: 11.1.21
       zustand:
         specifier: ~4.5.7
-        version: 4.5.7(@types/react@19.3.0)(immer@11.1.21)(react@19.3.1)
+        version: 4.5.7(@types/react@19.3.0)(immer@11.1.21)(react@19.3.0)
 
   packages/client/ui-agent-preset:
     devDependencies:
@@ -3674,7 +3674,7 @@ importers:
         version: link:../../util/values
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-approval:
     devDependencies:
@@ -3719,7 +3719,7 @@ importers:
         version: link:../../typert/protocol
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-attachment:
     devDependencies:
@@ -3764,10 +3764,10 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-brand-official:
     devDependencies:
@@ -3794,13 +3794,13 @@ importers:
         version: link:../ui-slots
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-chat:
     dependencies:
@@ -3927,13 +3927,13 @@ importers:
         version: link:../../util/workspace-path
       '@tanstack/react-virtual':
         specifier: 3.14.13
-        version: 3.14.13(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 3.14.13(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-commands:
     devDependencies:
@@ -3990,7 +3990,7 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-conversation:
     dependencies:
@@ -4126,10 +4126,10 @@ importers:
         version: 0.49.0(patch_hash=54c4413db208cf234cb68c6a837f2523d3b319aa17911f1da385af08362e1356)(typescript@6.0.3)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
       zod:
         specifier: 4.6.5
         version: 4.6.5
@@ -4162,13 +4162,13 @@ importers:
         version: link:../../core/session
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-deliverables:
     dependencies:
@@ -4265,7 +4265,7 @@ importers:
         version: link:../../deliverables/workspace-changes
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-directory-picker-browse:
     devDependencies:
@@ -4295,16 +4295,16 @@ importers:
         version: link:../ui-workspace
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       clsx:
         specifier: ^2.0.0
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-directory-picker-native:
     devDependencies:
@@ -4325,13 +4325,13 @@ importers:
         version: link:../ui-workspace
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-dockkit:
     devDependencies:
@@ -4346,16 +4346,16 @@ importers:
         version: link:../ui-primitives
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       clsx:
         specifier: ^2.0.0
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-entry-customization:
     devDependencies:
@@ -4400,16 +4400,16 @@ importers:
         version: link:../ui-workspace
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-file-drag:
     devDependencies:
@@ -4445,7 +4445,7 @@ importers:
         version: link:../../util/file-drag
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-goal:
     devDependencies:
@@ -4496,13 +4496,13 @@ importers:
         version: link:../../typert/protocol
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-input-trigger:
     devDependencies:
@@ -4550,7 +4550,7 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-jobs:
     devDependencies:
@@ -4589,10 +4589,10 @@ importers:
         version: link:../../core/session
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-layout:
     devDependencies:
@@ -4625,7 +4625,7 @@ importers:
         version: link:../ui-theme
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-message-feedback:
     devDependencies:
@@ -4685,13 +4685,13 @@ importers:
         version: link:../../typert/protocol
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-model-selection:
     devDependencies:
@@ -4754,10 +4754,10 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-open-in-app:
     devDependencies:
@@ -4823,7 +4823,7 @@ importers:
         version: link:../../core/session
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-permission-presets:
     devDependencies:
@@ -4883,7 +4883,7 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-plan:
     devDependencies:
@@ -4952,7 +4952,7 @@ importers:
         version: link:../../util/crypto
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-plugin-manager:
     dependencies:
@@ -5022,16 +5022,16 @@ importers:
         version: link:../../util/crypto
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-plugin-market:
     devDependencies:
@@ -5079,13 +5079,13 @@ importers:
         version: link:../../typert/protocol
       '@testing-library/react':
         specifier: ^16.1.0
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-primitives:
     devDependencies:
@@ -5160,10 +5160,10 @@ importers:
         version: 2.0.3
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
       shiki:
         specifier: ^4.5.0
         version: 4.5.0
@@ -5223,7 +5223,7 @@ importers:
         version: link:../../util/workspace-path
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-renderer:
     devDependencies:
@@ -5241,13 +5241,13 @@ importers:
         version: 1.7.0
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
       use-sync-external-store:
         specifier: 1.7.0
-        version: 1.7.0(react@19.3.1)
+        version: 1.7.0(react@19.3.0)
 
   packages/client/ui-schedule:
     devDependencies:
@@ -5316,16 +5316,16 @@ importers:
         version: link:../../util/values
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-secret-mask:
     devDependencies:
@@ -5349,7 +5349,7 @@ importers:
         version: link:../ui-slots
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-session:
     devDependencies:
@@ -5388,7 +5388,7 @@ importers:
         version: link:../../util/values
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-settings:
     dependencies:
@@ -5419,7 +5419,7 @@ importers:
         version: link:../../util/values
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-settings-account:
     dependencies:
@@ -5483,7 +5483,7 @@ importers:
         version: link:../../settings/settings
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@types/big.js':
         specifier: ^6.2.2
         version: 6.2.2
@@ -5492,10 +5492,10 @@ importers:
         version: 7.0.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-settings-agent-loop:
     devDependencies:
@@ -5531,7 +5531,7 @@ importers:
         version: link:../ui-slots
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-settings-general:
     dependencies:
@@ -5601,10 +5601,10 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-settings-models:
     dependencies:
@@ -5653,7 +5653,7 @@ importers:
         version: link:../../util/values
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-settings-plugin-inventory:
     devDependencies:
@@ -5698,13 +5698,13 @@ importers:
         version: link:../../util/package-manifest
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-settings-plugins:
     devDependencies:
@@ -5731,7 +5731,7 @@ importers:
         version: link:../../util/values
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-settings-session-log:
     devDependencies:
@@ -5767,10 +5767,10 @@ importers:
         version: link:../ui-slots
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-settings-shell:
     devDependencies:
@@ -5806,7 +5806,7 @@ importers:
         version: link:../ui-slots
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-settings-subagent:
     devDependencies:
@@ -5842,7 +5842,7 @@ importers:
         version: link:../ui-slots
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-settings-web-search:
     devDependencies:
@@ -5878,7 +5878,7 @@ importers:
         version: link:../ui-slots
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-shortcuts:
     devDependencies:
@@ -5920,7 +5920,7 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-sidebar:
     devDependencies:
@@ -5968,7 +5968,7 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-sidebar-browser:
     devDependencies:
@@ -6010,13 +6010,13 @@ importers:
         version: link:../ui-slots
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-sidebar-documentpreview:
     dependencies:
@@ -6092,10 +6092,10 @@ importers:
         version: 1.0.4(patch_hash=8791a230763dbf853fd65d627c68c31de37209992851377855e16cf08ea70532)
       '@fortune-sheet/react':
         specifier: 1.0.4
-        version: 1.0.4(patch_hash=2932e52e79afcd4ced08cfa123b5eded786c85043da32f622f3e80af6fc96c37)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 1.0.4(patch_hash=2932e52e79afcd4ced08cfa123b5eded786c85043da32f622f3e80af6fc96c37)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@types/papaparse':
         specifier: ^5.3.16
         version: 5.5.2
@@ -6122,10 +6122,10 @@ importers:
         version: 6.4.299
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
       xlsx:
         specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
         version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
@@ -6185,16 +6185,16 @@ importers:
         version: link:../../util/workspace-path
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       clsx:
         specifier: ^2.0.0
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-sidebar-right:
     devDependencies:
@@ -6251,7 +6251,7 @@ importers:
         version: link:../../util/crypto
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@types/picomatch':
         specifier: ^4.0.3
         version: 4.0.3
@@ -6263,10 +6263,10 @@ importers:
         version: 4.0.7
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
       zod:
         specifier: 4.6.5
         version: 4.6.5
@@ -6326,7 +6326,7 @@ importers:
         version: link:../../core/session
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@xterm/addon-fit':
         specifier: ^0.11.0
         version: 0.11.0
@@ -6338,10 +6338,10 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-skill:
     devDependencies:
@@ -6398,13 +6398,13 @@ importers:
         version: link:../../util/workspace-path
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-slots:
     devDependencies:
@@ -6416,7 +6416,7 @@ importers:
         version: link:../store
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-subagent:
     devDependencies:
@@ -6476,10 +6476,10 @@ importers:
         version: link:../../llm/token-meter
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-theme:
     dependencies:
@@ -6531,7 +6531,7 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-tool:
     devDependencies:
@@ -6630,16 +6630,16 @@ importers:
         version: link:../../util/workspace-path
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       clsx:
         specifier: ^2.0.0
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-trajectory:
     devDependencies:
@@ -6699,16 +6699,16 @@ importers:
         version: link:../../util/values
       '@tanstack/react-virtual':
         specifier: 3.14.13
-        version: 3.14.13(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 3.14.13(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       diff:
         specifier: ^9.0.0
         version: 9.0.0
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/client/ui-user-questions:
     devDependencies:
@@ -6786,7 +6786,7 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-workflow-run:
     devDependencies:
@@ -6837,7 +6837,7 @@ importers:
         version: link:../../workflow/workflow
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/ui-workspace:
     devDependencies:
@@ -6927,7 +6927,7 @@ importers:
         version: 2.1.1
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/client/web:
     devDependencies:
@@ -6960,13 +6960,13 @@ importers:
         version: link:../../host/webserver
       '@tanstack/react-virtual':
         specifier: 3.14.13
-        version: 3.14.13(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 3.14.13(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -8494,8 +8494,8 @@ importers:
   packages/experimental/browser-use-stagehand-native:
     dependencies:
       '@browserbasehq/stagehand':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 4.2.0
+        version: 4.2.0
       '@deepseek-ai/dsh-experimental-browser-use-runtime':
         specifier: workspace:*
         version: link:../browser-use-runtime
@@ -8512,8 +8512,8 @@ importers:
         specifier: link:../../../vendor/schemastery
         version: link:../../../vendor/schemastery
       '@puppeteer/browsers':
-        specifier: 3.2.3
-        version: 3.2.3(yauzl@3.4.0)
+        specifier: 3.2.4
+        version: 3.2.4(yauzl@3.4.0)
       zod:
         specifier: 4.4.3
         version: 4.4.3
@@ -8722,7 +8722,7 @@ importers:
         version: link:../../util/values
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/experimental/client-ui-agent-team:
     devDependencies:
@@ -8770,13 +8770,13 @@ importers:
         version: link:../../core/session
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/experimental/client-ui-claude-code-mods:
     devDependencies:
@@ -8821,13 +8821,13 @@ importers:
         version: link:../../typert/protocol
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/experimental/client-ui-cot-translation:
     dependencies:
@@ -8903,13 +8903,13 @@ importers:
         version: link:../../typert/registry
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/experimental/client-ui-creation-recommendations:
     devDependencies:
@@ -8951,7 +8951,7 @@ importers:
         version: link:../../core/session
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       zod:
         specifier: 4.6.5
         version: 4.6.5
@@ -9005,7 +9005,7 @@ importers:
         version: link:../../typert/protocol
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       zod:
         specifier: 4.6.5
         version: 4.6.5
@@ -9065,13 +9065,13 @@ importers:
         version: link:../../typert/protocol
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/experimental/computer-use-cua-driver-mcp:
     dependencies:
@@ -9430,13 +9430,13 @@ importers:
         version: link:../../session/working-directory
       '@testing-library/react':
         specifier: ^16.1.0
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
       sharp:
         specifier: ^0.35.3
         version: 0.35.5(@types/node@22.20.1)
@@ -9772,7 +9772,7 @@ importers:
         version: link:../../host/webserver
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@types/serve-static':
         specifier: ^2.2.0
         version: 2.2.0
@@ -9783,11 +9783,11 @@ importers:
         specifier: 1.0.1638082
         version: 1.0.1638082
       playwright:
-        specifier: ^1.63.0
-        version: 1.63.0
+        specifier: ^1.64.0
+        version: 1.64.0
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       tsx:
         specifier: ^4.23.15
         version: 4.23.15
@@ -10040,16 +10040,16 @@ importers:
         version: link:../../core/session
       '@tanstack/react-virtual':
         specifier: ^3.14.13
-        version: 3.14.13(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 3.14.13(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/experimental/session-search:
     dependencies:
@@ -10852,8 +10852,8 @@ importers:
         specifier: ^4.0.7
         version: 4.0.7
       readable-stream:
-        specifier: ^4.7.0
-        version: 4.7.0
+        specifier: ^4.8.0
+        version: 4.8.0
       string_decoder:
         specifier: ^1.3.0
         version: 1.3.0
@@ -10999,7 +10999,7 @@ importers:
         version: link:../../util/values
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/extensions/cordis-host-runner:
     dependencies:
@@ -11129,7 +11129,7 @@ importers:
         version: link:../../util/values
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/feedback/command-feedback:
     dependencies:
@@ -13503,7 +13503,7 @@ importers:
         version: link:../../session/session-title
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/session-query/session-query:
     dependencies:
@@ -13601,7 +13601,7 @@ importers:
         version: link:../../core/session
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
 
   packages/session/session-checkpoint-policy:
     devDependencies:
@@ -15449,11 +15449,11 @@ importers:
   packages/subagent/subagent-claude-code:
     dependencies:
       '@anthropic-ai/claude-agent-sdk':
-        specifier: 0.3.292
-        version: 0.3.292(@anthropic-ai/sdk@0.131.0(zod@4.6.5))(@modelcontextprotocol/sdk@1.32.1(supports-color@9.4.0)(zod@4.6.5))(zod@4.6.5)
+        specifier: 0.3.295
+        version: 0.3.295(@anthropic-ai/sdk@0.132.1(zod@4.6.5))(@modelcontextprotocol/sdk@1.32.1(supports-color@9.4.0)(zod@4.6.5))(zod@4.6.5)
       '@anthropic-ai/sdk':
-        specifier: 0.131.0
-        version: 0.131.0(zod@4.6.5)
+        specifier: 0.132.1
+        version: 0.132.1(zod@4.6.5)
       '@deepseek-ai/dsh-brand':
         specifier: workspace:*
         version: link:../../util/brand
@@ -15537,8 +15537,8 @@ importers:
         specifier: link:../../../vendor/schemastery
         version: link:../../../vendor/schemastery
       '@openai/codex':
-        specifier: 0.160.1
-        version: 0.160.1
+        specifier: 0.162.0
+        version: 0.162.0
     devDependencies:
       '@deepseek-ai/cordis':
         specifier: workspace:~
@@ -16068,7 +16068,7 @@ importers:
         version: 10.4.2
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       js-yaml:
         specifier: ^4.3.2
         version: 4.3.2
@@ -16171,10 +16171,10 @@ importers:
         version: 4.0.9
       react:
         specifier: ^19.3.0
-        version: 19.3.1
+        version: 19.3.0
       react-dom:
         specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
+        version: 19.3.0(react@19.3.0)
 
   packages/test-support/llm-mock-server:
     devDependencies:
@@ -17663,10 +17663,10 @@ importers:
         version: 5.4.21(@types/node@22.20.1)(lightningcss@1.33.0)
       vitepress:
         specifier: ^1.6.4
-        version: 1.6.4(@algolia/client-search@5.55.2)(@types/node@22.20.1)(@types/react@18.3.31)(lightningcss@1.33.0)(postcss@8.5.28)(react-dom@19.3.1(react@19.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@6.0.3)
+        version: 1.6.4(@algolia/client-search@5.55.2)(@types/node@22.20.1)(@types/react@18.3.31)(lightningcss@1.33.0)(postcss@8.5.28)(react-dom@19.3.0(react@19.3.0))(react@18.3.1)(search-insights@2.17.3)(typescript@6.0.3)
       vitepress-plugin-mermaid:
         specifier: ^2.0.17
-        version: 2.0.17(mermaid@12.1.0)(vitepress@1.6.4(@algolia/client-search@5.55.2)(@types/node@22.20.1)(@types/react@18.3.31)(lightningcss@1.33.0)(postcss@8.5.28)(react-dom@19.3.1(react@19.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@6.0.3))
+        version: 2.0.17(mermaid@12.1.0)(vitepress@1.6.4(@algolia/client-search@5.55.2)(@types/node@22.20.1)(@types/react@18.3.31)(lightningcss@1.33.0)(postcss@8.5.28)(react-dom@19.3.0(react@19.3.0))(react@18.3.1)(search-insights@2.17.3)(typescript@6.0.3))
       vue:
         specifier: 3.5.43
         version: 3.5.43(typescript@6.0.3)
@@ -17757,52 +17757,52 @@ packages:
   '@antfu/install-pkg@1.1.0':
     resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
 
-  '@anthropic-ai/claude-agent-sdk-darwin-arm64@0.3.292':
-    resolution: {integrity: sha512-VbE0eqQoAast5oQW0ZQleVkX/hJhjuTJfVrFlTlF7b7gdybl08UguRugezVS8fAZfePVo0rJYAnkafxL0API+g==}
+  '@anthropic-ai/claude-agent-sdk-darwin-arm64@0.3.295':
+    resolution: {integrity: sha512-bwfF0yZrrPhl8SwAqvoB82AuRk1TTP0eEp4x+M4teyKJZTdDKnAvilAnK1T94oaji7eGL18oORMgVtU8lwiwCw==}
     cpu: [arm64]
     os: [darwin]
 
-  '@anthropic-ai/claude-agent-sdk-darwin-x64@0.3.292':
-    resolution: {integrity: sha512-z1ChVMQC5uFrCsMUleQ67B1w+v8vLJNoHjl/qowv0DqVbTLWQ8Qz1ejQWdrZPezdT10BTpyss8kNf8G4wOrsOA==}
+  '@anthropic-ai/claude-agent-sdk-darwin-x64@0.3.295':
+    resolution: {integrity: sha512-FS2uQoF/U4KKAAQYUbtCw2/D/mye/eVM8YZWicRgm5Ts0lqhtU3eFmwgfWiZHwBMKkJBZ3ax8CGOqh7elLloDg==}
     cpu: [x64]
     os: [darwin]
 
-  '@anthropic-ai/claude-agent-sdk-linux-arm64-musl@0.3.292':
-    resolution: {integrity: sha512-6UIxxeHsQQcHheip8P+6q1kf5UQ1D7RJgso423IZeMjyBX1pMlX6LII8b59/1sBfaO1Q5YZ8JKDGr7f4+GtE0A==}
+  '@anthropic-ai/claude-agent-sdk-linux-arm64-musl@0.3.295':
+    resolution: {integrity: sha512-ti18RnLMCUyRCp7TxqFofWVBrcByOjK5sMUPjpIqEUkFYo7tho+Ts/DIiI9YFeCWWgfx2oDCKTKTGkRupMGrGg==}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@anthropic-ai/claude-agent-sdk-linux-arm64@0.3.292':
-    resolution: {integrity: sha512-ziGXVP0Kjjg531fUNZh/1lkT8MQKc77qFinqvQ7N7ZbR7Kr/wVRhs3kSb2s7A1+z/3TNsPiQJManEmbw61U+Hw==}
+  '@anthropic-ai/claude-agent-sdk-linux-arm64@0.3.295':
+    resolution: {integrity: sha512-DeFa0ZgbmI9ohRDXLbWIfGNi6LLXTFeY/NvjjDd4h8kEkY08JHSylrUmDCIWx0abPwzi7Rg2Gnt8Rg8FL9XiPw==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@anthropic-ai/claude-agent-sdk-linux-x64-musl@0.3.292':
-    resolution: {integrity: sha512-5XA1nW1/OAUBxaJNFmttfJov9CrqYanOqlmP6yvXWx+iSEWKICNv2ghnnipYEJXUeof6JjZlarS8IHaJol1trA==}
+  '@anthropic-ai/claude-agent-sdk-linux-x64-musl@0.3.295':
+    resolution: {integrity: sha512-iyw/R4MFqpLky65Xw594WcreXuZfqxSf6wRg/z9B8EBsQXc1rzmEp5CJ5fdj5NVjY0mnYO7nvXbONg0E4UKXMQ==}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@anthropic-ai/claude-agent-sdk-linux-x64@0.3.292':
-    resolution: {integrity: sha512-dnMVyLxpg8mUzEqAtxhv+5oBxdiYjCLIBHLPFM4z7cuk+Se6SwgyHPRGipp8rOociJBS8yyB7QXJh+RO41y+Kg==}
+  '@anthropic-ai/claude-agent-sdk-linux-x64@0.3.295':
+    resolution: {integrity: sha512-4o+9rmdRfEXqEUBxVsYqW9RTL2KXDQTub9hgif/E28KQy5ggUpQQp7KJrJnruV7EL1iUU9xsAYXGE1nixILLHg==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@anthropic-ai/claude-agent-sdk-win32-arm64@0.3.292':
-    resolution: {integrity: sha512-feA6NlAVnbGBGgnJ6VkYldofuCwW5H6wt+6sWuLDVIasn013X3sWrCSS4awseN3tyey4/0UKG/+ElNATaZaN4w==}
+  '@anthropic-ai/claude-agent-sdk-win32-arm64@0.3.295':
+    resolution: {integrity: sha512-6RGDEFcF/MUZoTnfGdIZeedg1qnkmO8hoZP71dn1yhDfpHn9OqzFqms2yd57Q0KeaP3LMFlk8y7X3NDi+6T2JA==}
     cpu: [arm64]
     os: [win32]
 
-  '@anthropic-ai/claude-agent-sdk-win32-x64@0.3.292':
-    resolution: {integrity: sha512-hIXHmaaV1FIH7AVhw7PFX7TW13hPRGsSj/wP/Bio9N03sqbaOg6lLidKn4qC8xtvAlDTpC+6nGieLjjQQB7SwA==}
+  '@anthropic-ai/claude-agent-sdk-win32-x64@0.3.295':
+    resolution: {integrity: sha512-q89KVk1rDpKmeiQu4MoiIAB8bzo778gKlZ4+Z8GxhuclGvSYI3Q6zjth18fEOy+FWvjfT54GH58cjpbWigBEMw==}
     cpu: [x64]
     os: [win32]
 
-  '@anthropic-ai/claude-agent-sdk@0.3.292':
-    resolution: {integrity: sha512-C5XI/19uArTg3jjgayN9CSQxJilRciBko007AdPmHXwQqbAzdUldaPUQtDp8Pm6QJg5Aw3jI1G1eIJOBrx4xKQ==}
+  '@anthropic-ai/claude-agent-sdk@0.3.295':
+    resolution: {integrity: sha512-GaLZbMAqyT4ZCtDQYq2p26bjpqqRfoobVxCK+Ao283I12sGyw2ttMvjdCXclS9VKhs+/IIu8/AtjqyrX73FZ/g==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@anthropic-ai/sdk': '>=0.93.0'
@@ -17818,8 +17818,8 @@ packages:
       zod:
         optional: true
 
-  '@anthropic-ai/sdk@0.131.0':
-    resolution: {integrity: sha512-9+PepoU7qVMmM70jSahdnfcMHAvAnzhMOLv2W9WjRLO+OG/MAiBETkwKZqv7KIJ1Cj5h8eZ019bHzZaq+Mbepw==}
+  '@anthropic-ai/sdk@0.132.1':
+    resolution: {integrity: sha512-Dg+Rd0effi+4FyNwgEx6JXl9COefsZ3C7BOPSKYIWboQOEIi9HXtu1WBdND0DIgMF7Qt1vuCSjsbs7sjUkzJuQ==}
     hasBin: true
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
@@ -18026,8 +18026,8 @@ packages:
   '@browserbasehq/sdk@2.20.0':
     resolution: {integrity: sha512-zDDsgrwF6/iF+Ob0LIqe6EPBa4n7m+5YfKn0g0+kZR5jIncTXBPmJSW6tAsu9go3wA9tQQP+zm6qUOPVi1Gutw==}
 
-  '@browserbasehq/stagehand@4.1.0':
-    resolution: {integrity: sha512-PJikMBVoaCRh6TFD7GcmeISmsMq4IwUu1BD5FOsGUVDUxrVqZomWa6W6dF+a/zu4xRZu2Z2xX1nXVMDaCuZWsw==}
+  '@browserbasehq/stagehand@4.2.0':
+    resolution: {integrity: sha512-jX8i2QPsvcn8KIxEOHJPOiYsrxK0/63t6fMedq0RbHac0zZ4xV1FwWW9YyvgBUucsdUydr0cRlwtAhBbtWxVbw==}
     engines: {node: '>=22.18.0'}
 
   '@chevrotain/cst-dts-gen@13.2.0':
@@ -19330,43 +19330,43 @@ packages:
     resolution: {integrity: sha512-da6KbdNCV5sr1/txD896V+6W0iamFWrvVl8cHkBSPT+YlvmT3DwXa4jxZnQc+gnuTEqSWbBeoSZYTayXH9wXcw==}
     engines: {node: '>= 20'}
 
-  '@openai/codex@0.160.1':
-    resolution: {integrity: sha512-f1yrJhwgimKQI1kYQlxdPJcFwkNZxZrbz7Hf89EAcnLqkQ7TiESzr2FgSZn13Ga5RuHjlVUfurzwq10wk9zw2g==}
+  '@openai/codex@0.162.0':
+    resolution: {integrity: sha512-qWWckMfknyVym1lD5y2rTwPJA2sgHkzePF2l/Uevss4hVpqbt23rMIHKNTrqECdnv82denylHWEzrAmDnCYNIw==}
     engines: {node: '>=16'}
     hasBin: true
 
-  '@openai/codex@0.160.1-darwin-arm64':
-    resolution: {integrity: sha512-6Znu97O7+Ie/cnUpsWLx6NlcPc7DNuj6sAs58xpt0/tKRgx4+xgE9zca1YrwqQUBjUQO1HexudyimmhpZjdWlA==}
+  '@openai/codex@0.162.0-darwin-arm64':
+    resolution: {integrity: sha512-hyiGlMCbZog7IY2TcSWzXbsmtUnynT93QA4utqGlVmFlmz8TurADk3LV28zqUIdgh9GLOzumDIdHQbYieo9Nqw==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [darwin]
 
-  '@openai/codex@0.160.1-darwin-x64':
-    resolution: {integrity: sha512-Q33hmY6BxhoQRgCo4f/xS20yMxORnilQMNdr5w1bXSkXGYAty8/z9odcHbsNYUM6m0fNle12DHLQ5F0Dpfji3A==}
+  '@openai/codex@0.162.0-darwin-x64':
+    resolution: {integrity: sha512-4XzCUJgEDDdme6VWDEKvbWDA6f+470d4xhhorYUgNBZwY8Dq5NYqvWkO33rnc1vjxkqSj+SwkymHxRMxL6h1CA==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [darwin]
 
-  '@openai/codex@0.160.1-linux-arm64':
-    resolution: {integrity: sha512-JLyjBlmjPvwTaicHemw+y5xQSz3Uja2r7F/xkvS8gFufTA2g132Ak+0fo35xnJ/k2uc9fTtjm0LrsEGI78L6Ng==}
+  '@openai/codex@0.162.0-linux-arm64':
+    resolution: {integrity: sha512-6NYWwy09FsZ+/0Dz/bvV/yz3aFhkNzj86fSiux9Ax9VMBOID5nPdwd51OySm7fy8TMRud4fgJFELSi3Enc1s7Q==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [linux]
 
-  '@openai/codex@0.160.1-linux-x64':
-    resolution: {integrity: sha512-sIDhqV+bsZKKVaVFVY5iB+pAzyOz2XRm3H1KXCsSJwGj5p98qnrT0Fweo1Hfe7WnyTp8mfBNdbVzUeO+mHYugA==}
+  '@openai/codex@0.162.0-linux-x64':
+    resolution: {integrity: sha512-qHWp6oKpf456PqjberGN8avs8zChv2oS+UuDiqVFYAuDOhq6vBc1drh8jEsnR7dBX+zcw03PN5VLtePGlMcC3w==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [linux]
 
-  '@openai/codex@0.160.1-win32-arm64':
-    resolution: {integrity: sha512-PCGz2kVUBKKzyKv/cqo/1WqWN8GVUyk9sk0LyWIyXftdU0t+SSsGp45c2I6iOitm88ftGB3LxFHpTMnaiIKU7w==}
+  '@openai/codex@0.162.0-win32-arm64':
+    resolution: {integrity: sha512-scdBHlUz4AfLOUWT4r4kwe3GFvjbBbWxreLDGoLSyMFf566e7sHSJvlJuV7uha2S7uRoQnMmWwmqYMJuT322UQ==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [win32]
 
-  '@openai/codex@0.160.1-win32-x64':
-    resolution: {integrity: sha512-yyqykHtHNhm0ZViofGozz9a4ffUyXDsiyRu9Q2hPNg/cu4uzSsovNr5kDmzBXPFWAilmlZuNkwpw1W7uae2nlg==}
+  '@openai/codex@0.162.0-win32-x64':
+    resolution: {integrity: sha512-W8kqHaqpW0qPz71E0rRT5dq+socGz1BbJyYN7o3SP1TWQt8Zl6ML74R9Hvt/xn1NNLVlDTRfXqNmaMkte6yEMQ==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
@@ -19793,8 +19793,8 @@ packages:
     resolution: {integrity: sha512-4EDEmvxWtgsCnnVeBvtFIFZtUhPPt1+bA9JrSwU4Sa//6oKtzCSlGGXYJr44OD9aGISymbieJ4mCKHUygUDU+g==}
     engines: {node: '>=18'}
 
-  '@puppeteer/browsers@3.2.3':
-    resolution: {integrity: sha512-2Bt3m6dDAJqmZehn0wiXSYyQmuhyiHHZ7FjvrVaS1W2RoFGV6eCK71UvKYkNJjkwC1Q9nobjhvTMhLQztFVINA==}
+  '@puppeteer/browsers@3.2.4':
+    resolution: {integrity: sha512-okJ6yQMc0SBexOKxMi966omwAV1uAPwgF/YMZdb04gZQPXVjWHl9bmXjZYtIcsN1+PN3Bz4iFfGK3g+c6lZJ0Q==}
     engines: {node: '>=22.12.0'}
     hasBin: true
     peerDependencies:
@@ -22843,58 +22843,58 @@ packages:
     resolution: {integrity: sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==}
     engines: {node: '>= 0.6.3'}
 
-  lefthook-darwin-arm64@2.1.17:
-    resolution: {integrity: sha512-BHF3rD0qmwBulLLe5EdPYQVGvPibZZqHnSPpWT+LgPyYk2+GxtScLJvSD/NgCOFU49Fzs6XgOHg/zlfXcdKFfQ==}
+  lefthook-darwin-arm64@2.2.1:
+    resolution: {integrity: sha512-SyuDBT5HqNQfi607vMHrYJu45bRN7JoIFdyxLjEPVe34UnZJCesmeYBODEYTyCfRZjPOaTbton4Padu+qvqfCQ==}
     cpu: [arm64]
     os: [darwin]
 
-  lefthook-darwin-x64@2.1.17:
-    resolution: {integrity: sha512-wRgqAKw2UUQz8eR5pBRo1Cfk2Jaao3u5b6n8EsLcJ6bCVP0pLLhFrNjE1UsTCOlriN7+GgI9SC0l1+zr2eVbTA==}
+  lefthook-darwin-x64@2.2.1:
+    resolution: {integrity: sha512-qkIdM89T3OxpLp9rssPSdRQ7QKkX0l07xWxxOaZfECn5iB2xVXSD9FQSjYUMNGXtJJWOGqdKqBngGTB/ShDZtQ==}
     cpu: [x64]
     os: [darwin]
 
-  lefthook-freebsd-arm64@2.1.17:
-    resolution: {integrity: sha512-pECdcOu/oImbaQyBbmnQyNhdpu1L/bUageBoHSesDB3+2vyHEd6Q3buTUETrI+/gsL993FK5jHnyzsY1X2IFsQ==}
+  lefthook-freebsd-arm64@2.2.1:
+    resolution: {integrity: sha512-0jdr/9Q5cGuazrEVquv29AOD77aPc2jAmFU4EtqVVg3PhMJjAyt7bQeA9qdwHhaHhLnaeUZwMwo3IleVm+D4wg==}
     cpu: [arm64]
     os: [freebsd]
 
-  lefthook-freebsd-x64@2.1.17:
-    resolution: {integrity: sha512-+z+GPl4mxZC0AcJICDazAWxExz4f8JPW7rvGUQ4Ao8flfmNUoyenrtsx9PUp00KdI+8zPjIujuLMSIEN52y1hQ==}
+  lefthook-freebsd-x64@2.2.1:
+    resolution: {integrity: sha512-JFKyNZ9qQp9NsuFyAg/CJIBurIHX3AUayFXxuoDMATWAIhhlyK0YMtpWgEFIl1M2iGLBLQ3TiLoCCRnbwndNDg==}
     cpu: [x64]
     os: [freebsd]
 
-  lefthook-linux-arm64@2.1.17:
-    resolution: {integrity: sha512-q01FgqafSJo4WQ6rHj4J1AUe8WLlReZ4Sx5qIjdXMjFuQsbLKlaWUWnJMmZkQQwsi195zDGtOycU44c0vozPiw==}
+  lefthook-linux-arm64@2.2.1:
+    resolution: {integrity: sha512-na8Ezm7pK44+WsQqj9tES7v8VseM1MrNeNJhUnM8eINV22KYptWam8evfjZxY3NYxOTwn6f/Zpe/BBvcLKMaTQ==}
     cpu: [arm64]
     os: [linux]
 
-  lefthook-linux-x64@2.1.17:
-    resolution: {integrity: sha512-NyWgJyhmkPspgnhNSvkusKNjCyOOnwiE/IFKkAFkMNfTlst0Dv3UVNxe0e/DlgsGbbFLVieFKhwd4twI2RKoOQ==}
+  lefthook-linux-x64@2.2.1:
+    resolution: {integrity: sha512-wl7CR5uNkOiZ38SkW4l9O6wf/Nllbkw90ZZonXRFkbgrnPjLMhZGUt9ucewsPwBQ/ckU1t08JuBHeOywB/CFow==}
     cpu: [x64]
     os: [linux]
 
-  lefthook-openbsd-arm64@2.1.17:
-    resolution: {integrity: sha512-zhIY2sel/yHeIJbQfnlAx+xnIJf6Yh0/RG/Ont33VzCXrzMf4jczQwEAu6VdAD7Ms/Tiv3b9t8aTk7LrU4byJA==}
+  lefthook-openbsd-arm64@2.2.1:
+    resolution: {integrity: sha512-UFwL+AGSqkhQ15kuKl5FMRx/UqbcfcQbGFg5ggYzhT7qBOsTu3a9POXRxt3hsalBeMgkDWsv3IaPlj51YGpCAg==}
     cpu: [arm64]
     os: [openbsd]
 
-  lefthook-openbsd-x64@2.1.17:
-    resolution: {integrity: sha512-aHGnjzyyFBOQEJjmie7px67nNVRUJ+DUG2R/BOSABdH/sGwVYLg6GG0pjnSUkWPoIv3T+CFoG9YcGYO+h3MLoQ==}
+  lefthook-openbsd-x64@2.2.1:
+    resolution: {integrity: sha512-IMKEuxJLo91C1yjhJ42EadfXUb3ECMkvTKpSt17kwaiyZsvvZ8LGdrXwQZiLNJt2M5ECuTVCQUvDimM6mGraOw==}
     cpu: [x64]
     os: [openbsd]
 
-  lefthook-windows-arm64@2.1.17:
-    resolution: {integrity: sha512-NN6Ke+O019lhlGAbrbFDf719E4vGt0Y0O30Gr5Yoe3ZdFW6qQFOlP+gVq/shFvJ7iw6rFA/xyOu6wgM+Lytimg==}
+  lefthook-windows-arm64@2.2.1:
+    resolution: {integrity: sha512-Pi8vOvObjg8HJDl8d96s7jsI6TN33klpqv6tXSXpoKEeoAwEh5Y9NawO6bzoOpLfAxf2SfMBcuaBzFQ5zE2gjA==}
     cpu: [arm64]
     os: [win32]
 
-  lefthook-windows-x64@2.1.17:
-    resolution: {integrity: sha512-yV07jCYAzqr4UoMFtVs5frVgKzxppWd/tjr6OpXpxYqB47fomx3w9vxgEOlb2opODFTFm2wdeESLfwVO9Cy/DQ==}
+  lefthook-windows-x64@2.2.1:
+    resolution: {integrity: sha512-7FtuPrc1XzxIFLAbzneOF1hr9r/vGi2lcMpX14QG9d/mnLhwu4EyNBh48JNEqsQqrOB9QKavsNqxVl1e8zcukA==}
     cpu: [x64]
     os: [win32]
 
-  lefthook@2.1.17:
-    resolution: {integrity: sha512-UWpD0VvZNIA2eA/+x4DvFlIT7uxH7aPrPrShE6nsIrX5qHJXxgDkoslAzF73X/YL2o0/9zDw3aOfpr98XchKFw==}
+  lefthook@2.2.1:
+    resolution: {integrity: sha512-aKEwhQzGbLMkZu5vrFYKJzLvLVblWATYITmN7Ak4qRCDPCoFJhmeJZFuYf3nTXuqG9xTBE+J8xaAEPL2tpuWyw==}
     hasBin: true
 
   levn@0.4.1:
@@ -23736,8 +23736,8 @@ packages:
     resolution: {integrity: sha512-emEcLuomt2j03vxD54giVB4SxTjnsqkU692xZOZXHDVoYyypEm+b3jpiTcc+Cf+myooc+/Ly0z01jqeNHVgJGw==}
     engines: {node: '>=16.0.0'}
 
-  playwright-core@1.63.0:
-    resolution: {integrity: sha512-rYCsBF/M5HjUch52bbtVONEFjv6Xu8sm8h72dNlR5bzIE1fvC/bxgspzkjSfU+MweEMmPM8KJebG6nnyxo5mCg==}
+  playwright-core@1.64.0:
+    resolution: {integrity: sha512-T9r+MZkTECl2+oUcZ26YgZzTrYidTsIhYYkJix+6iDOymOb1FB2RLLSOxRGnZGv5DStt+aduIVbt+E8WygXYpg==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -23746,8 +23746,8 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  playwright@1.63.0:
-    resolution: {integrity: sha512-+7ziBLidS4NaNCdt57SUDT+wYmmd5fmiQejUic/kb+YsYSCPyOOE9sebzMjNmQrsnNpDJqd4WHvV/8lfKfUDUg==}
+  playwright@1.64.0:
+    resolution: {integrity: sha512-kVzTnYFYEyQ9RGzBjNCd2+yEqWmVbxl3AHPynv3qQ6JTjv4a+kwRcnqQwIpuP3NnrnIrE/Q6wWAIAvMfIE2/Yg==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -23914,10 +23914,10 @@ packages:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
 
-  react-dom@19.3.1:
-    resolution: {integrity: sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ==}
+  react-dom@19.3.0:
+    resolution: {integrity: sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==}
     peerDependencies:
-      react: ^19.3.1
+      react: ^19.3.0
 
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
@@ -23926,8 +23926,8 @@ packages:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
 
-  react@19.3.1:
-    resolution: {integrity: sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw==}
+  react@19.3.0:
+    resolution: {integrity: sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==}
     engines: {node: '>=0.10.0'}
 
   read-binary-file-arch@1.0.6:
@@ -23941,8 +23941,8 @@ packages:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
     engines: {node: '>= 6'}
 
-  readable-stream@4.7.0:
-    resolution: {integrity: sha512-oIGGmcpTLwPga8Bn6/Z75SVaH1z5dUut2ibSyAMVhmUggWpmDn2dapB0n7f8nwaSiRtepAsfJyfXIO5DCVAODg==}
+  readable-stream@4.8.0:
+    resolution: {integrity: sha512-2jhTTU3Eilp/2DMT71gbcoqC35eQHasMJH0RHkYxwlxIv3+FR6Y5xAFZIwEGLxKkjZYEFlsiMNIdwUqjK2lLHQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   readdir-glob@1.1.3:
@@ -25264,44 +25264,44 @@ snapshots:
       package-manager-detector: 1.6.0
       tinyexec: 1.2.4
 
-  '@anthropic-ai/claude-agent-sdk-darwin-arm64@0.3.292':
+  '@anthropic-ai/claude-agent-sdk-darwin-arm64@0.3.295':
     optional: true
 
-  '@anthropic-ai/claude-agent-sdk-darwin-x64@0.3.292':
+  '@anthropic-ai/claude-agent-sdk-darwin-x64@0.3.295':
     optional: true
 
-  '@anthropic-ai/claude-agent-sdk-linux-arm64-musl@0.3.292':
+  '@anthropic-ai/claude-agent-sdk-linux-arm64-musl@0.3.295':
     optional: true
 
-  '@anthropic-ai/claude-agent-sdk-linux-arm64@0.3.292':
+  '@anthropic-ai/claude-agent-sdk-linux-arm64@0.3.295':
     optional: true
 
-  '@anthropic-ai/claude-agent-sdk-linux-x64-musl@0.3.292':
+  '@anthropic-ai/claude-agent-sdk-linux-x64-musl@0.3.295':
     optional: true
 
-  '@anthropic-ai/claude-agent-sdk-linux-x64@0.3.292':
+  '@anthropic-ai/claude-agent-sdk-linux-x64@0.3.295':
     optional: true
 
-  '@anthropic-ai/claude-agent-sdk-win32-arm64@0.3.292':
+  '@anthropic-ai/claude-agent-sdk-win32-arm64@0.3.295':
     optional: true
 
-  '@anthropic-ai/claude-agent-sdk-win32-x64@0.3.292':
+  '@anthropic-ai/claude-agent-sdk-win32-x64@0.3.295':
     optional: true
 
-  '@anthropic-ai/claude-agent-sdk@0.3.292(@anthropic-ai/sdk@0.131.0(zod@4.6.5))(@modelcontextprotocol/sdk@1.32.1(supports-color@9.4.0)(zod@4.6.5))(zod@4.6.5)':
+  '@anthropic-ai/claude-agent-sdk@0.3.295(@anthropic-ai/sdk@0.132.1(zod@4.6.5))(@modelcontextprotocol/sdk@1.32.1(supports-color@9.4.0)(zod@4.6.5))(zod@4.6.5)':
     dependencies:
-      '@anthropic-ai/sdk': 0.131.0(zod@4.6.5)
+      '@anthropic-ai/sdk': 0.132.1(zod@4.6.5)
       '@modelcontextprotocol/sdk': 1.32.1(supports-color@9.4.0)(zod@4.6.5)
       zod: 4.6.5
     optionalDependencies:
-      '@anthropic-ai/claude-agent-sdk-darwin-arm64': 0.3.292
-      '@anthropic-ai/claude-agent-sdk-darwin-x64': 0.3.292
-      '@anthropic-ai/claude-agent-sdk-linux-arm64': 0.3.292
-      '@anthropic-ai/claude-agent-sdk-linux-arm64-musl': 0.3.292
-      '@anthropic-ai/claude-agent-sdk-linux-x64': 0.3.292
-      '@anthropic-ai/claude-agent-sdk-linux-x64-musl': 0.3.292
-      '@anthropic-ai/claude-agent-sdk-win32-arm64': 0.3.292
-      '@anthropic-ai/claude-agent-sdk-win32-x64': 0.3.292
+      '@anthropic-ai/claude-agent-sdk-darwin-arm64': 0.3.295
+      '@anthropic-ai/claude-agent-sdk-darwin-x64': 0.3.295
+      '@anthropic-ai/claude-agent-sdk-linux-arm64': 0.3.295
+      '@anthropic-ai/claude-agent-sdk-linux-arm64-musl': 0.3.295
+      '@anthropic-ai/claude-agent-sdk-linux-x64': 0.3.295
+      '@anthropic-ai/claude-agent-sdk-linux-x64-musl': 0.3.295
+      '@anthropic-ai/claude-agent-sdk-win32-arm64': 0.3.295
+      '@anthropic-ai/claude-agent-sdk-win32-x64': 0.3.295
 
   '@anthropic-ai/sdk@0.129.0(zod@4.6.5)':
     dependencies:
@@ -25310,7 +25310,7 @@ snapshots:
     optionalDependencies:
       zod: 4.6.5
 
-  '@anthropic-ai/sdk@0.131.0(zod@4.6.5)':
+  '@anthropic-ai/sdk@0.132.1(zod@4.6.5)':
     dependencies:
       json-schema-to-ts: 3.1.1
       standardwebhooks: 1.1.1
@@ -25644,7 +25644,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@browserbasehq/stagehand@4.1.0':
+  '@browserbasehq/stagehand@4.2.0':
     dependencies:
       '@browserbasehq/sdk': 2.20.0
       '@opentelemetry/api': 1.9.1
@@ -25722,9 +25722,9 @@ snapshots:
 
   '@docsearch/css@3.8.2': {}
 
-  '@docsearch/js@3.8.2(@algolia/client-search@5.55.2)(@types/react@18.3.31)(react-dom@19.3.1(react@19.3.1))(react@18.3.1)(search-insights@2.17.3)':
+  '@docsearch/js@3.8.2(@algolia/client-search@5.55.2)(@types/react@18.3.31)(react-dom@19.3.0(react@19.3.0))(react@18.3.1)(search-insights@2.17.3)':
     dependencies:
-      '@docsearch/react': 3.8.2(@algolia/client-search@5.55.2)(@types/react@18.3.31)(react-dom@19.3.1(react@19.3.1))(react@18.3.1)(search-insights@2.17.3)
+      '@docsearch/react': 3.8.2(@algolia/client-search@5.55.2)(@types/react@18.3.31)(react-dom@19.3.0(react@19.3.0))(react@18.3.1)(search-insights@2.17.3)
       preact: 10.29.7
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -25734,7 +25734,7 @@ snapshots:
       - react-dom
       - search-insights
 
-  '@docsearch/react@3.8.2(@algolia/client-search@5.55.2)(@types/react@18.3.31)(react-dom@19.3.1(react@19.3.1))(react@18.3.1)(search-insights@2.17.3)':
+  '@docsearch/react@3.8.2(@algolia/client-search@5.55.2)(@types/react@18.3.31)(react-dom@19.3.0(react@19.3.0))(react@18.3.1)(search-insights@2.17.3)':
     dependencies:
       '@algolia/autocomplete-core': 1.17.7(@algolia/client-search@5.55.2)(algoliasearch@5.55.2)(search-insights@2.17.3)
       '@algolia/autocomplete-preset-algolia': 1.17.7(@algolia/client-search@5.55.2)(algoliasearch@5.55.2)
@@ -25743,7 +25743,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.31
       react: 18.3.1
-      react-dom: 19.3.1(react@19.3.1)
+      react-dom: 19.3.0(react@19.3.0)
       search-insights: 2.17.3
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -26298,14 +26298,14 @@ snapshots:
       '@formulajs/formulajs': 2.9.3
       tiny-emitter: 2.1.0
 
-  '@fortune-sheet/react@1.0.4(patch_hash=2932e52e79afcd4ced08cfa123b5eded786c85043da32f622f3e80af6fc96c37)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@fortune-sheet/react@1.0.4(patch_hash=2932e52e79afcd4ced08cfa123b5eded786c85043da32f622f3e80af6fc96c37)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
       '@fortune-sheet/core': 1.0.4(patch_hash=8791a230763dbf853fd65d627c68c31de37209992851377855e16cf08ea70532)
       '@types/regenerator-runtime': 0.13.8
       immer: 9.0.21
       lodash: 4.18.1
-      react: 19.3.1
-      react-dom: 19.3.1(react@19.3.1)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
       regenerator-runtime: 0.14.1
 
   '@google/genai@2.21.0(@modelcontextprotocol/sdk@1.32.1(supports-color@9.4.0)(zod@4.6.5))(supports-color@9.4.0)':
@@ -26824,31 +26824,31 @@ snapshots:
       '@octokit/request-error': 7.1.1
       '@octokit/webhooks-methods': 6.0.0
 
-  '@openai/codex@0.160.1':
+  '@openai/codex@0.162.0':
     optionalDependencies:
-      '@openai/codex-darwin-arm64': '@openai/codex@0.160.1-darwin-arm64'
-      '@openai/codex-darwin-x64': '@openai/codex@0.160.1-darwin-x64'
-      '@openai/codex-linux-arm64': '@openai/codex@0.160.1-linux-arm64'
-      '@openai/codex-linux-x64': '@openai/codex@0.160.1-linux-x64'
-      '@openai/codex-win32-arm64': '@openai/codex@0.160.1-win32-arm64'
-      '@openai/codex-win32-x64': '@openai/codex@0.160.1-win32-x64'
+      '@openai/codex-darwin-arm64': '@openai/codex@0.162.0-darwin-arm64'
+      '@openai/codex-darwin-x64': '@openai/codex@0.162.0-darwin-x64'
+      '@openai/codex-linux-arm64': '@openai/codex@0.162.0-linux-arm64'
+      '@openai/codex-linux-x64': '@openai/codex@0.162.0-linux-x64'
+      '@openai/codex-win32-arm64': '@openai/codex@0.162.0-win32-arm64'
+      '@openai/codex-win32-x64': '@openai/codex@0.162.0-win32-x64'
 
-  '@openai/codex@0.160.1-darwin-arm64':
+  '@openai/codex@0.162.0-darwin-arm64':
     optional: true
 
-  '@openai/codex@0.160.1-darwin-x64':
+  '@openai/codex@0.162.0-darwin-x64':
     optional: true
 
-  '@openai/codex@0.160.1-linux-arm64':
+  '@openai/codex@0.162.0-linux-arm64':
     optional: true
 
-  '@openai/codex@0.160.1-linux-x64':
+  '@openai/codex@0.162.0-linux-x64':
     optional: true
 
-  '@openai/codex@0.160.1-win32-arm64':
+  '@openai/codex@0.162.0-win32-arm64':
     optional: true
 
-  '@openai/codex@0.160.1-win32-x64':
+  '@openai/codex@0.162.0-win32-x64':
     optional: true
 
   '@opentelemetry/api-logs@0.223.0':
@@ -27197,7 +27197,7 @@ snapshots:
     dependencies:
       tinyexec: 1.3.1
 
-  '@puppeteer/browsers@3.2.3(yauzl@3.4.0)':
+  '@puppeteer/browsers@3.2.4(yauzl@3.4.0)':
     dependencies:
       modern-tar: 0.8.5
       yargs: 18.1.0
@@ -27526,11 +27526,11 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tanstack/react-virtual@3.14.13(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@tanstack/react-virtual@3.14.13(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
       '@tanstack/virtual-core': 3.17.11
-      react: 19.3.1
-      react-dom: 19.3.1(react@19.3.1)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
 
   '@tanstack/virtual-core@3.17.11': {}
 
@@ -27545,12 +27545,12 @@ snapshots:
       picocolors: 1.1.1
       pretty-format: 27.5.1
 
-  '@testing-library/react@16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@testing-library/react@16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
       '@babel/runtime': 7.29.7
       '@testing-library/dom': 10.4.2
-      react: 19.3.1
-      react-dom: 19.3.1(react@19.3.1)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
     optionalDependencies:
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
@@ -30459,48 +30459,48 @@ snapshots:
     dependencies:
       readable-stream: 2.3.8
 
-  lefthook-darwin-arm64@2.1.17:
+  lefthook-darwin-arm64@2.2.1:
     optional: true
 
-  lefthook-darwin-x64@2.1.17:
+  lefthook-darwin-x64@2.2.1:
     optional: true
 
-  lefthook-freebsd-arm64@2.1.17:
+  lefthook-freebsd-arm64@2.2.1:
     optional: true
 
-  lefthook-freebsd-x64@2.1.17:
+  lefthook-freebsd-x64@2.2.1:
     optional: true
 
-  lefthook-linux-arm64@2.1.17:
+  lefthook-linux-arm64@2.2.1:
     optional: true
 
-  lefthook-linux-x64@2.1.17:
+  lefthook-linux-x64@2.2.1:
     optional: true
 
-  lefthook-openbsd-arm64@2.1.17:
+  lefthook-openbsd-arm64@2.2.1:
     optional: true
 
-  lefthook-openbsd-x64@2.1.17:
+  lefthook-openbsd-x64@2.2.1:
     optional: true
 
-  lefthook-windows-arm64@2.1.17:
+  lefthook-windows-arm64@2.2.1:
     optional: true
 
-  lefthook-windows-x64@2.1.17:
+  lefthook-windows-x64@2.2.1:
     optional: true
 
-  lefthook@2.1.17:
+  lefthook@2.2.1:
     optionalDependencies:
-      lefthook-darwin-arm64: 2.1.17
-      lefthook-darwin-x64: 2.1.17
-      lefthook-freebsd-arm64: 2.1.17
-      lefthook-freebsd-x64: 2.1.17
-      lefthook-linux-arm64: 2.1.17
-      lefthook-linux-x64: 2.1.17
-      lefthook-openbsd-arm64: 2.1.17
-      lefthook-openbsd-x64: 2.1.17
-      lefthook-windows-arm64: 2.1.17
-      lefthook-windows-x64: 2.1.17
+      lefthook-darwin-arm64: 2.2.1
+      lefthook-darwin-x64: 2.2.1
+      lefthook-freebsd-arm64: 2.2.1
+      lefthook-freebsd-x64: 2.2.1
+      lefthook-linux-arm64: 2.2.1
+      lefthook-linux-x64: 2.2.1
+      lefthook-openbsd-arm64: 2.2.1
+      lefthook-openbsd-x64: 2.2.1
+      lefthook-windows-arm64: 2.2.1
+      lefthook-windows-x64: 2.2.1
 
   levn@0.4.1:
     dependencies:
@@ -31454,13 +31454,13 @@ snapshots:
       pvutils: 1.2.0
       tslib: 2.8.1
 
-  playwright-core@1.63.0: {}
+  playwright-core@1.64.0: {}
 
   playwright-core@1.64.0-alpha-1790635538000: {}
 
-  playwright@1.63.0:
+  playwright@1.64.0:
     dependencies:
-      playwright-core: 1.63.0
+      playwright-core: 1.64.0
 
   playwright@1.64.0-alpha-1790635538000:
     dependencies:
@@ -31628,9 +31628,9 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
-  react-dom@19.3.1(react@19.3.1):
+  react-dom@19.3.0(react@19.3.0):
     dependencies:
-      react: 19.3.1
+      react: 19.3.0
       scheduler: 0.28.0
 
   react-is@17.0.2: {}
@@ -31640,7 +31640,7 @@ snapshots:
       loose-envify: 1.4.0
     optional: true
 
-  react@19.3.1: {}
+  react@19.3.0: {}
 
   read-binary-file-arch@1.0.6(supports-color@9.4.0):
     dependencies:
@@ -31664,7 +31664,7 @@ snapshots:
       string_decoder: 1.3.0
       util-deprecate: 1.0.2
 
-  readable-stream@4.7.0:
+  readable-stream@4.8.0:
     dependencies:
       abort-controller: 3.0.0
       buffer: 6.0.3
@@ -32552,9 +32552,9 @@ snapshots:
       querystringify: 2.2.0
       requires-port: 1.0.0
 
-  use-sync-external-store@1.7.0(react@19.3.1):
+  use-sync-external-store@1.7.0(react@19.3.0):
     dependencies:
-      react: 19.3.1
+      react: 19.3.0
 
   utf8-byte-length@1.0.5: {}
 
@@ -32617,17 +32617,17 @@ snapshots:
       tsx: 4.23.15
       yaml: 2.9.1
 
-  vitepress-plugin-mermaid@2.0.17(mermaid@12.1.0)(vitepress@1.6.4(@algolia/client-search@5.55.2)(@types/node@22.20.1)(@types/react@18.3.31)(lightningcss@1.33.0)(postcss@8.5.28)(react-dom@19.3.1(react@19.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@6.0.3)):
+  vitepress-plugin-mermaid@2.0.17(mermaid@12.1.0)(vitepress@1.6.4(@algolia/client-search@5.55.2)(@types/node@22.20.1)(@types/react@18.3.31)(lightningcss@1.33.0)(postcss@8.5.28)(react-dom@19.3.0(react@19.3.0))(react@18.3.1)(search-insights@2.17.3)(typescript@6.0.3)):
     dependencies:
       mermaid: 12.1.0
-      vitepress: 1.6.4(@algolia/client-search@5.55.2)(@types/node@22.20.1)(@types/react@18.3.31)(lightningcss@1.33.0)(postcss@8.5.28)(react-dom@19.3.1(react@19.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@6.0.3)
+      vitepress: 1.6.4(@algolia/client-search@5.55.2)(@types/node@22.20.1)(@types/react@18.3.31)(lightningcss@1.33.0)(postcss@8.5.28)(react-dom@19.3.0(react@19.3.0))(react@18.3.1)(search-insights@2.17.3)(typescript@6.0.3)
     optionalDependencies:
       '@mermaid-js/mermaid-mindmap': 9.3.0
 
-  vitepress@1.6.4(@algolia/client-search@5.55.2)(@types/node@22.20.1)(@types/react@18.3.31)(lightningcss@1.33.0)(postcss@8.5.28)(react-dom@19.3.1(react@19.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@6.0.3):
+  vitepress@1.6.4(@algolia/client-search@5.55.2)(@types/node@22.20.1)(@types/react@18.3.31)(lightningcss@1.33.0)(postcss@8.5.28)(react-dom@19.3.0(react@19.3.0))(react@18.3.1)(search-insights@2.17.3)(typescript@6.0.3):
     dependencies:
       '@docsearch/css': 3.8.2
-      '@docsearch/js': 3.8.2(@algolia/client-search@5.55.2)(@types/react@18.3.31)(react-dom@19.3.1(react@19.3.1))(react@18.3.1)(search-insights@2.17.3)
+      '@docsearch/js': 3.8.2(@algolia/client-search@5.55.2)(@types/react@18.3.31)(react-dom@19.3.0(react@19.3.0))(react@18.3.1)(search-insights@2.17.3)
       '@iconify-json/simple-icons': 1.2.90
       '@shikijs/core': 2.5.0
       '@shikijs/transformers': 2.5.0
@@ -32892,12 +32892,12 @@ snapshots:
 
   zod@4.6.5: {}
 
-  zustand@4.5.7(@types/react@19.3.0)(immer@11.1.21)(react@19.3.1):
+  zustand@4.5.7(@types/react@19.3.0)(immer@11.1.21)(react@19.3.0):
     dependencies:
-      use-sync-external-store: 1.7.0(react@19.3.1)
+      use-sync-external-store: 1.7.0(react@19.3.0)
     optionalDependencies:
       '@types/react': 19.3.0
       immer: 11.1.21
-      react: 19.3.1
+      react: 19.3.0
 
   zwitch@2.0.4: {}
