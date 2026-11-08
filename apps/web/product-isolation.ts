@@ -54,13 +54,52 @@ export function productWebBundleIsolation(repository: string, webRoot: string): 
           },
         },
         worker: {
-          plugins: () => [...workerPlugins?.() ?? [], {
-            name: 'dsh-worker-build-inputs',
-            generateBundle: {
-              order: 'post',
-              handler(_options, bundle) { inputs.workerBundle(bundle, this.getWatchFiles()) },
-            },
-          }],
+          plugins: () => {
+            const watched = new Set<string>()
+            return [...workerPlugins?.() ?? [], {
+              name: 'dsh-worker-build-inputs',
+              configResolved(workerConfig) {
+                for (const plugin of workerConfig.plugins) {
+                  const load = plugin.load
+                  if (load !== undefined) {
+                    const handler = typeof load === 'function' ? load : load.handler
+                    plugin.load = {
+                      ...typeof load === 'function' ? {} : load,
+                      handler(...args) { return handler.apply(watchingContext(this, watched), args) },
+                    }
+                  }
+                  const transform = plugin.transform
+                  if (transform !== undefined) {
+                    const handler = typeof transform === 'function' ? transform : transform.handler
+                    plugin.transform = {
+                      ...typeof transform === 'function' ? {} : transform,
+                      handler(...args) { return handler.apply(watchingContext(this, watched), args) },
+                    }
+                  }
+                  const resolveId = plugin.resolveId
+                  if (resolveId !== undefined) {
+                    const handler = typeof resolveId === 'function' ? resolveId : resolveId.handler
+                    plugin.resolveId = {
+                      ...typeof resolveId === 'function' ? {} : resolveId,
+                      handler(...args) { return handler.apply(watchingContext(this, watched), args) },
+                    }
+                  }
+                  const buildStart = plugin.buildStart
+                  if (buildStart !== undefined) {
+                    const handler = typeof buildStart === 'function' ? buildStart : buildStart.handler
+                    plugin.buildStart = {
+                      ...typeof buildStart === 'function' ? {} : buildStart,
+                      handler(...args) { return handler.apply(watchingContext(this, watched), args) },
+                    }
+                  }
+                }
+              },
+              generateBundle: {
+                order: 'post',
+                handler(_options, bundle) { inputs.workerBundle(bundle, [...this.getModuleIds(), ...watched]) },
+              },
+            }]
+          },
         },
       }
     },
@@ -102,4 +141,18 @@ export function productWebBundleIsolation(repository: string, webRoot: string): 
       },
     },
   }]
+}
+
+/** Retain worker input observations while forwarding each plugin's watch registration. */
+function watchingContext<T extends { addWatchFile(file: string): void }>(context: T, files: Set<string>): T {
+  return new Proxy(context, {
+    get(target, property) {
+      if (property === 'addWatchFile') return (file: string): void => {
+        files.add(file)
+        target.addWatchFile(file)
+      }
+      const value: unknown = Reflect.get(target, property, target)
+      return typeof value === 'function' ? value.bind(target) : value
+    },
+  })
 }
