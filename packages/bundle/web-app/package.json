@@ -210,7 +210,7 @@
     "@deepseek-ai/dsh-session-projection": "workspace:*",
     "@deepseek-ai/dsh-shell-env": "workspace:*",
     "@deepseek-ai/dsh-typert-registry": "workspace:*",
-    "@deepseek-ai/libreoffice-kit": "^0.1.5",
+    "@deepseek-ai/libreoffice-kit": "^0.2.0",
     "@deepseek-ai/dsh-otel": "workspace:*"
   }
 }
