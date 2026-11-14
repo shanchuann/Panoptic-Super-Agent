@@ -117,7 +117,7 @@
     "@deepseek-ai/dsh-tool-ralph": "workspace:*",
     "@deepseek-ai/dsh-hooks-codex": "workspace:*",
     "@deepseek-ai/dsh-hooks-claude-code": "workspace:*",
-    "@agentclientprotocol/sdk": "1.7.0",
+    "@agentclientprotocol/sdk": "1.8.0",
     "@deepseek-ai/dsh-acp": "workspace:*",
     "@deepseek-ai/dsh-agent": "workspace:*",
     "@deepseek-ai/dsh-agent-loop": "workspace:*",
@@ -163,7 +163,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/ws": "8.18.2",
     "ajv": "^8.20.0",
-    "execa": "^10.1.0",
+    "execa": "^10.1.1",
     "ws": "8.22.0"
   },
   "exports": {
