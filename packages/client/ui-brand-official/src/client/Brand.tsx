@@ -20,9 +20,9 @@ export function OfficialBrandMark({ size }: SidebarBrandMarkOwnerProps) {
 export function OfficialBrandName({ t }: PropsLocale<'panoptic.brand'>) {
   return <span aria-label={t('name')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap', fontFamily: 'var(--dsw-font-family-brand)', fontSize: 18, letterSpacing: '-0.03em', fontWeight: 500, color: 'var(--panoptic-wordmark-ink)' }}>
     <span>{t('wordmark')}</span>{' '}
-    <span style={{ padding: '3px 7px', borderRadius: 6, background: 'var(--panoptic-deep)', color: 'var(--panoptic-badge-ink)', display: 'inline-flex', alignItems: 'center', height: 18 }}>
-      <svg width="45" height="12" viewBox="0 0 45 12" role="img" aria-label={t('badge')} fill="none">
-        <g stroke="currentColor" strokeWidth="1.35" strokeLinecap="square" strokeLinejoin="round" transform="translate(1 1)">
+    <span style={{ padding: '3px 8px', borderRadius: 6, background: 'var(--panoptic-deep)', color: 'var(--panoptic-badge-ink)', display: 'inline-flex', alignItems: 'center', height: 20 }}>
+      <svg width="56.25" height="15" viewBox="0 0 45 12" role="img" aria-label={t('badge')} fill="none">
+        <g stroke="currentColor" strokeWidth="1.8" strokeLinecap="square" strokeLinejoin="round" transform="translate(1 1)">
           <path d="M6 1H2.5C.5 1 .5 4.5 2.5 4.5H4C6.5 4.5 6.5 8.5 4 8.5H.5" />
           <path d="M9.5 1V6C9.5 9.5 15 9.5 15 6V1" />
           <path d="M19 8.5V1H22C25.5 1 25.5 5 22 5H19" />
