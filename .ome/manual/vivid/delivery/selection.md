@@ -4,5 +4,5 @@
 - 更新日期：2026-11-08
 - 来源资产：vivid-illustration-skill 的 VA-109，按本项目事实重绘
 - 用途：说明书图 1，README 与设计文档
-- 交付文件：fig.pptx（原生可编辑，100 个形状）、fig.svg、fig.pdf
+- 交付文件：fig.pptx（原生可编辑，100 个形状）、fig.pdf；正式 SVG 位于 [architecture-overview.svg](../../architecture-overview.svg)
 - 说明：v1.2 新增三个运行循环、执行账本、能力网关与可观测性

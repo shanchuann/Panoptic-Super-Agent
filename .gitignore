@@ -53,8 +53,5 @@ dist/
 __pycache__/
 *.log
 
-# Local manual build intermediates and skill working copies
+# Local manual build intermediates
 .ome/manual/print/
-.ome/manual/vivid/A/
-.ome/manual/vivid/B/
-.ome/manual/vivid/comparison.html
