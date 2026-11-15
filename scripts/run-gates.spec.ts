@@ -467,11 +467,12 @@ describe('gate graph validation', () => {
   )
 
   it.each(['ci-primary', 'ci-static', 'check-all'] as const)(
-    'keeps weighted approval policy tests in %s',
+    'omits retired upstream repository bots from %s',
     (mode) => {
       const ids = withPnpmEntrypoint(() => gatesForMode(mode).map(subject => subject.id))
 
-      expect(ids).toContain('approval-policy')
+      expect(ids).not.toContain('approval-policy')
+      expect(ids).not.toContain('issue-management')
     },
   )
 

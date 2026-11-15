@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/archived/process/2026-10-20-weighted-approval-status-gate-with-check-run-label.md
+2026-10-20-weighted-approval-status-gate-with-check-run-label.md: b49aaa30a815b4faf08bbfcc93d7894a7e3d563d
+2026-10-20-weighted-approval-status-gate-with-check-run-label.zh.md: 284c0bb934580060becc0034c8a016356d8e449d

@@ -1,6 +1,7 @@
 # Agent Note: Event-directed PR review status commands
 
 Status: implemented
+Archived: 2026-11-15
 
 English | [中文](2026-08-10-event-directed-pr-review-status.zh.md)
 

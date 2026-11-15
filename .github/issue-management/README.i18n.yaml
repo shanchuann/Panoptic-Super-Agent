@@ -3,32 +3,20 @@
 # After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .github/issue-management/README.md
 /:
-  en: d5e0fd5da06b95ab
-  zh: db4281526c40cc1d
+  en: 7d67c02eee6c8213
+  zh: 191d6d923593fd04
 /issue-management:
   en: 44fb5f74b6908794
   zh: cc25f420bac7d40b
-/issue-management/summary:
-  en: b3f6f5f011516611
-  zh: 7e6c83caf28ea807
-/issue-management/table-of-contents:
-  en: cff988027897ee0d
-  zh: 36a444b895dfdc48
 /issue-management/pull-request-policy:
-  en: ad11184112771cc8
-  zh: cc8c112a76dcf62e
+  en: 28c6456a384ebeb5
+  zh: c63a7a9582c3f61b
 /issue-management/lifecycle-events:
-  en: f0e434f0ead4e952
-  zh: c7c62cee2486a3ff
+  en: e20c1d995941f90e
+  zh: 467ecd59292be111
 /issue-management/configuration-and-limitations:
-  en: 36cbf0d37f910b04
-  zh: cdab6aef6763941f
-/issue-management/module-ownership:
-  en: e83f694e0be99e69
-  zh: 85fb201f86af2ce8
+  en: 18da81fadb0edbd0
+  zh: cfc847733fed2f41
 /issue-management/verification:
-  en: b52fe10bcb063600
-  zh: 3362170645a58eff
-/issue-management/dev-note:
-  en: b75c8458928b72b9
-  zh: 003ba4e17b4b5269
+  en: b0ac30093bfceb64
+  zh: 06273f0dbfc3485c
