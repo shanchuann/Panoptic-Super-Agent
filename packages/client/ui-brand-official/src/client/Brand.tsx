@@ -18,5 +18,8 @@ export function OfficialBrandMark({ size }: SidebarBrandMarkOwnerProps) {
  * @returns the product wordmark.
  */
 export function OfficialBrandName({ t }: PropsLocale<'panoptic.brand'>) {
-  return <span aria-label={t('name')} style={{ whiteSpace: 'nowrap', fontSize: 18, letterSpacing: '-0.02em', fontWeight: 500 }}>{t('name')}</span>
+  return <span aria-label={t('name')} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap', fontFamily: 'var(--dsw-font-family-brand)', fontSize: 18, letterSpacing: '-0.03em', fontWeight: 500, color: 'var(--panoptic-wordmark-ink)' }}>
+    <span>{t('wordmark')}</span>{' '}
+    <span style={{ padding: '3px 7px', borderRadius: 6, background: 'var(--panoptic-deep)', color: 'var(--panoptic-badge-ink)', fontSize: 12, lineHeight: '18px', letterSpacing: '0.01em' }}>{t('badge')}</span>
+  </span>
 }

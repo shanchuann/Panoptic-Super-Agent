@@ -22,7 +22,7 @@ it('boots the built plugin graph and renders a fixture session end to end', asyn
 
   // The sidebar renders from the boot graph: every inject layer activated.
   const tree = await screen.findByRole('tree', { name: 'Sessions' }, { timeout: 10_000 })
-  screen.getByText('Panoptic Super')
+  screen.getByLabelText('Panoptic Super')
   expect(document.querySelector('img[src*="panoptic-logo"]')).not.toBeNull()
   // The compact layout dropped group session counts; the fixture workspace
   // group row renders immediately with its sessions beneath it.

@@ -4,14 +4,14 @@
  *
  * A browser installs a Web App only with a raster 192px and a 512px icon, masks
  * the icon it puts on the home screen, and has no manifest support for iOS,
- * which reads `apple-touch-icon` instead. The whale favicon is the bare mark
- * drawn edge to edge: handed to a launcher directly it loses its fins to the
+ * which reads `apple-touch-icon` instead. The favicon is the bare mark
+ * drawn without a tile: handed to a launcher directly it loses its edges to the
  * mask, and it carries neither the tile nor a background of its own. This
  * script rasterizes the official application tile (`apps/desktop/resources/icon.svg`,
  * the artwork the desktop application ships) into the committed PNGs under
  * `public/`. Every variant crops the tile's drop shadow, which belongs to a
  * desktop window rather than a launcher; the maskable variant additionally
- * scales the whale inside the safe zone a platform mask may crop, leaving the
+ * scales the orbital artwork inside the safe zone a platform mask may crop, leaving the
  * tile's own gradient to fill the icon so no mask meets a seam.
  *
  * The committed PNGs are the output; rerun
@@ -63,7 +63,7 @@ const SOURCE_ROOT = /^<svg[^>]*>/u
 /** The tile group's drop shadow; stripped because a launcher icon has no window around it. */
 const TILE_SHADOW_GROUP = '<g filter="url(#filter0_d_1637_371)">'
 
-/** The whale group inside the tile; the only element a maskable icon scales. */
+/** The artwork group inside the tile; the only element a maskable icon scales. */
 const TILE_ARTWORK_GROUP = '<g filter="url(#filter1_ddi_1637_371)">'
 
 /** One committed install icon: the manifest or link member it serves and its edge in pixels. */

@@ -288,3 +288,49 @@
 .overlayLayer > * {
   pointer-events: auto;
 }
+
+/* Only the clipped centre owns ambient motion; controls and overlays remain interactive. */
+.centerCol,
+:global([data-windows-titlebar]) .centerCol,
+:global([data-platform='darwin']) .centerCol {
+  position: relative;
+  isolation: isolate;
+  background: var(--panoptic-canvas);
+}
+
+.centerCol::before,
+.centerCol::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  corner-shape: round;
+  animation: panoptic-drift 36s ease-in-out infinite alternate;
+}
+
+.centerCol::before {
+  left: -20%;
+  top: -25%;
+  background: var(--panoptic-orb-blue);
+}
+
+.centerCol::after {
+  right: -20%;
+  bottom: -30%;
+  background: var(--panoptic-orb-white);
+  animation-duration: 44s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes panoptic-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(22%, 18%, 0) scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .centerCol::before,
+  .centerCol::after { animation: none; }
+}

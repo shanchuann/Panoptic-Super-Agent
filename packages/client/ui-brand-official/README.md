@@ -25,6 +25,8 @@ This package supplies the Panoptic Super orbital mark and English wordmark in th
 <a id="use-this-package"></a>
 ## Use this package
 
+The sidebar pairs the supplied orbital logo with `Panoptic` and a lowercase `super` badge in white on deep blue. The accessible product name remains Panoptic Super.
+
 Mount this plugin in the browser roster. Both local and official builds use the same supplied artwork. Remove this plugin when composing a different product identity.
 
 -----

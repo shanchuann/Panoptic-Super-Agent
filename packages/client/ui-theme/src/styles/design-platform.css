@@ -422,3 +422,57 @@ html[data-platform='darwin'] body {
 html[data-platform='darwin'] body[data-ds-dark-theme] {
   --dsw-specific-menu: rgba(48, 49, 54, 0.94);
 }
+
+/* Panoptic identity: shared surfaces keep controls and content above the ambient light. */
+body {
+  --panoptic-deep: #1b2d56;
+  --panoptic-mist: #5b7ca6;
+  --panoptic-ice: #d6e4f7;
+  --panoptic-silver: #f8faff;
+  --panoptic-peach: #f7d6c3;
+  --panoptic-badge-ink: #fff;
+  --panoptic-wordmark-ink: var(--panoptic-deep);
+  --panoptic-canvas: linear-gradient(135deg, #f8faff 5%, #edf3fd 48%, #e1ecfc 100%);
+  --panoptic-orb-blue: radial-gradient(ellipse, rgb(139 179 234 / 45%), rgb(214 228 247 / 18%) 48%, transparent 70%);
+  --panoptic-orb-white: radial-gradient(ellipse, rgb(255 255 255 / 95%), rgb(255 255 255 / 40%) 42%, transparent 70%);
+  --dsw-alias-brand-primary: var(--panoptic-deep);
+  --dsw-alias-button-primary-hover: #2c4679;
+  --dsw-alias-brand-primary-new-colorprimary-new-color: var(--panoptic-mist);
+  --dsw-alias-bg-base: var(--panoptic-silver);
+  --dsw-alias-label-primary: var(--panoptic-deep);
+  --dsw-alias-label-secondary: #4b6386;
+  --dsw-alias-border-l1: rgb(91 124 166 / 10%);
+  --dsw-alias-border-l2: rgb(91 124 166 / 18%);
+  --dsw-alias-border-l3: rgb(91 124 166 / 22%);
+  --dsw-alias-interactive-bg-hover: rgb(91 124 166 / 9%);
+  --dsw-specific-sidebar-fill: #eef3fc;
+  --dsw-specific-sidebar-nav-item-active: #d6e4f7;
+  --dsw-alias-bg-layer-1: #fff;
+  --dsw-alias-bg-layer-2: #f8faff;
+  --dsw-alias-bg-layer-3: #edf3fd;
+  --dsw-specific-input-major: var(--dsw-alias-bg-layer-2);
+  --dsw-specific-tip: var(--dsw-alias-bg-layer-3);
+}
+
+body[data-ds-dark-theme] {
+  --panoptic-wordmark-ink: #e4edfc;
+  --panoptic-canvas: linear-gradient(135deg, #101c32 5%, #162947 60%, #1b3356 100%);
+  --panoptic-orb-blue: radial-gradient(ellipse, rgb(91 124 166 / 28%), transparent 70%);
+  --panoptic-orb-white: radial-gradient(ellipse, rgb(214 228 247 / 12%), transparent 70%);
+  --dsw-alias-brand-primary: #c4d8f4;
+  --dsw-alias-button-primary-hover: #e0ebfb;
+  --dsw-alias-bg-base: #101c32;
+  --dsw-alias-label-primary: #e4edfc;
+  --dsw-alias-label-secondary: #b2c3dc;
+  --dsw-alias-border-l1: rgb(171 195 229 / 10%);
+  --dsw-alias-border-l2: rgb(171 195 229 / 18%);
+  --dsw-alias-border-l3: rgb(171 195 229 / 22%);
+  --dsw-alias-interactive-bg-hover: rgb(171 195 229 / 10%);
+  --dsw-specific-sidebar-fill: #13213a;
+  --dsw-specific-sidebar-nav-item-active: #263e60;
+  --dsw-alias-bg-layer-1: #182b46;
+  --dsw-alias-bg-layer-2: #1d324f;
+  --dsw-alias-bg-layer-3: #263e60;
+  --dsw-specific-input-major: var(--dsw-alias-bg-layer-2);
+  --dsw-specific-tip: var(--dsw-alias-bg-layer-3);
+}
