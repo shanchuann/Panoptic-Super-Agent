@@ -83,9 +83,9 @@ describe('official browser-brand plugin', () => {
 
   it('renders the official name independently from both requested mark sizes', () => {
     const name = render(<OfficialBrandName t={key => zh[key as keyof typeof zh]} />)
-    expect(name.container.textContent).toBe('Panoptic super')
+    expect(name.container.textContent).toBe('Panoptic ')
     expect(name.getByLabelText('Panoptic Super')).toBeDefined()
-    expect(name.getByText('super').style.background).toBe('var(--panoptic-deep)')
+    expect(name.getByRole('img', { name: 'SUPER' }).parentElement?.style.background).toBe('var(--panoptic-deep)')
     name.unmount()
 
     const mark = render(<OfficialBrandMark size={34} />)
