@@ -31,7 +31,7 @@
     "diff": "^9.0.0",
     "react-dom": "^19.3.1",
     "anser": "^2.3.5",
-    "katex": "^0.19.0",
+    "katex": "^0.19.1",
     "micromark-core-commonmark": "^2.0.4",
     "micromark-util-character": "^2.1.1",
     "micromark-util-classify-character": "^2.0.1",
@@ -48,7 +48,7 @@
     "mdast-util-math": "^3.0.0",
     "micromark-extension-gfm": "^3.0.0",
     "micromark-util-sanitize-uri": "^2.0.1",
-    "simple-icons": "16.34.0",
+    "simple-icons": "16.36.0",
     "@deepseek-ai/dsh-util-file-drag": "workspace:*"
   },
   "files": [
