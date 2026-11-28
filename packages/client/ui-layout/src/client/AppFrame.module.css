@@ -16,6 +16,17 @@
   transition: grid-template-columns var(--ds-transition-duration-slow) var(--ds-ease-in-out);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .frame[data-sidebar-animating]:has([data-project-sidebar]) {
+    transition-duration: 270ms;
+    transition-timing-function: cubic-bezier(0.24, 0.74, 0.28, 1);
+  }
+
+  .frame[data-sidebar-animating][data-sidebar-collapsed][data-rightbar-collapsed]:has([data-project-sidebar]) {
+    transition-duration: 234ms;
+  }
+}
+
 /* Dragging writes widths at pointer cadence; easing them would detach the
    column from the handle. */
 .frame[data-dragging] {
@@ -289,48 +300,31 @@
   pointer-events: auto;
 }
 
-/* Only the clipped centre owns ambient motion; controls and overlays remain interactive. */
 .centerCol,
 :global([data-windows-titlebar]) .centerCol,
 :global([data-platform='darwin']) .centerCol {
-  position: relative;
-  isolation: isolate;
   background: var(--panoptic-canvas);
 }
 
-.centerCol::before,
-.centerCol::after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  pointer-events: none;
-  width: 85%;
-  height: 85%;
-  border-radius: 50%;
+.frame:has([data-project-sidebar]) {
+  --panoptic-sidebar-surface: color-mix(in srgb, var(--dsw-specific-sidebar-fill), var(--dsw-alias-bg-layer-3) 65%);
+}
+
+:global(html:not([data-platform='darwin'])) .frame:has([data-project-sidebar]) .sidebarCol,
+:global([data-windows-titlebar]) .frame:has([data-project-sidebar])::before {
+  background: var(--panoptic-sidebar-surface, var(--dsw-specific-sidebar-fill));
+}
+
+.frame:has([data-project-sidebar]):has(> .centerCol[data-main-panel]:not([data-main-panel='panoptic-project-shelf'])) {
+  background: var(--panoptic-sidebar-surface);
+}
+
+/* Project views keep using the entire center track. Other panels use an inset. */
+.frame:has([data-project-sidebar]) > .centerCol[data-main-panel]:not([data-main-panel='panoptic-project-shelf']) {
+  min-height: 0;
+  margin: 8px 8px 8px 0;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: var(--dsw-radius-lg);
+  background: var(--dsw-alias-bg-base);
   corner-shape: round;
-  animation: panoptic-drift 36s ease-in-out infinite alternate;
-}
-
-.centerCol::before {
-  left: -20%;
-  top: -25%;
-  background: var(--panoptic-orb-blue);
-}
-
-.centerCol::after {
-  right: -20%;
-  bottom: -30%;
-  background: var(--panoptic-orb-white);
-  animation-duration: 44s;
-  animation-direction: alternate-reverse;
-}
-
-@keyframes panoptic-drift {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(22%, 18%, 0) scale(1.12); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .centerCol::before,
-  .centerCol::after { animation: none; }
 }

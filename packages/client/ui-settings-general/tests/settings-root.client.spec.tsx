@@ -32,6 +32,7 @@ afterEach(() => {
   if (scrollIntoViewDescriptor === undefined) Reflect.deleteProperty(Element.prototype, 'scrollIntoView')
   else Object.defineProperty(Element.prototype, 'scrollIntoView', scrollIntoViewDescriptor)
   vi.useRealTimers()
+  vi.unstubAllGlobals()
 })
 
 type Row = { id: string; order: number; label: string }
@@ -282,6 +283,20 @@ describe('SettingsRoot trigger', () => {
   it('keeps the reconnect indicator out of the collapsed rail', () => {
     mount({ wide: false, connectionState: 'disconnected' })
     expect(screen.queryByRole('button', { name: 'Disconnected, reconnect now' })).toBeNull()
+  })
+
+  it('shows PCS connection feedback outside the Settings row with the sidebar collapsed', () => {
+    vi.stubGlobal('__PANOPTIC_PROJECT_HOME__', true)
+    const mounted = mount({ wide: false })
+    mounted.setConnectionState('disconnected')
+    const retry = screen.getByRole('button', { name: 'Disconnected, reconnect now' })
+    expect(mounted.view.container.contains(retry)).toBe(false)
+    expect(retry.parentElement?.parentElement).toBe(document.body)
+    fireEvent.click(retry)
+    expect(mounted.reconnect).toHaveBeenCalledOnce()
+    mounted.setConnectionState('connected')
+    const recovered = screen.getByRole('status', { name: 'Connected' })
+    expect(recovered.parentElement?.parentElement).toBe(document.body)
   })
 })
 

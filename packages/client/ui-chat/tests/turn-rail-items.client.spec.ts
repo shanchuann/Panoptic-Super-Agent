@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import { describe, expect, it } from 'vitest'
-import { mergeTurnRailItems } from '../src/client/chat/turn-rail-items.ts'
+import { mergeTurnRailItems, turnAtEvent } from '../src/client/chat/turn-rail-items.ts'
 import type { TurnNavigationItem } from '../src/client/contract/snapshot.ts'
 
 function loadedItem(turn: number, prompt = `p${String(turn)}`, response = `r${String(turn)}`): TurnNavigationItem {
@@ -73,5 +73,15 @@ describe('mergeTurnRailItems', () => {
       { turn: 3, prompt: '', response: '', anchor: { kind: 'unloaded', seq: 4 } },
       { turn: 6, prompt: 'kept', response: '', anchor: { kind: 'unloaded', seq: 7 } },
     ])
+  })
+})
+
+describe('turnAtEvent', () => {
+  it('locates the owning durable turn and ignores outline entries without an event sequence', () => {
+    const outline = [{ turn: 1, seq: 4 }, { turn: 2, seq: 18 }, { turn: 3, seq: 29 }, { turn: 4 }]
+    expect(turnAtEvent(outline, 3)).toBeUndefined()
+    expect(turnAtEvent(outline, 17)).toBe(1)
+    expect(turnAtEvent(outline, 18)).toBe(2)
+    expect(turnAtEvent(outline, 46)).toBe(3)
   })
 })

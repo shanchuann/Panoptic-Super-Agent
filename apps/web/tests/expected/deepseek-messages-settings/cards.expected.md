@@ -18,11 +18,12 @@
       - button "认证说明": "?"
       - textbox "API 密钥":
         - /placeholder: 留空使用已保存凭据
+      - text: API 地址
+      - textbox "API 地址":
+        - /placeholder: https://api.deepseek.com/anthropic（默认使用环境 DEEPSEEK_BASE_URL）
+      - text: 当前 DeepSeek 提供商使用 Anthropic Messages。OpenAI 兼容地址请通过「添加模型提供商 → 自定义模型 API」配置。
       - group:
-        - text: 自定义设置 API 地址
-        - textbox "API 地址":
-          - /placeholder: https://api.deepseek.com/anthropic（默认使用环境 DEEPSEEK_BASE_URL）
-        - text: 请填写兼容 Anthropic Messages 协议的 API 地址。
+        - text: 自定义设置
         - region "模型目录":
           - text: 模型目录 正在使用适配器默认模型
           - button "调整模型顺序 1"

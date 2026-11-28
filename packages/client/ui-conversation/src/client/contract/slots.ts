@@ -220,6 +220,8 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
     }
     /** Conversation shell beneath its root-scoped main-panel entry. */
     'main.conversation': { kind: 'single'; scope: 'session-maybe' }
+    /** Standalone project graph occupying the conversation viewport. */
+    'conversation.projectGraph': { kind: 'single'; scope: 'session-maybe' }
     /** Strict per-Session Conversation body. */
     'conversation.session': {
       kind: 'single'
@@ -324,6 +326,7 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
       scope: 'session-maybe'
       props: ConversationContentInputProps
       children: {
+        'conversation.projectGraph': { kind: 'single'; scope: 'session-maybe' }
         'conversation.session': { kind: 'single'; scope: 'session' }
         'conversation.composer': { kind: 'chain'; scope: 'session' }
         'conversation.composer.bar': { kind: 'single'; scope: 'session-maybe' }
@@ -599,6 +602,8 @@ export interface ConversationContentInputProps {
   variant: 'main' | 'embedded'
   phase: 'settling' | 'hero' | 'active'
   hero: boolean
+  /** Use the project graph and on-demand transcript with the original composer. */
+  projectGraph?: boolean
 }
 
 /** Values passed from shared content to its occurrence-selected width controls. */

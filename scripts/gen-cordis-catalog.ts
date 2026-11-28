@@ -846,6 +846,7 @@ export const LINK_MAP: Readonly<Record<string, string>> = {
   WorkspaceOrderValue: 'workspace.md',
   WorkspacePinSessionRequest: 'workspace.md',
   WorkspacePinValue: 'workspace.md',
+  WorkspaceProjectGraph: 'workspace.md#project-graph',
   WorkspaceRenameRequest: 'workspace.md',
   WorkspaceUnarchiveSessionRequest: 'workspace.md',
   WorkspaceUnpinSessionRequest: 'workspace.md',

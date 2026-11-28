@@ -6,6 +6,7 @@ import type { MainPanelId, PanelActions } from '../src/client/service.ts'
 function fakePanels(): PanelActions {
   return {
     selectPanel: vi.fn(),
+    locateProjectHistory: vi.fn(),
     retainMainPanels: vi.fn(),
     setSidebar: vi.fn(),
     toggleSidebar: vi.fn(),

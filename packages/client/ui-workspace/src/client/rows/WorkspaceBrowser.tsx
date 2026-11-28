@@ -577,6 +577,12 @@ function SessionTree({
           actions={group.workspaceId === undefined
             ? undefined
             : {
+              openProject: () => {
+                if (group.workspaceId !== undefined) {
+                  setGroupExpanded(group.key, true)
+                  startSession(group.workspaceId, { projectConversation: true })
+                }
+              },
               rename: () => {
               /* v8 ignore next -- narrowing guard: the actions object exists only for real-workspace groups. */
                 if (group.workspaceId !== undefined) onRenameRequest(group.workspaceId, group.label)

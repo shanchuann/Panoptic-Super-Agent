@@ -6,6 +6,8 @@ The `dsh` command is the sole supported Node application launcher: profiles are 
 
 ## Entry modes
 
+Run `pnpm pcs web` in the Panoptic Super checkout or `pcs web` with the desktop-installed command. PCS uses the same profile syntax and loads its own data from `PCS_HOME` or `~/.pcs`.
+
 | Command | Purpose |
 |---|---|
 | `dsh <name>` / `dsh --profile <name>` | Boot the named profile under `$DSH_HOME/profiles/<name>`. |

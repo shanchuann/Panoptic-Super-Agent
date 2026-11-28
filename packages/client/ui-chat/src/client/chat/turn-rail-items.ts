@@ -51,6 +51,19 @@ function outlineEntries(outline: unknown): readonly unknown[] {
 }
 
 /**
+ * Find the persisted turn containing an event referenced by a project node.
+ * @param outline - Host turn outline for that conversation.
+ * @param seq - event sequence selected on the graph.
+ * @returns turn number, or undefined before the outline covers the conversation.
+ */
+export function turnAtEvent(outline: unknown, seq: number): number | undefined {
+  for (const raw of [...outlineEntries(outline)].reverse()) {
+    const item = outlineEntry(raw)
+    if (item !== undefined && item.seq <= seq) return item.turn
+  }
+}
+
+/**
  * Merge the host outline with the loaded rail items into the full ladder.
  * A turn present in both sides keeps the loaded anchor, taking an outline
  * preview only where the window's own is empty (a mid-Turn window head, or a

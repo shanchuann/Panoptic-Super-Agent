@@ -18,8 +18,8 @@
   en: e9b22f232837e131
   zh: fc5f3834b969d2d2
 /deepseek-harness-desktop/terminal-command:
-  en: 5f2d25a1d8472647
-  zh: 2acb5c5d7d1917e2
+  en: 405be3a28f27c3b5
+  zh: bb005eb7897d41d5
 /deepseek-harness-desktop/closing-the-window-and-quitting:
   en: bb35a022c37955c9
   zh: ab2ef22d398d83a0
@@ -27,23 +27,23 @@
   en: 3724c53da4f7647b
   zh: 76ae549d43c99bb4
 /deepseek-harness-desktop/key-technical-decisions/bundled-workspace-dependencies:
-  en: 3368ff9b955ada69
-  zh: e9209ef6ad4fd305
+  en: 90215ed48a7159b3
+  zh: b80a8cd731740e2d
 /deepseek-harness-desktop/bundled-command-runtime:
-  en: 372297005b57a08b
-  zh: 074a635ac17e4362
+  en: 84e47e306d3d5bff
+  zh: 038166da6fb6d857
 /deepseek-harness-desktop/installation-ownership:
-  en: 160b500cdcd6a39a
-  zh: 6c267f1762ec3689
+  en: 0dad4d8a1f98fe7d
+  zh: 945ac88d4edfed74
 /deepseek-harness-desktop/installation-ownership/runtime-and-plugin-activation:
-  en: a1a47b09f4a72ba4
-  zh: 7b1cf27f0b72cf31
+  en: f6563cb83818046e
+  zh: 6b2ccd1c9300bce1
 /deepseek-harness-desktop/installation-ownership/host-environment:
   en: 98cf848762482d48
   zh: 74f9100a39ec8c2f
 /deepseek-harness-desktop/develop:
-  en: faf7676ba18bbf2f
-  zh: f1d7b75ad348c548
+  en: 8515202f166b5f31
+  zh: a6babc1bdca7b6d6
 /deepseek-harness-desktop/develop/startup-onboarding:
   en: 67dc7ef3e293236a
   zh: 1b224db684a2d1d7

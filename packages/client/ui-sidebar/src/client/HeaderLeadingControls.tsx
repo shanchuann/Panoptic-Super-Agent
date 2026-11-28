@@ -1,6 +1,6 @@
 /** Window-chrome controls for the fully hidden sidebar (frame shell.leading seat). */
 import {
-  IconNewChatOutlineRegular, IconPanelLeftOutlineRegular, Tooltip,
+  IconNewChatOutlineRegular, IconPanelLeftOutlineRegular, IconProjectAddOutlineRegular, Tooltip,
 } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { InjectFace, PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
 // Type-only: pulls the frame's shell.leading slot declaration.
@@ -24,12 +24,13 @@ export type HeaderLeadingControlsProps =
  * @returns the sidebar toggle, plus the New Session control while the access snapshot allows `session/create`.
  */
 export function HeaderLeadingControls({
-  toggleSidebar, startSession, trackEntryClick, useRemoteAccess, useShortcuts, t,
+  toggleSidebar, startSession, projectPanelId, trackEntryClick, useRemoteAccess, useShortcuts, t,
 }: HeaderLeadingControlsProps) {
   // A page whose access snapshot excludes starting a Session keeps only the sidebar toggle here.
   const canStartSession = useRemoteAccess('session/create')
   const shortcut = useShortcuts(rows => rows.find(row => row.id === 'sidebar.left.toggle'))
   const newShortcut = useShortcuts(rows => rows.find(row => row.id === 'session.new'))
+  const newLabel = t(projectPanelId === undefined ? 'session.new.label' : 'project.new')
   return (
     <div className={css.controls}>
       <Tooltip label={t('toggle.open')} shortcutKeys={shortcut?.keys} delayMs={500}>
@@ -44,18 +45,18 @@ export function HeaderLeadingControls({
         </button>
       </Tooltip>
       {canStartSession && (
-        <Tooltip label={t('session.new.label')} shortcutKeys={newShortcut?.keys} delayMs={500}>
+        <Tooltip label={newLabel} shortcutKeys={newShortcut?.keys} delayMs={500}>
           <button
             type="button"
             className={css.iconButton}
-            aria-label={t('session.new.label')}
+            aria-label={newLabel}
             aria-keyshortcuts={newShortcut?.aria}
             onClick={() => {
               trackEntryClick({ menu_name: 'new_session', position: 'titlebar' })
               startSession()
             }}
           >
-            <IconNewChatOutlineRegular size={16} />
+            {projectPanelId === undefined ? <IconNewChatOutlineRegular size={16} /> : <IconProjectAddOutlineRegular size={16} />}
           </button>
         </Tooltip>
       )}

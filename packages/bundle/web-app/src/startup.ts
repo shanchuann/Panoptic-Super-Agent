@@ -57,9 +57,11 @@ interface WebOptions {
  * @returns a fresh program, so one process can parse more than once (tests).
  */
 function webCommand(): Command {
+  const standalone = process.env.PANOPTIC_STANDALONE === '1'
+  const command = standalone ? 'pcs --profile web' : 'dsh --profile web'
   return new Command()
-    .name('dsh --profile web')
-    .description('Serve the DeepSeek Harness browser UI.')
+    .name(command)
+    .description(standalone ? 'Serve the Panoptic Super browser UI.' : 'Serve the DeepSeek Harness browser UI.')
     .helpOption('-h, --help', 'show this help')
     .option('--host <host>', 'bind address: one concrete IPv4 or IPv6 literal of a local interface; wildcard addresses are rejected')
     .option('--no-open', 'do not open the Web UI in the default browser')
@@ -70,13 +72,13 @@ function webCommand(): Command {
     .option('--tls-key <file>', 'unencrypted PEM private key; requires --tls-cert')
     .addHelpText('after', `
 Examples:
-  dsh --profile web                          serve on the composed host and port
-  dsh --profile web --no-open                serve without opening a browser
-  dsh --profile web --port 8080              serve on another port
-  dsh --profile web --host 10.0.0.7          bind one local interface address
-  dsh --profile web --public-url https://app.example/ui/ --trusted-host app.example
+  ${command}                          serve on the composed host and port
+  ${command} --no-open                serve without opening a browser
+  ${command} --port 8080              serve on another port
+  ${command} --host 10.0.0.7          bind one local interface address
+  ${command} --public-url https://app.example/ui/ --trusted-host app.example
                                              advertise a prefix-stripping HTTPS proxy entry and admit its authority
-  dsh --profile web --tls-cert ./server-chain.pem --tls-key ./server-key.pem
+  ${command} --tls-cert ./server-chain.pem --tls-key ./server-key.pem
                                              serve HTTPS with an existing certificate and key
 `)
 }

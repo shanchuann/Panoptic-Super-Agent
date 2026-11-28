@@ -1,6 +1,6 @@
 <div align="center">
   <img src="Panoptic Super.png" alt="Panoptic Super 品牌横幅" width="100%">
-  <h1>Panoptic Super 万象超级智能体</h1>
+  <h1>Panoptic Super · 万象超级智能体（PCS）</h1>
   <p>开源自用，按项目管理，图优先，可演进</p>
   <p>
     <code>MIT</code>
@@ -110,10 +110,10 @@ pnpm install
 pnpm run build
 pnpm run typecheck
 pnpm run test
-pnpm dsh web
+pnpm pcs web
 ~~~
 
-开发运行时固定为 Node 24.15.0，由 `pnpm install` 安装到项目环境；用 `pnpm node --version` 确认版本后运行测试与构建，无需更改系统 Node。模型接口在首次启动时配置，密钥保存在本地凭据存储。
+开发运行时固定为 Node 24.15.0，由 `pnpm install` 安装到项目环境。PCS Web 和桌面使用 `~/.pcs` 保存项目、会话、配置和凭证。点击侧栏顶部「新项目」选择目录创建项目，或从「更多」下方的「项目」进入选择页，预览书封并打开已有项目。图谱占据主窗口，缩放控件在侧栏设置按钮旁，主输入框居中停靠底部，可从输入框两侧拖动调宽。模型菜单在输入框内的模型按钮上方展开。悬停查看节点信息，点击节点查看关联对话。「引用节点」把来源加入主对话草稿。在设置中的模型配置填入专用于 Panoptic 的 API Key。可通过 PCS_HOME 指定 PCS 的数据目录。桌面启动命令为 `pnpm run start:desktop`。
 
 ## 许可
 

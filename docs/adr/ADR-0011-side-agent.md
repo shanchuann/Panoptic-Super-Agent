@@ -1,60 +1,62 @@
-# ADR-0011：旁路智能体
+# ADR-0011 Side agent
 
-- 状态：**Accepted**（2026-11-08 用户提出）
-- 决策人：用户 ｜ 记录：Lead ｜ 依据：[design/side-agent.md](../../.ome/design/side-agent.md)、[contracts/side-agent.md](../../.ome/contracts/side-agent.md)、[ADR-0003](ADR-0003-session-project-state.md)、[ADR-0006](ADR-0006-collaboration-model.md)
+English | [中文](ADR-0011-side-agent.zh.md)
 
-## 背景
+- Status **Accepted** (requested by the user on 2026-11-08)
+- Decision owner user | Recorder Lead | References [design/side-agent.md](../../.ome/design/side-agent.md), [contracts/side-agent.md](../../.ome/contracts/side-agent.md), ADR-0003, ADR-0006
 
-主任务推进时，用户常有临时问题。直接发到主会话会打断主 Agent，改变主线上下文，消息还会顶到时间线顶部，把用户正在看的位置冲掉。需要一条共享当前上下文、但不污染主线的提问通道。
+## Context
 
-## 决策
+The user may have a question while the main task is running. Posting it in the main conversation interrupts the agent, changes its context, and moves the timeline away from the user's current position. The user needs a question channel that shares the current context and keeps the main timeline intact.
 
-### D1 旁路线程与主会话记录分离
+## Decision
 
-旁路线程使用独立的存储表与日志，不写入主会话事件日志。主 Agent 的上下文装配器显式排除旁路记录。这样旁路消息不会进入模型请求，也不会改变主线未读与顺序。
+### D1 Store side threads separately from the main conversation
 
-### D2 上下文采用快照模式
+Side threads have their own storage tables and logs. The main agent excludes side-thread records when assembling context, so side messages stay outside the main event log, model requests, unread counts, and message order.
 
-打开旁路线程时生成主会话快照，包含项目、任务、判据、约束、决策、近期事件与产物句柄。第一阶段不跟随主线新增事件；P1.5 再提供单向跟随。旁路不能反向写入主线。
+### D2 Take a context snapshot
 
-### D3 界面使用侧栏
+Opening a side thread captures the project, task, acceptance criteria, constraints, decisions, recent events, and artifact handles. The first phase uses a fixed snapshot. Phase P1.5 adds one-way following from the main conversation. Side threads remain read-only with respect to the main conversation.
 
-旁路以右侧抽屉呈现，主内容区宽度不变。旁路有独立滚动与未读标记，主线的滚动位置、未读计数与消息顺序不受影响。
+### D3 Present the side thread in a sidebar
 
-### D4 默认只读
+A right drawer displays the side thread at the current main content width. It has independent scrolling and unread state, so the main conversation keeps its scroll position, unread count, and message order.
 
-旁路只使用只读工具白名单，不写文件、不执行命令、不发送消息、不付款。需要写操作时只能生成建议，由用户带入主线后执行。
+### D4 Grant read-only access by default
 
-### D5 带入主线是唯一写入路径
+Side threads use an allowlist of read-only tools. File writes, commands, external messages, and payments require execution in the main conversation after the user brings a suggestion into it.
 
-带入需要用户二次确认，写入带来源、快照版本与确认人的注记。带入不复制整段对话，不修改既有主线消息。模型不能自行触发带入。
+### D5 Require user confirmation to bring notes into the main conversation
 
-### D6 记忆与删除
+The confirmed note records its source, snapshot version, and the person who confirmed it. The action adds the note and preserves the existing conversation. Only the user can initiate it.
 
-旁路消息默认不写入长期记忆。带入主线后，注记进入候选记忆。删除线程级联删除消息、快照与待确认带入记录。
+### D6 Manage memory and deletion
 
-### D7 第一阶段范围
+Side messages stay outside long-term memory by default. A note brought into the main conversation becomes a memory candidate. Deleting the side thread also deletes its messages, snapshots, and pending notes.
 
-第一阶段实现快照上下文、只读工具、侧栏交互、归档、带入与删除。跟随模式、旁路引用产物、多线程并行、建议转任务放到后续。
+### D7 Deliver the first phase
 
-## 备选与不选
+The first phase covers snapshot context, read-only tools, the sidebar, archiving, bringing notes into the main conversation, and deletion. Later work covers following, artifact references, parallel side threads, and turning suggestions into tasks.
 
-| 备选 | 不选理由 |
+## Alternatives
+
+| Alternative | Reason for rejecting it |
 |---|---|
-| 把旁路消息写进主会话但隐藏显示 | 仍会进入模型请求与事件日志，隔离不成立 |
-| 用普通子智能体承载旁路 | 子智能体是任务执行体，不是用户面对面提问通道 |
-| 新开一个普通会话 | 丢失当前上下文，用户需要重复解释 |
-| 旁路默认拥有写权限 | 与默认只读、审批边界冲突 |
-| 带入自动写入主线 | 模型可能污染主线，必须由用户确认 |
+| Store side messages in the main conversation and hide them | The messages would still reach model requests and the event log |
+| Use a regular subagent | Subagents execute tasks and the side thread is a user-facing question channel |
+| Open a separate conversation | The user would have to repeat the current context |
+| Grant writes by default | This conflicts with the read-only default and approval boundaries |
+| Automatically bring notes into the main conversation | The user must confirm content before it enters the main conversation |
 
-## 后果与风险
+## Consequences and risks
 
-收益：主任务不被打断，用户可以随时澄清与试探，主线上下文保持干净。
+The user can ask questions and explore ideas while the main task continues with its existing context.
 
-代价：新增旁路存储、快照生成、侧栏交互与带入审计；快照可能过期，需要在回复中提示。
+The system adds side-thread storage, snapshot generation, a sidebar, and an audit trail for confirmed notes. When a snapshot is stale, the response should say so.
 
-风险：快照过大（按预算裁剪）；旁路被误当成主任务执行（只读与带入确认兜底）；带入内容质量差（预览与确认）。
+Prune snapshots to the context budget, use permissions and confirmation to limit side-thread activity, and let the user preview a proposed note before bringing it into the main conversation.
 
-## 重议条件
+## When to revisit
 
-如果用户需要旁路直接执行写操作，应通过能力授权与审批重新评估，而不是放开默认只读。如果跟随模式导致主线上下文泄漏，应回到快照模式。
+If the user needs direct writes from the side thread, reevaluate capability grants and approval requirements. If following exposes main-conversation context outside its intended scope, restore fixed snapshots.

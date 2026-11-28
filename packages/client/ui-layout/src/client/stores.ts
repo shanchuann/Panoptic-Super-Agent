@@ -3,7 +3,7 @@
  * The registration supplies a fresh store and binds its actions to ctx.layout.
  */
 import { defineStore, type EngineStoreHandle } from '@deepseek-ai/dsh-client-store'
-import type { MainPanelId } from './service.ts'
+import type { MainPanelId, PanelInfo } from './service.ts'
 import {
   clampWidth, RIGHTBAR_DEFAULT_RATIO, RIGHTBAR_MAX_RATIO, RIGHTBAR_MIN,
   SIDEBAR_AUTO_COLLAPSE, SIDEBAR_DEFAULT, SIDEBAR_MAX, SIDEBAR_MIN,
@@ -17,6 +17,7 @@ type LayoutState = {
   panelInfo: {
     /** Null selects the Conversation; global panels keep the current Session intact. */
     activePanelId: MainPanelId | null
+    projectHistory?: PanelInfo['projectHistory']
   }
   layoutInfo: LayoutInfo
 }
@@ -57,6 +58,7 @@ type LayoutInfo = {
  */
 type LayoutActions = {
   selectPanel: (draft: LayoutState, panelId: MainPanelId | null) => void
+  locateProjectHistory: (draft: LayoutState, position: PanelInfo['projectHistory']) => void
   retainMainPanels: (draft: LayoutState, panelIds: readonly string[]) => void
   setSidebar: (draft: LayoutState, px: number) => void
   toggleSidebar: (draft: LayoutState) => void
@@ -94,6 +96,7 @@ export function createLayoutStore(): EngineStoreHandle<LayoutState, LayoutAction
       selectPanel: (d, panelId: MainPanelId | null) => {
         d.panelInfo.activePanelId = panelId
       },
+      locateProjectHistory: (d, position: PanelInfo['projectHistory']) => { d.panelInfo.projectHistory = position },
       retainMainPanels: (d, panelIds: readonly string[]) => {
         if (d.panelInfo.activePanelId !== null && !panelIds.includes(d.panelInfo.activePanelId)) {
           d.panelInfo.activePanelId = null

@@ -24,7 +24,9 @@ async function main(): Promise<void> {
   const profile = loadProfileDirectory('dsh', projectDir, installAnchor)
   reportSkippedBundles('dsh', profile)
   const application = runProfile({
-    environment: loadLayeredEnv('dsh'),
+    environment: process.env.PANOPTIC_STANDALONE === '1'
+      ? loadLayeredEnv('pcs', resolveDshHome())
+      : loadLayeredEnv('dsh'),
     profile: 'desktop',
     resolvedProfile: { profile, installAnchor },
     patchFiles: [],

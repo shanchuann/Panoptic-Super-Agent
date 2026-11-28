@@ -2,6 +2,8 @@
 
 /** Simplified Chinese dictionary (the key-set source of truth). */
 export const zh = {
+  'project.new': '新项目',
+  'project.list': '项目',
   'session.new': '新会话',
   'session.new.label': '新建会话',
   'toggle.open': '打开侧边栏',
@@ -16,6 +18,8 @@ export type SidebarKey = keyof typeof zh
 
 /** English dictionary, checked complete against the zh key set. */
 export const en = {
+  'project.new': 'New project',
+  'project.list': 'Projects',
   'session.new': 'New Session',
   'session.new.label': 'New session',
   'toggle.open': 'Open sidebar',
@@ -27,6 +31,8 @@ export const en = {
 
 /** Japanese copy, checked against the English keys. */
 export const ja = {
+  'project.new': '新規プロジェクト',
+  'project.list': 'プロジェクト',
   'session.new': '新規セッション',
   'session.new.label': '新規セッション',
   'toggle.open': 'サイドバーを開く',
@@ -38,6 +44,8 @@ export const ja = {
 
 /** Spanish dictionary, checked against the English keys. */
 export const es = {
+  'project.new': 'Nuevo proyecto',
+  'project.list': 'Proyectos',
   'session.new': 'Nueva sesión',
   'session.new.label': 'Nueva sesión',
   'toggle.open': 'Abrir barra lateral',
@@ -49,6 +57,8 @@ export const es = {
 
 /** French dictionary, checked against the English keys. */
 export const fr = {
+  'project.new': 'Nouveau projet',
+  'project.list': 'Projets',
   'session.new': 'Nouvelle séance',
   'session.new.label': 'Nouvelle séance',
   'toggle.open': 'Ouvrir la barre latérale',
@@ -60,6 +70,8 @@ export const fr = {
 
 /** German dictionary, checked against the English keys. */
 export const de = {
+  'project.new': 'Neues Projekt',
+  'project.list': 'Projekte',
   'session.new': 'Neue Sitzung',
   'session.new.label': 'Neue Sitzung',
   'toggle.open': 'Seitenleiste öffnen',
@@ -71,6 +83,8 @@ export const de = {
 
 /** Russian dictionary, checked against the English keys. */
 export const ru = {
+  'project.new': 'Новый проект',
+  'project.list': 'Проекты',
   'session.new': 'Новая сессия',
   'session.new.label': 'Новая сессия',
   'toggle.open': 'Открыть боковую панель',
@@ -82,6 +96,8 @@ export const ru = {
 
 /** Portuguese dictionary, checked against the English keys. */
 export const pt = {
+  'project.new': 'Novo projeto',
+  'project.list': 'Projetos',
   'session.new': 'Nova sessão',
   'session.new.label': 'Nova sessão',
   'toggle.open': 'Abrir barra lateral',

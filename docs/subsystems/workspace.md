@@ -166,6 +166,11 @@ interface SessionActivity {
 
 `SessionActivityItem` carries the family-specific `id` (a session, job, or schedule id) and an optional display `label`. `archiveSession(sessionId)` asks the waterfall once, after the existence check, and rejects a non-empty answer with `WorkspaceActiveSessionError` (`sessionId`, `activity`) without writing; the controller maps it to the `workspace/session-active` error, whose details carry the same two fields. `archiveSession(sessionId, { stopActivity: true })` — the `ArchiveSessionOptions` field the transport request exposes as `stopActivity` — skips the check, writes the archive, then dispatches `workspace/session-stop`; a rejecting provider is logged and the archive stays, and the stopped work is never awaited to settlement. An already archived id neither asks nor stops. The shipped providers, what they stop, and the `agent/pre-step` gate that keeps an archived Session from running a model step are documented with the [registry package](../../packages/workspace/workspace/README.md#api-behavior); the decision record is the [archive-stops-running-work Agent Note](../../.agents/notes/implemented/feature/2026-09-21-archive-stops-running-session-work.md).
 
+<a id="project-graph"></a>
+## Project graph
+
+`WorkspaceProjectGraph` is the owner-only read projection returned by `workspaceController.projectGraph`. It carries the current plan revision and source event sequence when a plan exists, the goal and constraints, tasks with acceptance criteria and evidence references, current decisions, and pending operations. Reading the graph leaves the project conversation and workspace records untouched. [Type definition](../../packages/api/workspace-controller/src/types.ts).
+
 ## Consumers
 
 [`dsh-workspace-controller`](../../packages/api/workspace-controller) serves workspace CRUD to GUI clients over `ctx.workspaceRegistry`, and [`dsh-session-controller`](../../packages/api/session-controller) performs the create-session-then-attach flow above. [dsh-agent-instructions](../../packages/context/agent-instructions) is **not** a consumer despite the name: it discovers AGENTS.md-style instruction files under an agent's own cwd and never touches `ctx.workspaceRegistry` — the shared word refers to the user's working directory, not to this registry's entities.
@@ -321,6 +326,14 @@ Host service backing the generated `ctx.remote.workspace` namespace.
 @Remote('create') create(request: WorkspaceCreateRequest): Promise<WorkspaceCreateValue>
 
 /**
+ * Read the current project graph without opening or changing a conversation.
+ * @param workspaceId - workspace whose graph belongs to the local owner.
+ * @param signal - caller lifetime.
+ * @returns current plan, evidence references, and project decisions.
+ */
+@Remote('projectGraph') projectGraph(workspaceId: WorkspaceId, signal: AbortSignal): WorkspaceProjectGraph
+
+/**
  * Initialize or reuse the default Workspace during first-use startup. The
  * directory name is fixed, so the Host never renames or relocates an
  * existing default; its initial title is that same name, which browser
@@ -399,6 +412,8 @@ Host service backing the generated `ctx.remote.workspace` namespace.
  */
 @Remote({ mode: 'stream' }) async *follow(signal: AbortSignal): AsyncIterable<WorkspaceFollowFrame>
 ```
+
+Types: [WorkspaceProjectGraph](workspace.md#project-graph)
 
 Source: [`packages/api/workspace-controller/src/index.ts`](../../packages/api/workspace-controller/src/index.ts)
 

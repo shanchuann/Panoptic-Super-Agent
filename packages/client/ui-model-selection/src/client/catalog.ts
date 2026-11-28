@@ -98,6 +98,29 @@ export class ModelCatalogDirectory {
     void this.load().catch(() => { /* the selector exposes the shared error */ })
   }
 
+  /**
+   * Update the default from the Host settings mirror and retain provider groups.
+   * @param selection - the deployment default published by the mirror.
+   */
+  updateDefault(selection: ModelSelection): void {
+    const apply = (): void => {
+      const state = this.store.getSnapshot()
+      const { value } = state
+      if (value === null) return
+      if (value.default.provider === selection.provider && value.default.model === selection.model
+        && value.default.reasoningEffort === selection.reasoningEffort) return
+      this.store.set({ ...state, value: { ...value, default: selection } })
+    }
+    if (this.inflight === undefined) {
+      apply()
+      return
+    }
+    const generation = this.generation
+    void this.inflight.then(() => {
+      if (generation === this.generation) apply()
+    }, () => { /* The catalog load publishes its own failure. */ })
+  }
+
   /** Clear Host-specific values and load the replacement Host generation. */
   resetGeneration(): void {
     this.reasoning.clear()

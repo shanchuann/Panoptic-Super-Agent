@@ -135,9 +135,11 @@
     # reports an actionable error when its settings-domain provider is absent.
     - id: ui-settings-account
       name: '@deepseek-ai/dsh-client-ui-settings-account'
+      disabled: !!js process.env.PANOPTIC_STANDALONE === '1'
 
     - id: account-controller
       name: '@deepseek-ai/dsh-api-account-controller'
+      disabled: !!js process.env.PANOPTIC_STANDALONE === '1'
 
     - id: settings-controller
       name: '@deepseek-ai/dsh-api-settings-controller'

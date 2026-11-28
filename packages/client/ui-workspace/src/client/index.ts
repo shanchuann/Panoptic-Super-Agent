@@ -56,6 +56,11 @@ import { RowActionToast } from './session-actions/RowActionToast.tsx'
 import { registerToasts } from './toast/register.ts'
 import { SessionIdMenuItem } from './session-actions/SessionId.tsx'
 import { WorkspacePicker } from './WorkspacePicker.tsx'
+import { ProjectGraph, ProjectGraphZoom, defaultGraphCamera, type GraphCamera } from './ProjectGraph.tsx'
+import { ProjectDirectoryIntake } from './rows/ProjectDirectoryIntake.tsx'
+import { ProjectShelf } from './ProjectShelf.tsx'
+import type { MainPanelId, ProjectHistoryNode } from '@deepseek-ai/dsh-client-ui-layout/client'
+import { graphEn, graphZh } from './project-graph-locales.ts'
 import { en, ja, es, fr, de, ru, pt, zh, type WorkspaceKey } from './locales.ts'
 
 export type { StartSessionOptions, UiWorkspace } from './navigation.ts'
@@ -110,6 +115,7 @@ export const inject = [
  * @param ctx - client root context.
  */
 export function apply(ctx: Context): void {
+  const projectHome = (globalThis as { __PANOPTIC_PROJECT_HOME__?: boolean }).__PANOPTIC_PROJECT_HOME__ === true
   const sessions = ctx.get('sessions') as ISessions
   const workspaces = ctx.get('workspaces') as IWorkspaces
   // One viewing-store instance, created here as ui-layout does for its layout
@@ -121,8 +127,12 @@ export function apply(ctx: Context): void {
   const rowToast = createSnapshotStore<RowToastState | null>(null)
   let toastSeq = 0
   const notify = (toast: RowToast): void => { rowToast.set({ ...toast, seq: ++toastSeq }) }
+  const shortcutControls = createWorkspaceShortcutControls()
+  const shelfPanel = 'panoptic-project-shelf' as MainPanelId
   const uiWorkspace = new UiWorkspaceService(
-    ctx, ctx.remote.directoryPicker, workspaces, sessions, viewInstance.actions, notify,
+    ctx, ctx.remote.directoryPicker, workspaces, sessions, viewInstance.actions, notify, projectHome,
+    projectHome ? shortcutControls.add : undefined,
+    projectHome ? shelfPanel : undefined,
   )
   ctx.slots.provideRoot({
     hooks: { workspaces: workspaces.list },
@@ -133,7 +143,39 @@ export function apply(ctx: Context): void {
     },
   })
   ctx.effect(() => ctx.locale.register(NS, { zh, en, ja, es, fr, de, ru, pt }), 'ui-workspace: dictionaries')
-  const shortcutControls = createWorkspaceShortcutControls()
+  const graphSelection = createSnapshotStore<WorkspaceId | undefined>(undefined)
+  const projectCamera = createSnapshotStore<GraphCamera>(defaultGraphCamera)
+  const updateCamera = (update: (camera: GraphCamera) => GraphCamera): void => {
+    projectCamera.set(update(projectCamera.getSnapshot()))
+  }
+  const showProjectGraph = (id?: WorkspaceId): void => {
+    if (id !== graphSelection.getSnapshot()) projectCamera.set(defaultGraphCamera)
+    graphSelection.set(id)
+    ctx.layout.locateProjectHistory()
+    ctx.layout.selectPanel(null)
+  }
+  if (projectHome) ctx.inject(['remote.workspace'], (graphCtx) => {
+    graphCtx.effect(() => graphCtx.locale.register('projectGraph', { zh: graphZh, en: graphEn }), 'project graph dictionaries')
+    graphCtx.slots.inject('conversation.projectGraph', () => {
+      return graphCtx.slots.register({ name: 'conversation.projectGraph', locale: 'projectGraph', inject: () => ({
+        hooks: { projectGraphSelection: graphSelection, projectCamera },
+        updateCamera,
+        closeHistory: () => { graphCtx.layout.locateProjectHistory() },
+        openConversation: (id: WorkspaceId, seq?: number | null, node?: ProjectHistoryNode) => {
+          void uiWorkspace.openProjectTrace(id, seq, node).catch((error: unknown) => { console.warn('project conversation could not open:', error) })
+        },
+        readGraph: async (id: WorkspaceId, signal: AbortSignal) => {
+          const result = await graphCtx.remote.workspace.projectGraph(id, signal)
+          if (!result.ok) throw new Error(result.error.message)
+          return result.value
+        },
+      }) }, ProjectGraph)
+    })
+    graphCtx.slots.inject('sidebar.settings.trailing', () => graphCtx.slots.register({
+      name: 'sidebar.settings.trailing', locale: 'projectGraph',
+      inject: () => ({ updateCamera, hooks: { projectCamera } }),
+    }, ProjectGraphZoom))
+  })
 
   const searchSessions: WorkspaceBrowserInjected['searchSessions'] = async (query, signal) => {
     const result = await sessions.search(query, signal)
@@ -148,6 +190,14 @@ export function apply(ctx: Context): void {
     subscribe: listener => ctx.slots.subscribe(hole, listener),
   })
   const browserFlowSource = flowSource('sidebar.workspaces.directoryFlow')
+  if (projectHome) ctx.slots.inject('main', () => ctx.slots.register({
+    name: 'main', key: shelfPanel, locale: 'projectGraph', inject: () => ({
+      hooks: { projectSelection: graphSelection, directoryFlow: browserFlowSource },
+      openProject: showProjectGraph,
+      back: () => { ctx.layout.selectPanel(null) },
+      addProject: shortcutControls.add,
+    }),
+  }, ProjectShelf))
   const hostInfo: HostObservable<RemoteHostFacts> = {
     getSnapshot: () => ctx.remote.$host,
     subscribe: listener => ctx.on('connection/reset', listener),
@@ -265,6 +315,7 @@ export function apply(ctx: Context): void {
     // Explicit group actions keep their target; unscoped New Session inherits
     // the current Session Workspace before the recent-Workspace fallback.
     startSession: (workspaceId, options) => { uiWorkspace.startSession(workspaceId, options) },
+    ...(projectHome ? { showProjectGraph } : {}),
     open: openSession,
     searchSessions,
     searchResultLimit: sessions.searchResultLimit,
@@ -309,7 +360,7 @@ export function apply(ctx: Context): void {
       inject: browserInjected,
       locale: NS,
     },
-    WorkspaceBrowser,
+    projectHome ? ProjectDirectoryIntake : WorkspaceBrowser,
   ))
   // The shipped row actions take the same route as a plugin's: `slots.inject`
   // waits for the browser registration above to declare each list, and the

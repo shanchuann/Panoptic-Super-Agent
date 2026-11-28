@@ -22,15 +22,15 @@
       - text: Acme Gateway acme-gateway API 密钥
       - textbox "API 密钥":
         - /placeholder: 输入 API 密钥
+      - text: API 地址
+      - textbox "API 地址":
+        - /placeholder: https://gateway.acme.example/v1
+        - text: https://gateway.acme.example/v1
       - group:
         - text: 自定义设置 显示名称
         - textbox "显示名称":
           - /placeholder: acme-gateway
           - text: Acme Gateway
-        - text: API 地址
-        - textbox "API 地址":
-          - /placeholder: https://gateway.acme.example/v1
-          - text: https://gateway.acme.example/v1
         - text: API 协议
         - combobox "API 协议":
           - option "OpenAI Chat Completions" [selected]

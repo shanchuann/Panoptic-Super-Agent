@@ -217,19 +217,18 @@ describe('web e2e: Models settings page configures a dormant provider', () => {
     expect(await page.content()).not.toContain('sk-e2e-minimax')
   }, 60_000)
 
-  it('applies a customized-settings field as a merge patch', async () => {
+  it('saves the visible Base URL alongside the existing credential reference', async () => {
     onTestFailed(() => saveFailureShot(page, 'web-e2e-models-customized'))
     const dialog = page.getByRole('dialog', { name: '设置' })
     await dialog.getByRole('button', { name: '编辑 minimax-cn' }).click()
     await dialog.getByPlaceholder('留空使用已保存凭据', { exact: true }).waitFor({ timeout: 10_000 })
     expect(await dialog.textContent()).not.toContain('API 密钥来源：')
     expect(await dialog.textContent()).not.toMatch(/oauth/i)
-    await dialog.getByText('自定义设置').click()
     const url = dialog.getByLabel('API 地址')
     await url.waitFor({ timeout: 10_000 })
     await url.fill('https://gateway.minimax.example/v1')
     await dialog.getByRole('button', { name: '保存', exact: true }).click()
-    // The editor closes back to the row; the fold's write merged into the
+    // The editor closes back to the row; the endpoint write merged into the
     // stored profile beside the reference.
     await expect.poll(async () => dialog.getByLabel('API 地址').count(), { timeout: 10_000 }).toBe(0)
     await dialog.getByText('已保存 minimax-cn。', { exact: true }).waitFor({ timeout: 10_000 })

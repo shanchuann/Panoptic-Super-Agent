@@ -21,7 +21,7 @@ import type { SessionEvent, SessionHeader, SessionId, UserMessage } from '@deeps
 import { SessionQueryError, type SessionObservation } from '@deepseek-ai/dsh-session-query'
 import { SessionTitleInvalidError } from '@deepseek-ai/dsh-session-title'
 import { assertNever } from '@deepseek-ai/dsh-util-values'
-import { RemoteError, remoteErrorOf } from '@deepseek-ai/dsh-typert-protocol'
+import { RemoteError, principalOf, remoteErrorOf } from '@deepseek-ai/dsh-typert-protocol'
 import type { Workspace } from '@deepseek-ai/dsh-workspace'
 import {
   ApiSessionAgentController,
@@ -117,13 +117,15 @@ export class SessionCommandController {
     const cwd = workspace?.path ?? request.cwd ?? this.defaultCwd
     let created: ApiSessionCreated
     try {
-      created = await this.agents.createSession({
-        ...(request.sessionId === undefined ? {} : { sessionId: request.sessionId }),
-        cwd,
-        ...(request.agentPreset === undefined ? {} : { agentPreset: request.agentPreset }),
-        reusable: sessionId => !this.ctx.workspaceRegistry.archivedSessionIds.includes(sessionId)
-          && (workspace === undefined || workspace.sessionIds.includes(sessionId)),
-      })
+      created = request.projectConversation === true
+        ? await this.openProject(request, workspace)
+        : await this.agents.createSession({
+          ...(request.sessionId === undefined ? {} : { sessionId: request.sessionId }),
+          cwd,
+          ...(request.agentPreset === undefined ? {} : { agentPreset: request.agentPreset }),
+          reusable: sessionId => !this.ctx.workspaceRegistry.archivedSessionIds.includes(sessionId)
+            && (workspace === undefined || workspace.sessionIds.includes(sessionId)),
+        })
     } catch (error) {
       this.rejectCreation(error)
     }
@@ -140,6 +142,24 @@ export class SessionCommandController {
       }
     }
     return { sessionId, ...(created.agentPreset === undefined ? {} : { agentPreset: created.agentPreset }) }
+  }
+
+  /** Resolve the owner-only primary conversation without replacing an existing Session. */
+  private async openProject(request: SessionCreateRequest, workspace: Workspace | undefined): Promise<ApiSessionCreated> {
+    if (workspace === undefined || request.sessionId !== undefined || request.agentPreset !== undefined) {
+      throw new RemoteError('gateway/bad-request', 'opening a project conversation requires only its workspaceId', {})
+    }
+    const principal = principalOf(this.ctx.invocation)
+    if (principal !== undefined && principal.kind !== 'owner') {
+      throw new RemoteError('gateway/bad-request', 'opening a project conversation requires local owner access', {})
+    }
+    if (await workspace.status() === 'missing-dir') {
+      throw new RemoteError('gateway/bad-request', 'restore the project directory before opening its conversation', {})
+    }
+    const sessionId = await this.ctx.workspaceRegistry.projects.reserve(workspace.id)
+    const result = await this.agents.openReservedSession(sessionId, workspace.path)
+    await this.ctx.workspaceRegistry.unarchiveSession(sessionId)
+    return result
   }
 
   /**

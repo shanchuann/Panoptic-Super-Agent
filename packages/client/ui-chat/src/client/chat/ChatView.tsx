@@ -6,6 +6,7 @@ import type {
   NodeKey, RenderEntry,
 } from '@deepseek-ai/dsh-client-ui-conversation/client'
 import type { InboxState } from '@deepseek-ai/dsh-agent/types'
+import type {} from '@deepseek-ai/dsh-client-ui-layout/client'
 import type { PendingSubmission } from '@deepseek-ai/dsh-api-session-controller/client'
 import {
   Button, IconChevronDownOutlineRegular, MarkdownDelegateProvider, Modal,
@@ -14,7 +15,7 @@ import { isAtOrOutside } from '../contract/group-tree.ts'
 import type { ChatFlowHookContext, ChatViewSlotProps, OpenFileOptions } from '../contract/slots.ts'
 import type { ChatSnapshot } from '../contract/snapshot.ts'
 import { TurnNavigator } from './TurnNavigator.tsx'
-import { mergeTurnRailItems } from './turn-rail-items.ts'
+import { mergeTurnRailItems, turnAtEvent } from './turn-rail-items.ts'
 import { useTextInteraction } from './text-interaction.ts'
 import { useChatScroll } from './use-chat-scroll.ts'
 import { fileMediaUrl, resolveWorkspacePath, sessionFileAddress } from '@deepseek-ai/dsh-util-workspace-path'
@@ -61,7 +62,7 @@ const MOTION_TAIL_MS = 800
 export function ChatView({
   useSession, useChat, useConversation, useSessions, renderSlot,
   sessionId, openFile, openExternalLink, loadOlder, loadThrough, loadImage, inspectCall, chatScroll, forkAt, fileMentions,
-  usePresentation, useProjection, useInteractionIds, dispatchInteraction, t, fileDrag,
+  usePresentation, useProjection, useInteractionIds, dispatchInteraction, t, fileDrag, usePanelInfo,
 }: ChatViewSlotProps) {
   const order = useChat(s => s.order)
   const groupedEntries = useConversation(snapshot => snapshot.views.grouped('chat')?.entries)
@@ -195,6 +196,22 @@ export function ChatView({
     loadedTurns: turnNavigationItems,
     transcriptView,
   })
+  const trace = usePanelInfo?.(info => info.projectHistory)
+  const handledTrace = useRef<number | undefined>(undefined)
+  const { navigateToTurn, initialized } = scroll
+  useEffect(() => {
+    if (!initialized || trace?.sessionId !== sessionId || trace.request === handledTrace.current) return
+    if (trace.seq === null) {
+      handledTrace.current = trace.request
+      scroll.returnToBottom()
+      return
+    }
+    const turn = turnAtEvent(turnOutline, trace.seq)
+    const item = railItems.find(candidate => candidate.turn === turn)
+    if (item === undefined) return
+    handledTrace.current = trace.request
+    navigateToTurn(item)
+  }, [initialized, trace, sessionId, turnOutline, railItems, navigateToTurn, scroll.returnToBottom])
   const interactionSurfaceRef = useRef<HTMLDivElement>(null)
   const interactionIds = useInteractionIds(ids => ids)
   const textInteraction = useTextInteraction(scroll.columnRef, interactionSurfaceRef, dispatchInteraction, interactionIds)

@@ -19,7 +19,8 @@
 import { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 import {
-  FishLogo, IconAppsAddOutlineRegular, IconNewChatOutlineMedium, IconNewChatOutlineRegular, IconPanelLeftOutlineRegular,
+  FishLogo, IconAppsAddOutlineRegular, IconFolderOpenOutlineRegular, IconNewChatOutlineMedium, IconNewChatOutlineRegular,
+  IconPanelLeftOutlineRegular, IconProjectAddOutlineRegular,
   isDarwinDesktop, Menu, ShortcutKeys, Toast, Tooltip, writeClipboard,
 } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { InjectFace, PropsRenderSlots, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
@@ -31,6 +32,8 @@ import css from './SidebarRoot.module.css'
 
 /** Wide-content unmount delay; matches the 150ms wide-content fade-out. */
 const COLLAPSE_SETTLE_MS = 150
+const PROJECT_COLLAPSE_SETTLE_MS = 122
+const projectHome = (globalThis as { __PANOPTIC_PROJECT_HOME__?: boolean }).__PANOPTIC_PROJECT_HOME__ === true
 
 /**
  * How long the column's scrollbars stay drawn after the pointer leaves it.
@@ -131,6 +134,7 @@ export function SidebarRoot({
   collapsed,
   width,
   startSession,
+  projectPanelId,
   toggleSidebar,
   selectPanel,
   setPinned,
@@ -150,6 +154,7 @@ export function SidebarRoot({
   const hasEntryActions = useEntryActions(registered => registered)
   const shortcut = useShortcuts(rows => rows.find(row => row.id === 'sidebar.left.toggle'))
   const newShortcut = useShortcuts(rows => rows.find(row => row.id === 'session.new'))
+  const newLabel = t(projectHome ? 'project.new' : 'session.new.label')
   // A page whose access snapshot excludes starting a Session offers no New Session affordance.
   const canStartSession = useRemoteAccess('session/create')
   const toggleLabel = collapsed ? t('toggle.open') : t('toggle.collapse')
@@ -158,7 +163,9 @@ export function SidebarRoot({
   const [settled, setSettled] = useState(collapsed)
   useEffect(() => {
     if (!collapsed) { setSettled(false); return }
-    const timer = window.setTimeout(() => { setSettled(true) }, COLLAPSE_SETTLE_MS)
+    const duration = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true ? 0
+      : projectHome ? PROJECT_COLLAPSE_SETTLE_MS : COLLAPSE_SETTLE_MS
+    const timer = window.setTimeout(() => { setSettled(true) }, duration)
     return () => { window.clearTimeout(timer) }
   }, [collapsed])
   const windowsTitlebar = document.documentElement.hasAttribute('data-windows-titlebar')
@@ -270,6 +277,7 @@ export function SidebarRoot({
         css.root, !wide && css.collapsed, !wide && everWide.current && css.railIn,
         collapsed && wide && css.fading, !pointerInside && css.quietBars,
       )}
+      data-project-sidebar={projectHome || undefined}
       style={wide ? { width: collapsed ? lastWideWidth.current : width } : undefined}
       onPointerEnter={() => {
         cancelLinger()
@@ -291,7 +299,7 @@ export function SidebarRoot({
           const identity = (
             <span className={css.brandIdentity} aria-hidden="true">
               <span className={css.brandMark}>
-                {renderSlot('sidebar.brand.mark', { size: 24 }, {
+                {renderSlot('sidebar.brand.mark', { size: projectHome ? 36 : 24 }, {
                   fallback: buildVersion === undefined
                     ? <FishLogo size={24} />
                     : <span className={css.copyVersion} data-copy-version onClick={copyVersion(buildVersion)}><FishLogo size={24} /></span>,
@@ -311,7 +319,7 @@ export function SidebarRoot({
               </span>
             </span>
           )
-          return darwinDesktop || !canStartSession
+          return projectHome || darwinDesktop || !canStartSession
             ? <span className={clsx(css.brand, css.wide)}>{identity}</span>
             : (
               <button
@@ -333,19 +341,19 @@ export function SidebarRoot({
 
       {/* The label fades before the hover/focus shortcut, including on translucent backgrounds. */}
       {canStartSession && (
-        <Tooltip label={t('session.new.label')} shortcutKeys={newShortcut?.keys} delayMs={500} side={captionTooltipSide} disabled={wide}>
+        <Tooltip label={newLabel} shortcutKeys={newShortcut?.keys} delayMs={500} side={captionTooltipSide} disabled={wide}>
           <button
             type="button"
             className={css.newSession}
-            aria-label={t('session.new.label')}
+            aria-label={newLabel}
             aria-keyshortcuts={newShortcut?.aria}
             onClick={openNewSession}
           >
             <span className={css.newSessionLabelMask}><span className={css.newSessionContent}>
-              {wide
+              {projectHome ? <IconProjectAddOutlineRegular size={wide ? 14 : windowsTitlebar ? 16 : 18} /> : wide
                 ? <IconNewChatOutlineMedium size={14} />
                 : <IconNewChatOutlineRegular size={windowsTitlebar ? 16 : 18} />}
-              {wide && <span className={clsx(css.newSessionLabel, css.wide)}>{t('session.new')}</span>}
+              {wide && <span className={clsx(css.newSessionLabel, css.wide)}>{t(projectHome ? 'project.new' : 'session.new')}</span>}
             </span></span>
             {wide && newShortcut !== undefined && newShortcut.keys.length > 0 && <span className={css.newSessionShortcut} aria-hidden="true">
               <ShortcutKeys keys={newShortcut.keys} />
@@ -354,7 +362,7 @@ export function SidebarRoot({
         </Tooltip>
       )}
 
-      {panels.length > 0 && (
+      {(panels.length > 0 || projectPanelId !== undefined) && (
         <nav className={css.panelList} aria-label={t('panels.label')}>
           {panels.filter(({ id }) => id === FIXED_PANEL_ID || !unpinned.includes(id)).map(({ id, label }) => (
             <PanelRow
@@ -385,6 +393,16 @@ export function SidebarRoot({
               renderSlot={renderSlot}
             />
           )}
+          {projectPanelId !== undefined && (
+            <Tooltip label={t('project.list')} delayMs={500} disabled={wide}>
+              <button type="button" className={clsx(css.panelRow, activePanelId === projectPanelId && css.panelActive)}
+                aria-label={t('project.list')} aria-current={activePanelId === projectPanelId ? 'page' : undefined}
+                onClick={() => { selectPanel(projectPanelId) }}>
+                <span className={css.panelGlyph} aria-hidden="true"><IconFolderOpenOutlineRegular size={wide ? 16 : 18} /></span>
+                {wide && <span className={clsx(css.panelTitle, css.wide)}>{t('project.list')}</span>}
+              </button>
+            </Tooltip>
+          )}
         </nav>
       )}
 
@@ -406,8 +424,11 @@ export function SidebarRoot({
         <div className={css.footerActions}>
           {renderSlot('sidebar.footer.action', { wide })}
         </div>
-        <div className={css.settingsArea}>
-          {renderSlot('sidebar.settings', { wide })}
+        <div className={css.settingsArea} data-project-settings={projectHome && wide || undefined}>
+          {projectHome && wide
+            ? <div className={css.settingsTrigger}>{renderSlot('sidebar.settings', { wide })}</div>
+            : renderSlot('sidebar.settings', { wide })}
+          {projectHome && wide && renderSlot('sidebar.settings.trailing', {})}
         </div>
       </div>
     </div>

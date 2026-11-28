@@ -173,7 +173,7 @@ describe('DeepSeekOnboardingDialog', () => {
     expect(await screen.findByRole('dialog', { name: en.onboardingTitle })).toBeTruthy()
   })
 
-  it('loads a credential-only modal, inerts the product, and focuses the key', async () => {
+  it('loads a connection setup modal, inerts the product, and focuses the key', async () => {
     const h = harness()
     render(<DeepSeekOnboardingDialog {...h.props} />)
     expect(await screen.findByRole('dialog', { name: en.onboardingTitle })).toBeTruthy()

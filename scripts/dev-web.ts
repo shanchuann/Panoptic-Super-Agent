@@ -418,8 +418,8 @@ if (isMain) {
     // The same launch vector as the root `dsh` script, so the served Host runs
     // from source exactly as `pnpm dsh web` would.
     if (options.serve) {
-      spawnStage(supervisor, 'dsh web', process.execPath, [
-        '--import', 'tsx/esm', 'apps/cli/src/bin.ts', 'web', ...options.appArgs,
+      spawnStage(supervisor, 'pcs web', process.execPath, [
+        '--import', 'tsx/esm', 'apps/cli/src/bin.ts', '--pcs', 'web', ...options.appArgs,
       ], false)
     }
     console.log(
@@ -427,7 +427,7 @@ if (isMain) {
       + ` and ${String(libraryDirs.length)} statically linked library packages`
       + (options.pollInterval !== undefined ? ` (polling ${String(options.pollInterval)}ms)` : '')
       + `, plus tsc -b ${CLIENT_TYPE_PROGRAM} and the ${SHELL_PACKAGE} dist build`
-      + (options.serve ? ', serving through dsh web' : '')
+      + (options.serve ? ', serving through pcs web' : '')
       + ':\n  '
       + [...pluginDirs, ...libraryDirs].join('\n  '),
     )

@@ -513,6 +513,7 @@ export class SessionManager {
   async create(
     opts: {
       workspaceId?: WorkspaceId
+      projectConversation?: true
       cwd?: string
       sessionId?: SessionId
       agentPreset?: string
@@ -523,7 +524,9 @@ export class SessionManager {
       ...(opts.agentPreset === undefined ? {} : { agentPreset: opts.agentPreset }),
     }
     const payload = opts.workspaceId !== undefined
-      ? { workspaceId: opts.workspaceId, ...shared }
+      ? { workspaceId: opts.workspaceId, ...shared,
+        ...(opts.projectConversation === undefined ? {} : { projectConversation: opts.projectConversation }),
+      }
       : { ...(opts.cwd === undefined ? {} : { cwd: opts.cwd }), ...shared }
     const result = await this.remote.session.create(payload)
     if (result.ok) {

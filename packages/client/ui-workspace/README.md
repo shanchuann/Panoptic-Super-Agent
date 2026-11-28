@@ -53,6 +53,12 @@ Collapsed search is one header action beside the view and add actions: activatin
 
 ### Managing sessions
 
+Choose **Open project conversation** from a Workspace's action menu to continue its primary conversation. Opening the same Workspace again restores the same conversation and its project state. The adjacent New Session action opens a regular conversation.
+
+In Panoptic, **Projects** presents the registered projects as books using the beUI Bookshelf motion. Open a cover with a click, browse with the arrow keys, or scroll horizontally with the mouse wheel when the shelf is wider than the viewport. If the graph request fails, the graph offers a retry and keeps the most recent data it loaded for the current project.
+
+The bookshelf and node history headings share the same toolbar button and title styles.
+
 The final built-in item in a Session row's "..." menu is Copy Session ID. It closes the menu and copies the complete ID directly, without opening a dialog. Clipboard success or failure appears in the global toast; a failed copy can be retried from the menu. Copying does not retain the Session, load its history, or call the Host.
 
 The Session row's Rename action opens a dialog prefilled with the row's display title; confirming an unchanged title is deliberately allowed — it pins the current automatic title against regeneration. Double-clicking a title also opens Rename; for an unarchived Session, the preceding clicks open its conversation. When the click that activates an unfocused window is not delivered to the page, as on macOS, the next click does not open Rename. Rename uses a temporary `workspaceOperation` reference and awaits its initial history opening. The row's Fork action reads ordinary cold history normally. When the Host reports that source migration is required, an app-wide Toast offers to open that Session; the action only navigates and does not retry fork. A successful fork uses the source's last completed turn and increments the inherited persisted title through Session Controller without retaining the child, opening its history, or changing selection. Workspace Delete opens a confirmation that states the retention boundary; success removes the group while its Sessions remain under Ungrouped. Pin, Rename, Fork, Archive, and Copy Session ID are themselves entries of the `sidebar.workspaces.session.menu.item` list (pin and archive also of `sidebar.workspaces.session.row.action`), so a client plugin's action takes whatever position its `order` gives it.

@@ -848,7 +848,7 @@ describe('ModelsSection', () => {
     expect(screen.queryByText(providerCopy(en.savedProvider, { provider: 'deepseek-official', displayName: 'DeepSeek' }))).toBeNull()
   })
 
-  it('reuses the provider editor as a required credential-only onboarding form', async () => {
+  it('offers an optional endpoint alongside the required onboarding key', async () => {
     let finishSet: ((response: { ok: true; value: undefined }) => void) | undefined
     const set = vi.fn(() => new Promise<{ ok: true; value: undefined }>((resolve) => {
       finishSet = resolve
@@ -867,7 +867,7 @@ describe('ModelsSection', () => {
       operations={operationsWith(face)}
       t={t}
       readOnly={false}
-      credentialOnly
+      connectionOnly
       credentialRequired
       autoFocusCredential
       cancelLabelKey="onboardingLater"
@@ -883,7 +883,7 @@ describe('ModelsSection', () => {
     expect(save.disabled).toBe(true)
     expect(screen.getByText(en.onboardingLater)).toBeTruthy()
     expect(screen.queryByText(en.customized)).toBeNull()
-    expect(screen.queryByLabelText(en.baseUrl)).toBeNull()
+    expect(screen.getByLabelText<HTMLInputElement>(en.baseUrl).value).toBe('https://base')
 
     fireEvent.change(key, { target: { value: '   ' } })
     expect(screen.getByText(en.keyRequired)).toBeTruthy()
@@ -1446,7 +1446,7 @@ describe('ModelsSection', () => {
     fireEvent.click(screen.getByText(en.customized))
     fireEvent.change(screen.getByLabelText(en.baseUrl), { target: { value: 'not-a-url' } })
     fireEvent.click(screen.getByText(en.apply))
-    await screen.findByText(/baseURL/)
+    await screen.findByText(en.customBaseUrlInvalid)
     expect(mutate).not.toHaveBeenCalled()
   })
 

@@ -107,6 +107,10 @@ async function bench(locale: 'zh' | 'en' = 'zh') {
     },
   }
   const remote = Object.assign(new TestRemote(ctx), { session: sessionRemote })
+  const settings = createSnapshotStore<{ view: { namespaces: { ns: string; value: ModelSelection }[] } | undefined }>({
+    view: undefined,
+  })
+  ctx.provide('configForms', { describe: () => settings })
   ctx.reflect.provide('remote.session', sessionRemote)
   const blocks = new Map<SessionId, { reason: string } | undefined>()
   ctx.provide('conversation', {
@@ -194,6 +198,7 @@ async function bench(locale: 'zh' | 'en' = 'zh') {
       selectionFailure = new RemoteError('session/writer-held', 'writer held', { sessionId: sid('owned') })
     },
     setHostCurrent: (selection: ModelSelection) => { defaultSelection = selection },
+    publishDefault: () => { settings.set({ view: { namespaces: [{ ns: 'agent-default-model', value: defaultSelection }] } }) },
     setProjected: (id: SessionId, value: ModelSelectionProjection) => { projections.get(id)?.set(value) },
     address: (id: SessionId) => { addressed.add(id) },
     setGroups: (next: typeof GROUPS) => { groups = next },
@@ -409,6 +414,27 @@ describe('ui-model-selection dual entry', () => {
         status: 'ready',
       })
     })
+  })
+
+  it('updates the default effort while keeping the loaded provider groups', async () => {
+    const b = await bench()
+    try {
+      b.mint('s1')
+      const directory = b.ctx.modelDirectories.directoryFor(sid('s1'))
+      const before = await directory.load()
+      b.setHostCurrent({ provider: 'deepseek-official', model: 'deepseek-v4-flash', reasoningEffort: ReasoningEffortId('max') })
+      b.remote.emit('settings/document-updated', ['agent-default-model', 1])
+      b.publishDefault()
+      await vi.waitFor(() => {
+        const current = directory.store.getSnapshot()
+        expect(current.current?.reasoningEffort).toBe('max')
+        expect(current.groups).toBe(before.groups)
+        expect(current.status).toBe('ready')
+      })
+      expect(b.calls.models).toBe(1)
+    } finally {
+      await b.ctx.fiber.dispose()
+    }
   })
 
   it('retains the last catalog on refresh failure and recovers on retry', async () => {

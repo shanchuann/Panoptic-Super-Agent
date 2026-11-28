@@ -584,6 +584,26 @@ describe('endpoint interrogation', () => {
     }])
   })
 
+  it('validates and saves the endpoint with advanced settings closed', async () => {
+    const { mutate } = await mountSection()
+    const row = screen.getByText('openai').closest('li')
+    if (row === null) throw new Error('no row for openai')
+    fireEvent.click(within_(row, en.edit))
+    const endpoint = screen.getByLabelText<HTMLInputElement>(en.baseUrl)
+    const save = screen.getByText<HTMLButtonElement>(en.apply)
+    expect(endpoint.closest('details')).toBeNull()
+    fireEvent.change(endpoint, { target: { value: 'file:///tmp/models' } })
+    expect(save.disabled).toBe(true)
+    expect(endpoint.getAttribute('aria-invalid')).toBe('true')
+    fireEvent.change(endpoint, { target: { value: '  https://edited.example/v1  ' } })
+    expect(endpoint.value).toBe('https://edited.example/v1')
+    fireEvent.click(save)
+    await waitFor(() => { expect(mutate).toHaveBeenCalledTimes(1) })
+    expect(firstMutate(mutate).ops).toEqual([{
+      op: 'set', path: ['providers', 'openai', 'baseURL'], value: 'https://edited.example/v1',
+    }])
+  })
+
   it('asks the endpoint the form shows, with a key that is not yet stored', async () => {
     const discover = vi.fn(() => Promise.resolve(ok([{ id: 'acme-large', contextWindow: 65_536 }])))
     await mountSection({ discover })
@@ -1053,7 +1073,7 @@ describe('hand-declared providers', () => {
       declaredRoutes: ['acme-gateway'],
     })
     openEditor('acme-gateway')
-    expect(fields()).toEqual([en.keyInput, en.customDisplayName, en.baseUrl, en.customApi])
+    expect(fields()).toEqual([en.keyInput, en.baseUrl, en.customDisplayName, en.customApi])
   })
 
   it('renames a declared route and falls back to its id when the name is cleared', async () => {

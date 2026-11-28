@@ -213,7 +213,7 @@ describe('WorkspaceRegistry lifecycle and bootstrap', () => {
     const newer = await makeDir('newer')
     const alias = join(base, 'older-link')
     const plain = join(base, 'plain.txt')
-    await symlink(older, alias)
+    await symlink(older, alias, 'junction')
     await writeFile(plain, 'not a directory')
     const missing = join(base, 'missing')
     const result = await harness({
@@ -362,6 +362,52 @@ describe('WorkspaceRegistry lifecycle and bootstrap', () => {
 })
 
 describe('WorkspaceRegistry create and lookup', () => {
+  it('reopens one primary conversation per project with its own plan, decisions and unsettled work', async () => {
+    const firstDir = await makeDir('project-main-one')
+    const secondDir = await makeDir('project-main-two')
+    const firstHost = await harness()
+    const one = await firstHost.registry.create(firstDir)
+    const two = await firstHost.registry.create(secondDir)
+    const projects = firstHost.registry.projects
+    const [primary, concurrent] = await Promise.all([projects.reserve(one.id), projects.reserve(one.id)])
+    expect(concurrent).toBe(primary)
+    expect(await projects.reserve(two.id)).not.toBe(primary)
+    const draft = {
+      goal: 'Improve the navigation', constraints: ['Leave layout untouched'], steps: [
+        { title: 'Read the navigation', acceptance: 'Confirm the current menu' },
+        { title: 'Update labels', acceptance: 'Read the updated menu' },
+      ],
+    }
+    await projects.plan(one.id, draft, 10)
+    await projects.remember(one.id, { key: 'route', value: '/old' }, 11)
+    await projects.remember(one.id, { key: 'route', value: '/new' }, 12)
+    await projects.remember(one.id, { key: 'obsolete', value: 'temporary' }, 13)
+    await projects.remember(one.id, { key: 'obsolete', value: null }, 14)
+    await projects.verify(one.id, 1, 0, { seq: 15, tool: 'read', sha256: 'receipt' })
+    await projects.begin(one.id, { id: 'lost-receipt', tool: 'write', argsHash: 'intent' })
+    await firstHost.ctx.fiber.dispose()
+
+    const reopened = await harness({ pool: firstHost.pool })
+    onTestFinished(() => reopened.ctx.fiber.dispose())
+    expect(await reopened.registry.projects.reserve(one.id)).toBe(primary)
+    expect(reopened.registry.projects.ownerOf(primary)).toBe(one.id)
+    expect(reopened.registry.projects.context(one.id)).toMatchObject({
+      plan: { revision: 1, constraints: draft.constraints, steps: [{ evidence: { seq: 15 } }, {}] },
+      decisions: [{ key: 'route', value: '/new', sourceSeq: 12 }],
+      pendingOperations: [{ id: 'lost-receipt', tool: 'write' }],
+    })
+    expect(reopened.registry.projects.context(two.id)).toEqual({
+      plan: undefined, decisions: [], pendingOperations: [], recentOperations: [],
+    })
+    await expect(reopened.registry.projects.begin(one.id, { id: 'duplicate', tool: 'write', argsHash: 'intent' }))
+      .rejects.toThrow('unresolved project operation')
+    await reopened.registry.projects.settle(one.id, 'lost-receipt', 'verified-file')
+    expect(reopened.registry.projects.pending(one.id)).toEqual([])
+    await reopened.registry.projects.plan(one.id, { ...draft, constraints: ['Keep the sidebar'] }, 20)
+    await expect(reopened.registry.projects.verify(one.id, 1, 1, { seq: 21, tool: 'read', sha256: 'stale' }))
+      .rejects.toThrow('current plan')
+  })
+
   it('accepts fully qualified roots and directories without accepting drive-relative paths', () => {
     expect(fullyQualifiedWorkspacePath('C:\\', 'win32')).toBe(true)
     expect(fullyQualifiedWorkspacePath('C:\\work', 'win32')).toBe(true)
@@ -384,7 +430,7 @@ describe('WorkspaceRegistry create and lookup', () => {
     const firstDir = await makeDir('first')
     const secondDir = await makeDir('second')
     const alias = join(base, 'first-link')
-    await symlink(firstDir, alias)
+    await symlink(firstDir, alias, 'junction')
     const { registry, pool } = await harness()
     const first = await registry.create(firstDir, 'Original')
     const second = await registry.create(secondDir)
@@ -1495,7 +1541,7 @@ describe('first-use Workspace preparation', () => {
     const target = join(h.directoryRoot, 'elsewhere')
     await mkdir(target)
     await mkdir(join(h.directoryRoot, 'nested'))
-    await symlink(target, join(h.directoryRoot, 'nested', 'Workspace'))
+    await symlink(target, join(h.directoryRoot, 'nested', 'Workspace'), 'junction')
     const workspace = await h.registry.initializeDefault(h.resolveDirectory)
     expect(workspace?.path).toBe(await realpath(target))
     // Not 'elsewhere': the title names the directory the caller asked for, so

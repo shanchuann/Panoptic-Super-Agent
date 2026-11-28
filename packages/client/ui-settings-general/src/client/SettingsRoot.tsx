@@ -120,6 +120,7 @@ export function SettingsRoot(props: SettingsRootComponentProps) {
     useDesktopUpdate, openDesktopUpdate, useStore, actions, useShortcuts,
   } = props
   const { open, activeId } = useStore(state => state)
+  const projectHome = (globalThis as { __PANOPTIC_PROJECT_HOME__?: boolean }).__PANOPTIC_PROJECT_HOME__ === true
   const shortcut = useShortcuts(rows => rows.find(row => row.id === 'settings.open'))
   const { close, openSection } = actions
   const [requestedOnboarding, setRequestedOnboarding] = useState<string | undefined>()
@@ -215,6 +216,17 @@ export function SettingsRoot(props: SettingsRootComponentProps) {
   } else if (showRecovery) {
     connectionIndicator = 'recovered'
   }
+  const connectionFeedback = (
+    <ConnectionIndicator
+      state={(projectHome || wide) && desktopUpdate.presentation?.phase !== 'installing' ? connectionIndicator : undefined}
+      disconnectedLabel={t('connection.error')}
+      connectingLabel={t('connection.connecting')}
+      recoveredLabel={t('connection.connected')}
+      reconnectActionLabel={t('connection.reconnect')}
+      restartActionLabel={t('connection.restart')}
+      onReconnect={reconnect}
+    />
+  )
 
   return (
     <>
@@ -236,18 +248,14 @@ export function SettingsRoot(props: SettingsRootComponentProps) {
             {renderSlot('settings.trigger', { wide })}
           </button>
         </Tooltip> })}
-        <ConnectionIndicator
-          state={wide && desktopUpdate.presentation?.phase !== 'installing' ? connectionIndicator : undefined}
-          disconnectedLabel={t('connection.error')}
-          connectingLabel={t('connection.connecting')}
-          recoveredLabel={t('connection.connected')}
-          reconnectActionLabel={t('connection.reconnect')}
-          restartActionLabel={t('connection.restart')}
-          onReconnect={reconnect}
-        />
+        {!projectHome && connectionFeedback}
         <DesktopUpdateIndicator wide={wide} hidden={connectionIndicator !== undefined && desktopUpdate.presentation?.phase !== 'installing'}
           t={t} view={desktopUpdate} onOpen={openDesktopUpdate} />
       </div>
+      {projectHome && createPortal(
+        <div className={css.connectionNotice}>{connectionFeedback}</div>,
+        document.body,
+      )}
       {open && (
         <SettingsPanel
           rows={rows}

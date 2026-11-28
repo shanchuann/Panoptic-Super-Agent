@@ -344,6 +344,7 @@ export function apply(ctx: Context, config: Config = Config({})): void {
     scope: 'session-maybe',
     locale: NS,
     children: {
+      'conversation.projectGraph': { kind: 'single', scope: 'session-maybe' },
       'conversation.session': { kind: 'single', scope: 'session' },
       'conversation.composer': { kind: 'chain', scope: 'session' },
       'conversation.composer.bar': { kind: 'single', scope: 'session-maybe' },

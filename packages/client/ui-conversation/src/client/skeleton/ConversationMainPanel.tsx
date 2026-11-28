@@ -4,6 +4,7 @@ import { ConversationWidthControls } from './ConversationWidthControls.tsx'
 import css from './ConversationRoot.module.css'
 
 const CONTENT_SLOTS = { widthControls: ConversationWidthControls }
+const projectGraph = (globalThis as { __PANOPTIC_PROJECT_HOME__?: boolean }).__PANOPTIC_PROJECT_HOME__ === true
 
 /**
  * Render the existing main Conversation frame around the extracted content.
@@ -38,17 +39,18 @@ export function ConversationMainPanel(props: ConversationSlotProps) {
     (shellPhase === 'blank' && openState === 'loading' && summaryBlank !== true)
     || parentAvailabilityPending
   )
-  const hero = sessionId === undefined
-    || (shellPhase === 'blank' && (openState === 'open' || summaryBlank === true))
-  const phase = settling ? 'settling' : hero ? 'hero' : 'active'
+  const hero = !projectGraph && (sessionId === undefined
+    || (shellPhase === 'blank' && (openState === 'open' || summaryBlank === true)))
+  const phase = settling && !projectGraph ? 'settling' : hero ? 'hero' : 'active'
 
   return (
-    <div className={css.root} data-phase={phase}>
+    <div className={css.root} data-phase={phase} data-project-home={projectGraph || undefined}>
       {renderSlot('conversation.header', {})}
       {renderFactorySlot('conversation.content', {
         variant: 'main',
         phase,
         hero,
+        projectGraph,
       }, {
         slots: CONTENT_SLOTS,
       })}

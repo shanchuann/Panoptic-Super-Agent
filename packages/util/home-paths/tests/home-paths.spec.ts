@@ -9,6 +9,7 @@ import {
   DSH_HOME_DIR_NAME,
   agentsHomeDisplay,
   canonicalizeWatchPath,
+  configurePanopticEnvironment,
   defaultAgentsHome,
   defaultDshHome,
   dshCachePath,
@@ -24,6 +25,28 @@ afterEach(() => {
 })
 
 describe('dsh path helpers', () => {
+  it('prepares an isolated product home without carrying account or model variables', () => {
+    const ambient: NodeJS.ProcessEnv = {
+      DSH_HOME: join(homedir(), '.dsh'), DSH_AGENTS_HOME: join(homedir(), '.agents'),
+      DEEPSEEK_API_KEY: 'inherited-key', OPENAI_API_KEY: 'inherited-model-key', PATH: 'commands',
+    }
+    const isolated = { ...ambient }
+    const home = configurePanopticEnvironment(isolated)
+    expect(home).toBe(join(homedir(), '.pcs'))
+    expect(isolated).toMatchObject({ PCS_HOME: home, DSH_HOME: home, DSH_AGENTS_HOME: join(home, 'agents'), PANOPTIC_STANDALONE: '1', PATH: 'commands' })
+    expect(isolated.DEEPSEEK_API_KEY).toBeUndefined()
+    expect(isolated.OPENAI_API_KEY).toBeUndefined()
+    expect(ambient.DSH_HOME).toBe(join(homedir(), '.dsh'))
+    expect(ambient.DEEPSEEK_API_KEY).toBe('inherited-key')
+  })
+
+  it('honors PCS_HOME before the previous Panoptic setting and refuses the DSH directory', () => {
+    const pcs = join(homedir(), 'pcs-test')
+    expect(configurePanopticEnvironment({ PCS_HOME: pcs, PANOPTIC_HOME: '~/previous-pcs' })).toBe(pcs)
+    expect(configurePanopticEnvironment({ PANOPTIC_HOME: '~/previous-pcs' })).toBe(join(homedir(), 'previous-pcs'))
+    expect(() => configurePanopticEnvironment({ PCS_HOME: join(homedir(), '.dsh', 'pcs') })).toThrow(/PCS_HOME/)
+  })
+
   it('owns the shared default DSH home directory name', () => {
     expect(DSH_HOME_DIR_NAME).toBe('.dsh')
     expect(DEFAULT_DSH_HOME_DISPLAY).toBe('~/.dsh')

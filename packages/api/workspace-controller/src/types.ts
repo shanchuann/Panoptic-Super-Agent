@@ -174,3 +174,17 @@ export type WorkspaceFollowIncrement =
 export type WorkspaceFollowFrame =
   | { readonly type: 'baseline'; readonly value: WorkspaceBaseline }
   | WorkspaceFollowIncrement
+/** Project state projected onto the workspace graph. */
+export interface WorkspaceProjectGraph {
+  readonly revision?: number
+  readonly sourceSeq?: number
+  readonly goal?: string
+  readonly constraints: readonly string[]
+  readonly tasks: readonly {
+    readonly title: string
+    readonly acceptance: string
+    readonly evidence?: { readonly seq: number; readonly tool: string }
+  }[]
+  readonly decisions: readonly { readonly key: string; readonly value: string; readonly sourceSeq: number }[]
+  readonly pending: readonly { readonly id: string; readonly tool: string }[]
+}

@@ -23,6 +23,7 @@ it.each(['system-bin', undefined])('dispatches with bundled pnpm when PATH is %s
 
   expect(installOfficeEngineResolution).toHaveBeenCalledExactlyOnceWith(runtime)
   expect(runCli).toHaveBeenCalledExactlyOnceWith({
+    standalone: true,
     manageDesktopProfile: true,
     packageManager: {
       command: process.execPath,

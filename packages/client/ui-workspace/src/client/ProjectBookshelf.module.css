@@ -1,0 +1,102 @@
+/* Typeset beUI book faces in the workspace's stylesheet pipeline. */
+.frame {
+  position: relative;
+  width: 100%;
+  touch-action: pan-y;
+  user-select: none;
+  clip-path: inset(0);
+}
+
+.overflowing {
+  mask-image: linear-gradient(90deg, transparent, black 28px, black calc(100% - 28px), transparent);
+}
+
+.row {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  margin-inline: 0;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+  perspective: 1600px;
+  perspective-origin: 0 50%;
+}
+
+.book, .faceLayer, .hit, .spine, .cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.book, .faceLayer, .pan, .picture { transform-style: preserve-3d; }
+.faceLayer, .pan, .picture { display: block; }
+.pan, .picture, .shade, .spineLight, .hinge { position: absolute; inset: 0; }
+.picture, .shadow, .shade, .spineLight, .hinge, .ruleTop, .ruleBottom { pointer-events: none; }
+.hit { padding: 0; border: 0; outline: none; background: transparent; cursor: pointer; }
+.book:has(.hit:focus-visible) :is(.spine, .cover) {
+  outline: 2px solid var(--dsw-focus-ring-color, var(--dsw-alias-brand-primary));
+  outline-offset: 2px;
+}
+
+.shadow {
+  position: absolute;
+  left: 0;
+  display: block;
+  height: 30px;
+  background: radial-gradient(closest-side, rgb(0 0 0 / 35%), transparent);
+  z-index: -2;
+}
+
+.shade { background: #000; }
+.spine, .cover {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.spine { align-items: center; border-radius: 2px; padding-block: 12px; }
+.cover {
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 2px 3px 3px 2px;
+  text-align: left;
+  transform-origin: 0 50%;
+}
+
+.spineLight { background: linear-gradient(90deg, rgb(0 0 0 / 28%), rgb(255 255 255 / 14%) 28%, transparent 55%, rgb(0 0 0 / 22%)); }
+.hinge { background: linear-gradient(90deg, rgb(0 0 0 / 35%), rgb(255 255 255 / 10%) 3%, rgb(0 0 0 / 12%) 5%, transparent 9%); }
+.ruleTop, .ruleBottom { position: absolute; inset-inline: 0; height: 1px; background: currentColor; opacity: .3; }
+.ruleTop { top: 8px; }
+.ruleBottom { bottom: 8px; }
+
+.spineTitle, .spineAuthor, .coverTitle, .coverAuthor { position: relative; }
+.spineTitle, .coverTitle { font-family: ui-serif, Georgia, Cambria, 'Times New Roman', 'Songti SC', serif; }
+.spineTitle, .spineAuthor {
+  min-height: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+}
+.spineTitle { flex: 1; margin-top: 12px; font-size: 14px; line-height: 1; }
+.spineAuthor, .coverAuthor {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: .75;
+}
+.spineAuthor { max-height: 30%; }
+.coverTitle {
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-size: 20px;
+  line-height: 1.25;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}

@@ -28,6 +28,8 @@ kind: "package-library"
 
 ### 解析主目录
 
+PCS 启动入口使用 `PCS_HOME` 或 `~/.pcs`，并将 Agent 配置置于该目录下的 `agents` 中。PCS 中的路径标签显示 `~/.pcs` 或 `$PCS_HOME`。
+
 ```ts
 import { resolveDshHome, dshHomePath, dshCachePath } from '@deepseek-ai/dsh-home-paths'
 

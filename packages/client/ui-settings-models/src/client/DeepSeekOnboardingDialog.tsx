@@ -121,7 +121,7 @@ export function DeepSeekOnboardingDialog(props: DeepSeekOnboardingDialogProps): 
           t={t}
           readOnly={false}
           hideTitle
-          credentialOnly
+          connectionOnly
           onSubmitCredential={() => { props.track?.('api_key_save_click', {}) }}
           credentialRequired
           autoFocusCredential

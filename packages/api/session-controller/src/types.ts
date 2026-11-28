@@ -259,6 +259,8 @@ export interface SessionSearchValue {
 export interface SessionCreateRequest {
   /** Workspace the Session joins; exclusive with `cwd`. */
   readonly workspaceId?: WorkspaceId
+  /** Open the Workspace's permanent project conversation. Requires `workspaceId`; rejects a caller-chosen Session id or preset. */
+  readonly projectConversation?: true
   /** Directory the Session owns when no Workspace is named. */
   readonly cwd?: string
   /** Blank Session to reuse while it is reusable, or the identity of a new Session when none is stored under it. */

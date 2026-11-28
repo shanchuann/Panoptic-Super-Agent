@@ -19,7 +19,7 @@ import type {
   IWorkspaces, WorkspaceId, WorkspaceSnapshot, WorkspaceView,
 } from '@deepseek-ai/dsh-api-workspace-controller/client'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
-import type {} from '@deepseek-ai/dsh-client-ui-layout/client'
+import type { MainPanelId, ProjectHistoryNode } from '@deepseek-ai/dsh-client-ui-layout/client'
 import type { DraftInitializationOptions } from '@deepseek-ai/dsh-client-ui-conversation/client'
 import type { RowToast } from './contract/slots.ts'
 import { pinOrderAccounts, pinOrderSource } from './pin-order.ts'
@@ -34,10 +34,14 @@ interface MainSelection {
 export interface StartSessionOptions extends DraftInitializationOptions {
   /** Agent preset the Session runs; the Host default when omitted. */
   readonly agentPreset?: string
+  /** Select the Workspace's persistent primary conversation. */
+  readonly projectConversation?: true
 }
 
 /** Workspace archive and directory operations consumed by Client UI domains. */
 export interface UiWorkspace {
+  /** Main panel for project selection, when the project workspace is enabled. */
+  readonly projectPanelId?: MainPanelId | undefined
   /**
    * Select a Session and show its Conversation as one UI navigation action.
    * @param target - known Session identity or durable direct-parent subagent address to display.
@@ -174,6 +178,7 @@ class UiWorkspaceService extends Service implements UiWorkspace {
     {}, { persist: { name: 'dsh.sessions.current' } },
   )
   private mainReference: SessionReference | undefined
+  private primaryWorkspace: WorkspaceId | undefined
   private restorationNavigation: AbortSignal | undefined
 
   /**
@@ -183,6 +188,9 @@ class UiWorkspaceService extends Service implements UiWorkspace {
    * @param sessions - pure Session Controller.
    * @param view - the browser's viewing-store write set (one instance shared with its registration).
    * @param notify - show one notice through the Workspace notice channel.
+   * @param projectHome - the standalone project page owns initial navigation.
+   * @param requestNewProject - open the directory chooser for the unscoped creation action.
+   * @param projectPanelId - main panel key for project selection.
    */
   constructor(
     ctx: Context,
@@ -191,6 +199,9 @@ class UiWorkspaceService extends Service implements UiWorkspace {
     private readonly sessions: ISessions,
     private readonly view: Pick<WorkspaceViewStoreActions, 'pinSessionOrder'>,
     private readonly notify: (toast: RowToast) => void,
+    private readonly projectHome = false,
+    private readonly requestNewProject?: () => void,
+    readonly projectPanelId?: MainPanelId,
   ) {
     super(ctx, 'uiWorkspace')
     ctx.effect(() => {
@@ -291,6 +302,7 @@ class UiWorkspaceService extends Service implements UiWorkspace {
   }
 
   openSession(target: SessionTarget): void {
+    this.primaryWorkspace = undefined
     this.replaceMain(target, this.lifetime.signal, 'reveal')
   }
 
@@ -305,12 +317,14 @@ class UiWorkspaceService extends Service implements UiWorkspace {
   private async openWorkspaceSession(
     workspaceId: WorkspaceId,
     beforeOpen: ((sessionId: SessionId) => void) | undefined,
-    reuse: Pick<StartSessionOptions, 'agentPreset'>,
+    reuse: Pick<StartSessionOptions, 'agentPreset' | 'projectConversation'>,
   ): Promise<void> {
     const navigation = AbortSignal.any([this.ctx.layout.beginNavigation(), this.lifetime.signal])
     let sessionId: SessionId
     try {
-      sessionId = await this.connectBlank(workspaceId, reuse)
+      sessionId = reuse.projectConversation === true
+        ? await this.sessions.create({ workspaceId, projectConversation: true })
+        : await this.connectBlank(workspaceId, reuse)
     } catch (error: unknown) {
       // Reported here, not in connectWorkspace: startup restoration calls that
       // directly and stays console-only.
@@ -318,7 +332,26 @@ class UiWorkspaceService extends Service implements UiWorkspace {
       throw error
     }
     if (navigation.aborted) return
-    this.replaceMain(sessionId, navigation, 'reveal', beforeOpen)
+    this.replaceMain(sessionId, navigation, this.projectHome && reuse.projectConversation === true ? 'preserve' : 'reveal', beforeOpen)
+    this.primaryWorkspace = reuse.projectConversation === true ? workspaceId : undefined
+  }
+
+  /**
+   * Open the project's primary conversation, optionally locating an event.
+   * @param workspaceId - project that owns the primary conversation.
+   * @param seq - selected event, or null for the latest message.
+   * @param node - title and reference data for the node that opened history.
+   */
+  async openProjectTrace(workspaceId: WorkspaceId, seq?: number | null, node?: ProjectHistoryNode): Promise<void> {
+    const locate = (sessionId: SessionId): void => {
+      if (seq !== undefined) this.ctx.layout.locateProjectHistory({ sessionId, seq, ...node === undefined ? {} : { node } })
+    }
+    if (this.primaryWorkspace === workspaceId && this.mainReference !== undefined) {
+      this.ctx.layout.beginNavigation()
+      locate(this.mainReference.sessionId)
+      return
+    }
+    await this.openWorkspaceSession(workspaceId, locate, { projectConversation: true })
   }
 
   async forkSession(
@@ -335,7 +368,11 @@ class UiWorkspaceService extends Service implements UiWorkspace {
   }
 
   startSession(workspaceId?: WorkspaceId, options?: StartSessionOptions): void {
-    const { agentPreset, ...draft } = options ?? {}
+    if (workspaceId === undefined && options === undefined && this.requestNewProject !== undefined) {
+      this.requestNewProject()
+      return
+    }
+    const { agentPreset, projectConversation, ...draft } = options ?? {}
     const draftOptions = options === undefined ? undefined : draft
     const initializeDraft = draftOptions !== undefined && (draftOptions.prompt !== undefined
       || (draftOptions.whenDraftExists ?? (draftOptions.clearPreviousDraft === true ? 'replace' : 'keep')) === 'replace')
@@ -357,11 +394,15 @@ class UiWorkspaceService extends Service implements UiWorkspace {
       this.clearMain()
       return
     }
-    const opening = this.openWorkspace(target, initializeDraft ? (id) => {
+    const beforeOpen = initializeDraft ? (id: SessionId) => {
       const binding = this.sessions.binding(id)
       if (binding === undefined) this.draftPreparationFailed()
       this.prepareDraft(binding, draftOptions)
-    } : undefined, agentPreset === undefined ? {} : { agentPreset })
+    } : undefined
+    const preset = agentPreset === undefined ? {} : { agentPreset }
+    const opening = projectConversation === true || this.projectHome
+      ? this.openWorkspaceSession(target, beforeOpen, { ...preset, projectConversation: true })
+      : this.openWorkspace(target, beforeOpen, preset)
     void opening.catch(
       (reason: unknown) => { console.warn('new session failed:', reason) },
     )
@@ -429,7 +470,7 @@ class UiWorkspaceService extends Service implements UiWorkspace {
   }
 
   private watchNavigation(): () => void {
-    let initial: 'waiting' | 'connecting' | 'done' = 'waiting'
+    let initial: 'waiting' | 'connecting' | 'done' = this.projectHome ? 'done' : 'waiting'
     const reconcile = (): void => {
       if (this.lifetime.signal.aborted) return
       if (this.clearArchivedCurrent()) return
@@ -513,6 +554,7 @@ class UiWorkspaceService extends Service implements UiWorkspace {
   }
 
   private clearMain(): void {
+    this.primaryWorkspace = undefined
     const previous = this.mainReference
     this.mainReference = undefined
     this.selection.set({})

@@ -54,6 +54,8 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
      * package's 'sidebar' entry; each action receives only the column state.
      */
     'sidebar.footer.action': { kind: 'list'; scope: 'root'; owner: SidebarFooterActionOwnerProps }
+    /** Optional compact controls beside the Settings button. */
+    'sidebar.settings.trailing': { kind: 'single'; scope: 'root' }
   }
 }
 
@@ -155,6 +157,8 @@ export type SidebarRootInjected = {
    * recent Workspace, or clear into the New Session pure view when none exist.
    */
   startSession: (workspaceId?: WorkspaceId) => void
+  /** Main panel key for the Projects launcher below More. */
+  projectPanelId?: MainPanelId | undefined
   /** Toggle the sidebar column through the layout service. */
   toggleSidebar: () => void
   /** Select the global panel addressed by a sidebar row. */
@@ -194,5 +198,6 @@ export type SidebarRootComponentProps =
     | 'sidebar.workspaces'
     | 'sidebar.settings'
     | 'sidebar.footer.action'
+    | 'sidebar.settings.trailing'
   >
   & InjectFace<SidebarRootInjected> & PropsLocale<'sidebar'>

@@ -423,18 +423,16 @@ html[data-platform='darwin'] body[data-ds-dark-theme] {
   --dsw-specific-menu: rgba(48, 49, 54, 0.94);
 }
 
-/* Panoptic identity: shared surfaces keep controls and content above the ambient light. */
+/* Panoptic identity: brand colors for the workspace and its controls. */
 body {
   --panoptic-deep: #1b2d56;
-  --panoptic-mist: #5b7ca6;
-  --panoptic-ice: #d6e4f7;
-  --panoptic-silver: #f8faff;
+  --panoptic-mist: #647c9c;
+  --panoptic-ice: #e6edf7;
+  --panoptic-silver: #fff;
   --panoptic-peach: #f7d6c3;
   --panoptic-badge-ink: #fff;
   --panoptic-wordmark-ink: var(--panoptic-deep);
-  --panoptic-canvas: linear-gradient(135deg, #f8faff 5%, #edf3fd 48%, #e1ecfc 100%);
-  --panoptic-orb-blue: radial-gradient(ellipse, rgb(139 179 234 / 45%), rgb(214 228 247 / 18%) 48%, transparent 70%);
-  --panoptic-orb-white: radial-gradient(ellipse, rgb(255 255 255 / 95%), rgb(255 255 255 / 40%) 42%, transparent 70%);
+  --panoptic-canvas: var(--panoptic-silver);
   --dsw-alias-brand-primary: var(--panoptic-deep);
   --dsw-alias-button-primary-hover: #2c4679;
   --dsw-alias-brand-primary-new-colorprimary-new-color: var(--panoptic-mist);
@@ -444,21 +442,19 @@ body {
   --dsw-alias-border-l1: rgb(91 124 166 / 10%);
   --dsw-alias-border-l2: rgb(91 124 166 / 18%);
   --dsw-alias-border-l3: rgb(91 124 166 / 22%);
-  --dsw-alias-interactive-bg-hover: rgb(91 124 166 / 9%);
-  --dsw-specific-sidebar-fill: #eef3fc;
-  --dsw-specific-sidebar-nav-item-active: #d6e4f7;
+  --dsw-alias-interactive-bg-hover: rgb(91 112 145 / 8%);
+  --dsw-specific-sidebar-fill: var(--panoptic-silver);
+  --dsw-specific-sidebar-nav-item-active: var(--panoptic-ice);
   --dsw-alias-bg-layer-1: #fff;
-  --dsw-alias-bg-layer-2: #f8faff;
-  --dsw-alias-bg-layer-3: #edf3fd;
+  --dsw-alias-bg-layer-2: var(--panoptic-silver);
+  --dsw-alias-bg-layer-3: #f6f7f9;
   --dsw-specific-input-major: var(--dsw-alias-bg-layer-2);
   --dsw-specific-tip: var(--dsw-alias-bg-layer-3);
 }
 
 body[data-ds-dark-theme] {
   --panoptic-wordmark-ink: #e4edfc;
-  --panoptic-canvas: linear-gradient(135deg, #101c32 5%, #162947 60%, #1b3356 100%);
-  --panoptic-orb-blue: radial-gradient(ellipse, rgb(91 124 166 / 28%), transparent 70%);
-  --panoptic-orb-white: radial-gradient(ellipse, rgb(214 228 247 / 12%), transparent 70%);
+  --panoptic-canvas: linear-gradient(135deg, #141d2c 5%, #1a2638 60%, #223249 100%);
   --dsw-alias-brand-primary: #c4d8f4;
   --dsw-alias-button-primary-hover: #e0ebfb;
   --dsw-alias-bg-base: #101c32;
@@ -468,11 +464,11 @@ body[data-ds-dark-theme] {
   --dsw-alias-border-l2: rgb(171 195 229 / 18%);
   --dsw-alias-border-l3: rgb(171 195 229 / 22%);
   --dsw-alias-interactive-bg-hover: rgb(171 195 229 / 10%);
-  --dsw-specific-sidebar-fill: #13213a;
-  --dsw-specific-sidebar-nav-item-active: #263e60;
-  --dsw-alias-bg-layer-1: #182b46;
-  --dsw-alias-bg-layer-2: #1d324f;
-  --dsw-alias-bg-layer-3: #263e60;
+  --dsw-specific-sidebar-fill: #192334;
+  --dsw-specific-sidebar-nav-item-active: #2a3b53;
+  --dsw-alias-bg-layer-1: #1d2a3f;
+  --dsw-alias-bg-layer-2: #223249;
+  --dsw-alias-bg-layer-3: #2a3b53;
   --dsw-specific-input-major: var(--dsw-alias-bg-layer-2);
   --dsw-specific-tip: var(--dsw-alias-bg-layer-3);
 }

@@ -28,6 +28,8 @@ Use these helpers wherever a package must agree with the rest of the harness abo
 
 ### Resolving the home
 
+The PCS launcher uses `PCS_HOME` or `~/.pcs` and places its agent configuration under `agents` in that directory. Path labels in PCS display `~/.pcs` or `$PCS_HOME`.
+
 ```ts
 import { resolveDshHome, dshHomePath, dshCachePath } from '@deepseek-ai/dsh-home-paths'
 

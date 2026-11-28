@@ -322,31 +322,31 @@
   overflow: hidden;
 }
 
-.runningWhaleAnimated {
-  display: none;
-  position: absolute;
-  inset: 0;
+.runningOrbit {
+  transform-origin: 12px 12px;
+  opacity: 0.7;
 }
 
-.runningWhaleStill {
-  display: initial;
+.runningStar {
+  transform-origin: 12px 12px;
 }
 
-@supports (mask-mode: alpha) and (mask-image: url('')) {
-  @media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
-    .runningWhaleAnimated {
-      display: block;
-      background: currentColor;
-      mask: url('../assets/running-whale@2x.png') center / 100% 100% no-repeat;
-      mask-mode: alpha;
-      /* Keep animated-mask repaints on an icon-sized composited layer. */
-      will-change: transform;
-    }
-
-    .runningWhaleStill {
-      display: none;
-    }
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  .runningOrbit {
+    animation: panoptic-orbit 6s linear infinite;
   }
+
+  .runningStar {
+    animation: panoptic-breathe 3s ease-in-out infinite;
+  }
+}
+
+@keyframes panoptic-orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes panoptic-breathe {
+  50% { transform: scale(0.85); opacity: 0.65; }
 }
 
 .openError {

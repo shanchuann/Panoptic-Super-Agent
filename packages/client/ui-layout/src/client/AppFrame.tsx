@@ -31,15 +31,12 @@ export type AppFrameProps =
   & PropsStore<ReturnType<typeof createLayoutStore>>
   & PropsLocale<'common'>
 
-/** Center column grid item (session-body building block). */
-function CenterColumn(props: { children?: ReactNode }) {
-  return <div className={css.centerCol}>{props.children}</div>
-}
-
-/** Subscribe to the main key without subscribing the column frame to each panel id. */
+/** Mount the selected view in the center track without subscribing the frame to its key. */
 function MainPanel({ usePanelInfo, renderSlot }: Pick<PropsRuntime<'root'>, 'usePanelInfo'> & PropsRenderSlots<'main'>) {
   const panelId = usePanelInfo(info => info.activePanelId)
-  return renderSlot('main', {}, { entryKey: panelId ?? 'conversation' })
+  return <div className={css.centerCol} data-main-panel={panelId ?? undefined}>
+    {renderSlot('main', {}, { entryKey: panelId ?? 'conversation' })}
+  </div>
 }
 
 /**
@@ -191,26 +188,27 @@ export function AppFrame({
   // Steady-state viewport updates stay instant (AppFrame.module.css), and so
   // does a toggle arriving together with a viewport change — that is the
   // responsive auto-collapse firing mid window-resize, where easing would
-  // chase the live window edge. The counter restarts the settle window when a
-  // re-toggle interrupts a running transition.
-  const [animating, setAnimating] = useState(0)
-  const trackToggle = `${sidebarCollapsed}:${layoutInfo.rightbarTrack}`
-  const previousToggle = useRef(trackToggle)
+  // chase the live window edge. A right-track change always uses shell timing.
+  const [animation, setAnimation] = useState<{ sidebarOnly: boolean } | null>(null)
+  const rightbarTrack = layoutInfo.rightbarTrack
+  const previousToggle = useRef({ sidebarCollapsed, rightbarTrack })
   const previousViewport = useRef(viewport)
   useLayoutEffect(() => {
     const viewportChanged = previousViewport.current !== viewport
     previousViewport.current = viewport
-    if (previousToggle.current === trackToggle) return
-    previousToggle.current = trackToggle
-    if (viewportChanged) return
-    setAnimating(token => token + 1)
-  }, [trackToggle, viewport])
+    const previous = previousToggle.current
+    const sidebarChanged = previous.sidebarCollapsed !== sidebarCollapsed
+    const rightbarChanged = previous.rightbarTrack !== rightbarTrack
+    previousToggle.current = { sidebarCollapsed, rightbarTrack }
+    if (viewportChanged || (!sidebarChanged && !rightbarChanged)) return
+    setAnimation({ sidebarOnly: sidebarChanged && !rightbarChanged })
+  }, [sidebarCollapsed, rightbarTrack, viewport])
   useEffect(() => {
-    if (animating === 0) return
+    if (animation === null) return
     const frame = frameRef.current
     /* v8 ignore next -- the ref is always attached by effect time: the frame div renders unconditionally. */
     if (frame === null) return
-    const settle = () => { setAnimating(0) }
+    const settle = () => { setAnimation(null) }
     const onTransitionEnd = (event: TransitionEvent) => {
       if (event.target === frame && event.propertyName === 'grid-template-columns') settle()
     }
@@ -220,7 +218,7 @@ export function AppFrame({
       frame.removeEventListener('transitionend', onTransitionEnd)
       clearTimeout(timer)
     }
-  }, [animating])
+  }, [animation])
   const onDragEnd = useCallback(() => { setDragging(false) }, [])
   const onSidebarStart = useCallback(() => { sidebarBase.current = colsRef.current.sidebar; setDragging(true) }, [])
   const onSidebarDrag = useCallback((dx: number) => {
@@ -270,7 +268,8 @@ export function AppFrame({
       data-rightbar-fullscreen={layoutInfo.rightbarFullscreen || undefined}
       data-rightbar-instant={layoutInfo.rightbarInstant || undefined}
       data-dragging={dragging || undefined}
-      data-animating={animating > 0 || undefined}
+      data-animating={animation !== null || undefined}
+      data-sidebar-animating={animation?.sidebarOnly || undefined}
     >
       <DocumentTitle
         productTitle={productTitle}
@@ -281,7 +280,7 @@ export function AppFrame({
         {sidebar}
       </div>
       <>
-        <CenterColumn>{main}</CenterColumn>
+        {main}
         <RightbarColumn>
           {renderSlot('rightbar', { width: normal.rightbar, viewportWidth: viewport, canShow: normal.rightbar > 0 })}
         </RightbarColumn>

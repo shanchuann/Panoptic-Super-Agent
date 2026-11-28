@@ -10,15 +10,32 @@
  */
 import type { BoundActions, HostObservable } from '@deepseek-ai/dsh-client-ui-slots'
 import type { Branded } from '@deepseek-ai/dsh-brand'
+import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import type { createLayoutStore } from './stores.ts'
 
 /** Identity shared by a sidebar panel entry and its main-slot occupant. */
 export type MainPanelId = Branded<'MainPanelId'>
 
+/** Display and reference fields of the project node that opened history. */
+export interface ProjectHistoryNode {
+  readonly kind: 'project' | 'task' | 'evidence' | 'decision' | 'pending' | 'constraint'
+  readonly label: string
+  readonly detail?: string
+  readonly seq?: number
+  readonly tool?: string
+}
+
 /** Root-scoped navigation state exposed to panel-aware components. */
 export interface PanelInfo {
   /** Selected global panel; null displays the current Conversation. */
   readonly activePanelId: MainPanelId | null
+  /** Event position requested by a project node in its primary conversation. */
+  readonly projectHistory?: {
+    readonly sessionId: SessionId
+    readonly seq: number | null
+    readonly request: number
+    readonly node?: ProjectHistoryNode
+  } | undefined
 }
 
 /** The layout store's bound action set (framework-baked, draft params peeled). */
@@ -34,6 +51,11 @@ export interface ILayout {
    * @throws if the selected main key is not registered; preserves the current selection.
    */
   selectPanel(panelId: MainPanelId | null): void
+  /**
+   * Show the read-only history for a project node.
+   * @param position - the conversation and event to show, null event for latest, or absent to close history.
+   */
+  locateProjectHistory(position?: Omit<NonNullable<PanelInfo['projectHistory']>, 'request'>): void
   /**
    * Start an asynchronous navigation, superseding any earlier pending navigation.
    * @returns a signal aborted by the next navigation or layout disposal; check it before committing UI state.
@@ -56,6 +78,7 @@ export interface ILayout {
 /** Cross-plugin panel-action face (ctx.layout). */
 export class LayoutController implements ILayout {
   private navigation = new AbortController()
+  private traceRequest = 0
 
   /**
    * @param panels - actions of the instance shared with the root entry.
@@ -75,6 +98,11 @@ export class LayoutController implements ILayout {
     }
     this.navigation.abort()
     this.panels.selectPanel(panelId)
+  }
+
+  /** @param position - event to show or absent to close; repeated selections receive distinct request identifiers. */
+  locateProjectHistory(position?: Omit<NonNullable<PanelInfo['projectHistory']>, 'request'>): void {
+    this.panels.locateProjectHistory(position === undefined ? undefined : { ...position, request: ++this.traceRequest })
   }
 
   /** @returns the new pending navigation's cancellation signal. */

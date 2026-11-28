@@ -35,6 +35,7 @@ const NS = 'sidebar'
 
 interface WorkspaceNavigation {
   startSession(workspaceId?: Parameters<SidebarRootInjected['startSession']>[0]): void
+  readonly projectPanelId?: MainPanelId
 }
 
 /** Services required by the sidebar plugin. */
@@ -72,6 +73,7 @@ export function apply(ctx: ClientContext): void {
     // The shell's New Session button rides the Workspace UI's shared action
     // (current Session Workspace, then recent Workspace).
     startSession: (workspaceId) => { workspaceNavigation.startSession(workspaceId) },
+    projectPanelId: workspaceNavigation.projectPanelId,
     toggleSidebar: () => { ctx.layout.toggleSidebar() },
     selectPanel: (id) => { ctx.layout.selectPanel(id) },
     setPinned: panelPins.setPinned,
@@ -90,6 +92,7 @@ export function apply(ctx: ClientContext): void {
       'sidebar.workspaces': { kind: 'single', scope: 'root' },
       'sidebar.settings': { kind: 'single', scope: 'root' },
       'sidebar.footer.action': { kind: 'list', scope: 'root' },
+      'sidebar.settings.trailing': { kind: 'single', scope: 'root' },
     },
     inject: injectProps,
   }, SidebarRoot))

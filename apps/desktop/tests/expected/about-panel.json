@@ -14,7 +14,7 @@
   },
   "darwin:zh-CN": {
     "menu": [
-      { "label": "关于 Panoptic Super", "role": "about" },
+      { "label": "关于万象超级智能体", "role": "about" },
       { "type": "separator" }
     ],
     "options": {
@@ -27,7 +27,7 @@
   },
   "win32:zh-CN": {
     "menu": [
-      { "label": "关于 Panoptic Super" },
+      { "label": "关于万象超级智能体" },
       { "type": "separator" }
     ],
     "options": {

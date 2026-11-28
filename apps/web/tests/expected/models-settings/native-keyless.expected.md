@@ -58,6 +58,9 @@
       - option "xiaomi-token-plan-sgp"
       - option "zai"
       - option "zai-coding-cn"
+    - text: API 地址
+    - textbox "API 地址":
+      - /placeholder: https://chatgpt.com/backend-api
     - group: 自定义设置
     - button "取消"
     - button "保存"

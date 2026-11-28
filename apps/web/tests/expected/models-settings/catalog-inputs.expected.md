@@ -24,10 +24,11 @@
       - textbox "API 密钥":
         - /placeholder: 留空使用环境认证（OPENAI_API_KEY）
       - paragraph: 已检测到环境变量（OPENAI_API_KEY）
+      - text: API 地址
+      - textbox "API 地址":
+        - /placeholder: https://api.openai.com/v1
       - group:
-        - text: 自定义设置 API 地址
-        - textbox "API 地址":
-          - /placeholder: https://api.openai.com/v1
+        - text: 自定义设置
         - region "模型目录":
           - text: 模型目录 已自定义模型目录
           - button "恢复默认模型"

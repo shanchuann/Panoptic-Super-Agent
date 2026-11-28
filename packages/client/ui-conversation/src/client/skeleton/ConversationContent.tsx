@@ -23,9 +23,11 @@ export function ConversationContent(props: ConversationContentProps) {
   const {
     sessionId, phase, hero, useSession, useSessions, useSessionStatus,
     useWorkspaces, useInput, useComposerBlock, renderSlot, renderSlotChain,
-    selectWorkspace, t, useFactorySlot,
+    selectWorkspace, t, useFactorySlot, usePanelInfo, projectGraph,
   } = props
   const session = useSession(snapshot => snapshot)
+  const historyOpen = usePanelInfo?.(info =>
+    projectGraph === true && sessionId !== undefined && info.projectHistory?.sessionId === sessionId) === true
   const Views = useFactorySlot('views', ConversationSessionView)
   const WidthControls = useFactorySlot('widthControls', NoConversationWidthControls)
   const [body, setBody] = useState<HTMLDivElement | null>(null)
@@ -56,7 +58,9 @@ export function ConversationContent(props: ConversationContentProps) {
     const scroller = seat?.parentElement ?? null
     if (seat === null || scroller === null) return
     seatObserver.current = new ResizeObserver(() => {
-      scroller.style.setProperty('--dsh-composer-height', `${seat.offsetHeight}px`)
+      const height = `${seat.offsetHeight}px`
+      scroller.style.setProperty('--dsh-composer-height', height)
+      if (projectGraph === true) scroller.parentElement?.style.setProperty('--dsh-composer-height', height)
       scroller.style.setProperty(
         '--dsh-conversation-viewport-height',
         `${scroller.clientHeight}px`,
@@ -64,7 +68,7 @@ export function ConversationContent(props: ConversationContentProps) {
     })
     seatObserver.current.observe(seat)
     seatObserver.current.observe(scroller)
-  }, [])
+  }, [projectGraph])
 
   const sessionWorkspace = sessionId === undefined
     ? undefined
@@ -150,8 +154,7 @@ export function ConversationContent(props: ConversationContentProps) {
       ? {
         disabled: true,
         placeholder: t('placeholder.workspace'),
-        workspacePickerOpen: pickerOpen,
-        onRequestWorkspace: () => { setPickerOpen(true) },
+        ...(projectGraph === true ? {} : { workspacePickerOpen: pickerOpen, onRequestWorkspace: () => { setPickerOpen(true) } }),
       }
       : blocked
         // `blocked`, not `disabled`: the bar refuses input either way, but a
@@ -181,7 +184,7 @@ export function ConversationContent(props: ConversationContentProps) {
   // on the fallback alone would leave a business-owned takeover at the content
   // end off-screen when the user is not pinned to the floor.
   const composerSeat = (
-    <div ref={seatResizeRef} className={css.composerSeat} data-composer-seat="" data-conversation-region="composer">
+    <div ref={seatResizeRef} className={css.composerSeat} data-composer-seat="" data-conversation-region="composer" hidden={historyOpen}>
       {composer}
     </div>
   )
@@ -194,12 +197,25 @@ export function ConversationContent(props: ConversationContentProps) {
       data-conversation-session={sessionId}
       data-conversation-region="chat"
       data-content-phase={phase}
+      data-project-graph-mode={projectGraph || undefined}
+      data-project-node-view={historyOpen || undefined}
     >
       <div className={css.scrollBody} data-conversation-scroll="">
-        {sessionId === undefined ? null : <Views />}
+        {projectGraph === true ? (
+          <>
+            <div className={css.projectCanvas} data-project-canvas>
+              {renderSlot('conversation.projectGraph', {})}
+            </div>
+            {sessionId === undefined ? null : (
+              <div className={css.projectHistory} data-project-history data-conversation-scroll="" hidden={!historyOpen}>
+                {renderSlot('conversation.session', { view: 'chat' })}
+              </div>
+            )}
+          </>
+        ) : sessionId === undefined ? null : <Views />}
         {composerSeat}
       </div>
-      <WidthControls container={body} phase={phase} />
+      {historyOpen ? null : <WidthControls container={body} phase={phase} />}
     </div>
   )
 }

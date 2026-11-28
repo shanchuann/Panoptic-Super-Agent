@@ -44,11 +44,12 @@
 | DEC-22 | 四阶段生命周期：问询 至 任务 至 交付 至 迭代；迭代继承已有资产快速重启 | 已确认 | 2026-11-07 | ADR-0008、design/lifecycle.md | SCOPE M15/projects/UI |
 | DEC-23 | 任务范式路由：任务类型决定 playbook，规模与证据决定拓扑；六类预置 + 技能包可插拔 | 已确认 | 2026-11-07 | ADR-0008、design/task-paradigms.md | SCOPE M16/PLAN Z-001 |
 | DEC-24 | 事件驱动运行时：触发器 + Router/Worker + 订阅直通 + 全双工 + Watchdog；存算分离预留 | 已确认 | 2026-11-07 | ADR-0009、design/runtime.md | SCOPE M17/PLAN W-001 |
-| DEC-25 | P1 完整度定义：一条窄旅程无断点、七界面六态齐全、数据可导出可删除、交付物 8 项；范围收窄、闭环做深 | 已确认 | 2026-11-07 | design/p1-release.md | SCOPE M18/PLAN R-002/验收 |
+| DEC-25 | P1 完整度定义：一条窄旅程无断点、七界面六态齐全、数据可导出可删除、交付物 8 项；范围收窄、闭环做深 | 已确认 | 2026-11-07 | design/p1-release.md | SCOPE M18/PLAN REL-001/验收 |
 | DEC-26 | 三循环分离（交互、执行、学习）；执行账本与幂等语义；检查点与恢复；第一阶段发布门槛加入崩溃恢复演示 | 已确认 | 2026-11-08 | ADR-0010、contracts/agent-runtime.md | SCOPE M19/PLAN P-003 |
 | DEC-27 | 能力授权替代简单读写分级；项目工作区内已授权写可连续执行，越界与不可逆操作审批；权限在可信代码判定 | 已确认 | 2026-11-08 | ADR-0010、contracts/capability-approval.md | tools.md/SCOPE M08 |
 | DEC-28 | 第一阶段本地优先存储，PostgreSQL/pgvector 延后；OpenTelemetry 纳入第一阶段 | 已确认 | 2026-11-08 | ADR-0010 D6/D7 | SCOPE M20/PLAN O-001 |
 | DEC-29 | 旁路智能体：共享主会话快照的只读侧通道，旁路记录与主线分离，显式带入主线 | 已确认 | 2026-11-08 | ADR-0011、contracts/side-agent.md | SCOPE M21/PLAN S-001 |
+| DEC-30 | 每个项目有一个长期主对话。系统按风险在直接答复、授权范围内的小改动和多步骤计划之间分流 | 已确认 | 2026-11-22 | [项目主对话](contracts/project-conversation.md) | DESIGN、PLAN、交互设计 |
 
 ## 3. 未决（不计入已确认）
 

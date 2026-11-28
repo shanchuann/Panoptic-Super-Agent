@@ -10,8 +10,8 @@
 - text: Reply with a one-sentence description of event sourcing, then stop. {{clock}}
 - button "Copy"
 - paragraph: partial
-- status: Deep diving
-- text: Deep diving for {{duration}} ···
+- status: Exploring possibilities
+- text: Exploring possibilities for {{duration}} ···
 - list:
   - listitem:
     - img "Queued message image"

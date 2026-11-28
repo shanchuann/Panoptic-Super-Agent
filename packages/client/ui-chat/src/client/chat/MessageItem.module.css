@@ -299,6 +299,32 @@
   font: var(--dsw-font-markdown-code-block-small);
 }
 
+.projectError {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: var(--dsw-radius-md);
+  background: var(--dsw-alias-bg-layer-3);
+  font-size: var(--dsh-content-font-size-secondary, 13px);
+  line-height: 1.5;
+}
+
+.projectErrorCopy {
+  display: grid;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+  color: var(--dsw-alias-label-secondary);
+  overflow-wrap: anywhere;
+}
+
+.projectErrorCopy strong { color: var(--dsw-alias-state-error-primary); font-weight: 500; }
+.projectError > button { flex: none; align-self: center; }
+.projectErrorDiagnostic { max-height: 50vh; overflow: auto; overflow-wrap: anywhere; }
+.projectErrorDiagnostic p { margin: 8px 0 0; white-space: pre-wrap; }
+
 .maxTokensTitle {
   margin-right: 6px;
   color: var(--dsw-alias-state-warn-primary);

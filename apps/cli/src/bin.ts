@@ -7,7 +7,7 @@
 /* v8 ignore file -- built-bin acceptance exercises this self-executing dispatch. */
 
 import { getDshRuntimeVersion, loadLayeredEnv, StartupError } from '@deepseek-ai/dsh-app-boot'
-import { resolveDshHome } from '@deepseek-ai/dsh-home-paths'
+import { configurePanopticEnvironment, resolveDshHome } from '@deepseek-ai/dsh-home-paths'
 import { parseDshArgs } from './args.ts'
 import { reportStartupFailure } from './startup-diagnostics.ts'
 import type { RunProfileOptions } from './profile-boot.ts'
@@ -16,6 +16,8 @@ import type { RunProfileOptions } from './profile-boot.ts'
 export type RunCliOptions = Pick<RunProfileOptions, 'packageManager'> & {
   /** Permit plugin commands for Desktop's existing profile; reserved for its installed carrier. */
   manageDesktopProfile?: boolean
+  /** Launch against the isolated PCS data and product copy. */
+  standalone?: boolean
 }
 
 /**
@@ -25,15 +27,20 @@ export type RunCliOptions = Pick<RunProfileOptions, 'packageManager'> & {
  */
 export async function runCli(options: RunCliOptions = {}): Promise<void> {
   const version = getDshRuntimeVersion()
-  const { manageDesktopProfile, ...profileOptions } = options
-  const invocation = parseDshArgs(process.argv.slice(2), version, manageDesktopProfile)
+  const { manageDesktopProfile, standalone: productLaunch, ...profileOptions } = options
+  const argv = process.argv.slice(2)
+  const standaloneFlag = argv[0] === '--pcs' || argv[0] === '--panoptic'
+  const standalone = productLaunch === true || standaloneFlag
+  const home = standalone ? configurePanopticEnvironment() : undefined
+  const binName = standalone ? 'pcs' : 'dsh'
+  const invocation = parseDshArgs(standaloneFlag ? argv.slice(1) : argv, version, manageDesktopProfile, binName)
 
   switch (invocation.mode) {
     case 'profile': {
       const { runProfile } = await import('./profile-boot.ts')
       try {
         await runProfile({
-          environment: loadLayeredEnv('dsh'),
+          environment: loadLayeredEnv(binName, home),
           profile: invocation.profile,
           fromDefaultProfile: invocation.fromDefaultProfile,
           patchFiles: invocation.patches,
@@ -69,7 +76,7 @@ export async function runCli(options: RunCliOptions = {}): Promise<void> {
     }
     default:
       invocation satisfies never
-      throw new Error(`dsh: unhandled invocation mode ${JSON.stringify(invocation)}`)
+      throw new Error(`${binName}: unhandled invocation mode ${JSON.stringify(invocation)}`)
   }
 }
 

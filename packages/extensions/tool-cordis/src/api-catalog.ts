@@ -4035,6 +4035,12 @@ export const SERVICE_API: readonly ServiceApiEntry[] = [
         returns: 'the Workspace and whether this call created it.',
       },
       {
+        signature: '@Remote(\'projectGraph\') projectGraph(workspaceId: WorkspaceId, signal: AbortSignal): WorkspaceProjectGraph',
+        description: 'Read the current project graph without opening or changing a conversation.',
+        parameters: [{ name: 'workspaceId', description: 'workspace whose graph belongs to the local owner.' }, { name: 'signal', description: 'caller lifetime.' }],
+        returns: 'current plan, evidence references, and project decisions.',
+      },
+      {
         signature: '@Remote(\'initializeDefault\') async initializeDefault(signal: AbortSignal): Promise<WorkspaceValue | undefined>',
         description: 'Initialize or reuse the default Workspace during first-use startup. The directory name is fixed, so the Host never renames or relocates an existing default; its initial title is that same name, which browser consumers label in the reader\'s language.',
         parameters: [{ name: 'signal', description: 'caller lifetime; cancels native directory lookup.' }],
@@ -4139,6 +4145,11 @@ export const SERVICE_API: readonly ServiceApiEntry[] = [
     summary: 'Durable workspace registry.',
     description: 'Durable workspace registry. Startup waits for `sessionPersistence`, builds one canonical-cwd header index, and completes the one-time history bootstrap before the service becomes active. The persistence dependency is mandatory so an unavailable peer can never be mistaken for an empty history and commit the initialized marker.',
     methods: [
+      {
+        signature: 'readonly projects: ProjectRegistry',
+        description: 'Durable project conversations attached to Workspace identities.',
+        parameters: [],
+      },
       {
         signature: 'async create(path: string, title?: string): Promise<Workspace>',
         description: 'Create or reuse a workspace for an existing directory. The fully qualified path is canonicalized through `fs.realpath`; a relative, nonexistent, or non-directory path rejects. Repeated calls for the same canonical path return the existing entity without changing its title. A newly created workspace is prepended to the durable registry order. Different canonical paths may share a display title.',
@@ -6897,6 +6908,14 @@ export const TYPE_API: readonly TypeApiEntry[] = [
     declaration: 'export interface ProjectionSnapshot {\n    asOfSeq: SessionSeqCursor;\n    values: Partial<SessionProjectionMap>;\n}',
   },
   {
+    name: 'ProjectOperation',
+    declaration: 'export type ProjectOperation = z.infer<typeof operation>;',
+  },
+  {
+    name: 'ProjectRegistry',
+    declaration: 'export class ProjectRegistry {\n    constructor(private readonly ctx: Context);\n    async initialize(): Promise<void>;\n    async reserve(workspaceId: WorkspaceId): Promise<SessionId>;\n    ownerOf(id: SessionId): WorkspaceId | undefined;\n    context(id: WorkspaceId): {\n        plan: z.infer<typeof plan> | undefined;\n        decisions: z.infer<typeof decision>[];\n        pendingOperations: Pick<ProjectOperation, \'id\' | \'tool\'>[];\n        recentOperations: Pick<ProjectOperation, \'id\' | \'tool\' | \'state\' | \'expectedFile\'>[];\n    };\n    pending(id: WorkspaceId): ProjectOperation[];\n    verifiedWrite(id: WorkspaceId, expected: NonNullable<ProjectOperation[\'expectedFile\']>): boolean;\n    async begin(id: WorkspaceId, intent: Omit<ProjectOperation, \'state\'>): Promise<void>;\n    async settle(id: WorkspaceId, operationId: string, state: Exclude<ProjectOperation[\'state\'], \'pending\'>): Promise<void>;\n    async plan(id: WorkspaceId, draft: z.infer<typeof draftPlan>, fromSeq: number): Promise<z.infer<typeof plan>>;\n    async verify(id: WorkspaceId, revision: number, step: number, receipt: z.infer<typeof evidence>): Promise<void>;\n    async remember(id: WorkspaceId, entry: z.infer<typeof projectDecisionInput>, sourceSeq: number): Promise<void>;\n}',
+  },
+  {
     name: 'PromptAssembly',
     declaration: 'export interface PromptAssembly extends PromptPresentation {\n    tools: ToolSchema[];\n}',
   },
@@ -7434,7 +7453,7 @@ export const TYPE_API: readonly TypeApiEntry[] = [
   },
   {
     name: 'SessionCreateRequest',
-    declaration: 'export interface SessionCreateRequest {\n    readonly workspaceId?: WorkspaceId;\n    readonly cwd?: string;\n    readonly sessionId?: SessionId;\n    readonly agentPreset?: string;\n}',
+    declaration: 'export interface SessionCreateRequest {\n    readonly workspaceId?: WorkspaceId;\n    readonly projectConversation?: true;\n    readonly cwd?: string;\n    readonly sessionId?: SessionId;\n    readonly agentPreset?: string;\n}',
   },
   {
     name: 'SessionCreateValue',
@@ -9267,6 +9286,10 @@ export const TYPE_API: readonly TypeApiEntry[] = [
   {
     name: 'WorkspacePinValue',
     declaration: 'export interface WorkspacePinValue {\n    readonly pinnedSessionIds: readonly SessionId[];\n}',
+  },
+  {
+    name: 'WorkspaceProjectGraph',
+    declaration: 'export interface WorkspaceProjectGraph {\n    readonly revision?: number;\n    readonly sourceSeq?: number;\n    readonly goal?: string;\n    readonly constraints: readonly string[];\n    readonly tasks: readonly {\n        readonly title: string;\n        readonly acceptance: string;\n        readonly evidence?: {\n            readonly seq: number;\n            readonly tool: string;\n        };\n    }[];\n    readonly decisions: readonly {\n        readonly key: string;\n        readonly value: string;\n        readonly sourceSeq: number;\n    }[];\n    readonly pending: readonly {\n        readonly id: string;\n        readonly tool: string;\n    }[];\n}',
   },
   {
     name: 'WorkspaceRenameRequest',

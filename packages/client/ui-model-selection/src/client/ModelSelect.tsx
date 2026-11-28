@@ -123,6 +123,8 @@ export function ModelSelect(
   const currentVisibleIndex = visibleModels.findIndex(model =>
     model.provider === state.current?.provider && model.model === state.current.model)
   const activeModelIndex = Math.min(highlightedIndex ?? Math.max(0, currentVisibleIndex), visibleModels.length - 1)
+  const activeProvider = visibleModels[activeModelIndex]?.provider
+  const activeModel = visibleModels[activeModelIndex]?.model
   const selectedIndex = state.current === null
     ? -1
     : choices.findIndex(c => c.selection.provider === state.current?.provider && c.selection.model === state.current.model)
@@ -213,7 +215,7 @@ export function ModelSelect(
     if (open && pane === 'model' && activeModelIndex >= 0) {
       itemRefs.current[activeModelIndex]?.scrollIntoView({ block: 'nearest' })
     }
-  }, [open, pane, activeModelIndex, visibleModels])
+  }, [open, pane, activeModelIndex, activeProvider, activeModel, query])
 
   // The portal needs viewport coordinates from the trigger and the menu's
   // measured size before paint. Slot content can resize without parent renders.
@@ -230,7 +232,7 @@ export function ModelSelect(
       let y = rect.top - 8 - lh
       if (lw > 0) x = Math.min(Math.max(x, MARGIN), window.innerWidth - lw - MARGIN)
       if (lh > 0) y = Math.min(Math.max(y, MARGIN), window.innerHeight - lh - MARGIN)
-      setMenuPos({ left: x, top: y })
+      setMenuPos(previous => previous?.left === x && previous.top === y ? previous : { left: x, top: y })
     }
     place()
     window.addEventListener('scroll', place, true)
@@ -240,12 +242,13 @@ export function ModelSelect(
       ? new ResizeObserver(place)
       : null
     if (menu !== null) observer?.observe(menu)
+    if (triggerRef.current !== null) observer?.observe(triggerRef.current)
     return () => {
       observer?.disconnect()
       window.removeEventListener('scroll', place, true)
       window.removeEventListener('resize', place)
     }
-  }, [available, open, pane, state, query])
+  }, [available, open, pane])
 
   if (!available) return null
 

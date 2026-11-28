@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import type { PendingSubmission } from '@deepseek-ai/dsh-api-session-controller/client'
 import type { PropsRenderFactories } from '@deepseek-ai/dsh-client-ui-slots'
 import type { UserTextFacts } from '@deepseek-ai/dsh-client-ui-conversation/client'
-import { JsonBlock, StateDot, TextShimmer } from '@deepseek-ai/dsh-client-ui-primitives'
+import { Button, JsonBlock, Modal, StateDot, TextShimmer } from '@deepseek-ai/dsh-client-ui-primitives'
 import type {
   ChatNodeOwnerProps, ChatNodeViewProps, ChatViewSlotProps, UserContentAttachment, UserContentData, UserContentInput,
 } from '../contract/slots.ts'
@@ -14,6 +14,7 @@ import { MessageIconActions } from './MessageIconActions.tsx'
 import css from './MessageItem.module.css'
 
 const EMPTY_TEXT_FACTS: Readonly<Partial<UserTextFacts>> = {}
+const projectHome = (globalThis as { __PANOPTIC_PROJECT_HOME__?: boolean }).__PANOPTIC_PROJECT_HOME__ === true
 
 type UserImage = Extract<UserMessageNode['content'][number], { type: 'image' }>
 type UserFile = Extract<UserMessageNode['content'][number], { type: 'file' }>
@@ -133,6 +134,7 @@ function TurnErrorItem({ node, t }: {
   node: TurnErrorNode
   t: ChatViewSlotProps['t']
 }) {
+  if (projectHome) return <ProjectTurnError node={node} t={t} />
   return (
     <div className={css.turnErrorRow} role="status">
       <StateDot state="error" className={css.turnErrorDot} />
@@ -141,6 +143,39 @@ function TurnErrorItem({ node, t }: {
         <span className={css.turnErrorMessage}>{failureMessage(node.message, node.code, t)}</span>
       </div>
       {node.code !== undefined && node.code !== 'INTERRUPTED' && <code className={css.turnErrorCode}>{node.code}</code>}
+    </div>
+  )
+}
+
+function ProjectTurnError({ node, t }: { node: TurnErrorNode; t: ChatViewSlotProps['t'] }) {
+  const [showDetails, setShowDetails] = useState(false)
+  const stopped = node.code === 'ACCOUNT_SIGNED_OUT' || node.code === 'INTERRUPTED'
+  const invalidCredential = node.code === 'AUTH' || node.code === 'INVALID_CREDENTIAL'
+  const credentials = node.code === 'MISSING_CREDENTIAL' || invalidCredential
+  const title = t(stopped ? 'message.taskStopped' : 'message.turnError')
+  const reason = node.code === 'MISSING_CREDENTIAL' ? t('message.failure.missingCredential')
+    : invalidCredential ? t('message.failure.auth') : failureMessage(t('message.failure.detailsHint'), node.code, t)
+  const canShowDetails = !stopped && (node.code !== undefined || node.message !== '')
+  return (
+    <div className={css.projectError}>
+      <StateDot state="error" className={css.turnErrorDot} />
+      <div className={css.projectErrorCopy} role="status">
+        <strong>{title}</strong>
+        <span>{reason}</span>
+        {credentials && <span>{t('message.failure.modelSettings')}</span>}
+      </div>
+      {canShowDetails && <Button size="sm" variant="outline" onClick={() => { setShowDetails(true) }}>
+        {t('message.failure.details')}
+      </Button>}
+      {showDetails && (
+        <Modal open onClose={() => { setShowDetails(false) }} title={t('message.failure.details')}
+          closeLabel={t('message.failure.closeDetails')}>
+          <div className={css.projectErrorDiagnostic}>
+            {node.code !== undefined && <code>{node.code}</code>}
+            <p>{credentials ? reason : node.message || reason}</p>
+          </div>
+        </Modal>
+      )}
     </div>
   )
 }

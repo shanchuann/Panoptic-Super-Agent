@@ -2,7 +2,7 @@
 
 import { Context } from '@deepseek-ai/cordis'
 import z from '@deepseek-ai/schemastery'
-import { Remote, TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol'
+import { Remote, RemoteError, TypertRemoteService, principalOf } from '@deepseek-ai/dsh-typert-protocol'
 import type {} from '@deepseek-ai/dsh-api-remote-access'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import { WorkspaceCommands } from './commands.ts'
@@ -24,6 +24,7 @@ import type {
   WorkspaceOrderValue,
   WorkspacePinSessionRequest,
   WorkspacePinValue,
+  WorkspaceProjectGraph,
   WorkspaceRenameRequest,
   WorkspaceUnarchiveSessionRequest,
   WorkspaceUnpinSessionRequest,
@@ -90,6 +91,31 @@ export class WorkspaceController extends TypertRemoteService {
   @Remote('create')
   create(request: WorkspaceCreateRequest): Promise<WorkspaceCreateValue> {
     return this.commands.create(request)
+  }
+
+  /**
+   * Read the current project graph without opening or changing a conversation.
+   * @param workspaceId - workspace whose graph belongs to the local owner.
+   * @param signal - caller lifetime.
+   * @returns current plan, evidence references, and project decisions.
+   */
+  @Remote('projectGraph')
+  projectGraph(workspaceId: WorkspaceId, signal: AbortSignal): WorkspaceProjectGraph {
+    signal.throwIfAborted()
+    const principal = principalOf(this.ctx.invocation)
+    if ((principal !== undefined && principal.kind !== 'owner') || this.ctx.workspaceRegistry.get(workspaceId) === undefined) {
+      throw new RemoteError('workspace/not-found', 'Project workspace is unavailable', { workspaceId })
+    }
+    const { plan, decisions, pendingOperations } = this.ctx.workspaceRegistry.projects.context(workspaceId)
+    return {
+      ...(plan === undefined ? {} : { revision: plan.revision, goal: plan.goal, sourceSeq: plan.fromSeq }),
+      constraints: plan?.constraints ?? [],
+      tasks: plan?.steps.map(({ title, acceptance, evidence }) => ({
+        title, acceptance, ...(evidence === undefined ? {} : { evidence: { seq: evidence.seq, tool: evidence.tool } }),
+      })) ?? [],
+      decisions: decisions.flatMap(({ key, value, sourceSeq }) => value === null ? [] : [{ key, value, sourceSeq }]),
+      pending: pendingOperations,
+    }
   }
 
   /**

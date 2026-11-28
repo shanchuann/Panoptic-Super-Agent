@@ -13,6 +13,7 @@
  * per-session singleton with no global layer to merge.
  */
 import type {} from '@deepseek-ai/dsh-client-product-analytics/client'
+import type {} from '@deepseek-ai/dsh-client-ui-settings/client'
 import { Service } from '@deepseek-ai/cordis'
 import type { Context } from '@deepseek-ai/cordis'
 import type { SessionBinding } from '@deepseek-ai/dsh-api-session-controller/client'
@@ -20,6 +21,8 @@ import type { SessionId } from '@deepseek-ai/dsh-session/types'
 import { WeakMapWithValues } from '@deepseek-ai/dsh-util-values'
 import { ModelCatalogDirectory } from './catalog.ts'
 import { ModelDirectory } from './directory.ts'
+
+const DEFAULT_MODEL_SETTINGS = 'agent-default-model'
 
 declare module '@deepseek-ai/cordis' {
   interface Context {
@@ -47,12 +50,37 @@ export class ModelDirectoryResolver extends Service {
     super(ctx, 'modelDirectories')
     this.catalog = new ModelCatalogDirectory(ctx)
     void this.catalog.load().catch(() => { /* selectors expose the shared error */ })
+    let mirrorsDefault = false
+    ctx.inject(['configForms'], (child) => {
+      const mirror = child.configForms.describe()
+      let previous: ReturnType<typeof mirror.getSnapshot>['view']
+      const update = (): void => {
+        const { view } = mirror.getSnapshot()
+        if (view === previous) return
+        previous = view
+        const value = view?.namespaces.find(entry => entry.ns === DEFAULT_MODEL_SETTINGS)?.value
+        if (value === null || typeof value !== 'object' || Array.isArray(value)
+          || typeof value.provider !== 'string' || typeof value.model !== 'string') return
+        const { provider, model, reasoningEffort } = value
+        this.catalog.updateDefault({
+          provider, model, ...typeof reasoningEffort === 'string' ? { reasoningEffort } : {},
+        })
+      }
+      child.effect(() => {
+        mirrorsDefault = true
+        update()
+        const unsubscribe = mirror.subscribe(update)
+        return () => { unsubscribe(); mirrorsDefault = false }
+      }, 'ui-model-selection: deployment default')
+    })
     ctx.on('connection/reset', () => {
       this.catalog.resetGeneration()
       for (const directory of this.live.directories.values) directory.resetConnected()
     })
     ctx.remote.$on('llm/adapters-updated', () => { this.catalog.refresh() })
-    ctx.remote.$on('settings/document-updated', () => { this.catalog.refresh() })
+    ctx.remote.$on('settings/document-updated', (namespace) => {
+      if (namespace !== DEFAULT_MODEL_SETTINGS || !mirrorsDefault) this.catalog.refresh()
+    })
     ctx.remote.$on('credentials/record-updated', () => { this.catalog.refresh() })
     ctx.remote.$on('credentials/reference-updated', () => { this.catalog.refresh() })
   }

@@ -1,0 +1,43 @@
+# Bilingual-pair consistency record for ADR-0011-side-agent.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/adr/ADR-0011-side-agent.md
+/adr-0011-side-agent:
+  en: 42c7f8d56ab54a24
+  zh: 8565b3507dad0ca9
+/adr-0011-side-agent/context:
+  en: da876ad263b63e3b
+  zh: f1d1935f21bfccef
+/adr-0011-side-agent/decision:
+  en: a15c7c13f167e5ac
+  zh: 63bcc2ef60c2f344
+/adr-0011-side-agent/decision/d1-store-side-threads-separately-from-the-main-conversation:
+  en: 7255952d74833e96
+  zh: 84c6217de80d2f87
+/adr-0011-side-agent/decision/d2-take-a-context-snapshot:
+  en: 5c2b84bf02e9f7ad
+  zh: 28a07d064728f3d9
+/adr-0011-side-agent/decision/d3-present-the-side-thread-in-a-sidebar:
+  en: abc0701c650c800f
+  zh: ab058c1240f919ee
+/adr-0011-side-agent/decision/d4-grant-read-only-access-by-default:
+  en: f721af454a0b604d
+  zh: e617b165ce98b87a
+/adr-0011-side-agent/decision/d5-require-user-confirmation-to-bring-notes-into-the-main-conversation:
+  en: 4190319db767720d
+  zh: 044782ed32b12df3
+/adr-0011-side-agent/decision/d6-manage-memory-and-deletion:
+  en: 71860f7d7f18ad1d
+  zh: 866891f219357bcd
+/adr-0011-side-agent/decision/d7-deliver-the-first-phase:
+  en: f45a96a59ca6561d
+  zh: a297af28718acd6e
+/adr-0011-side-agent/alternatives:
+  en: c31cd55b355321fb
+  zh: 4250536875549058
+/adr-0011-side-agent/consequences-and-risks:
+  en: 5d3d11d8ac99648b
+  zh: 42a77b0edb350a5a
+/adr-0011-side-agent/when-to-revisit:
+  en: 9cf89ebaf9ab4542
+  zh: 18baa354dad84807

@@ -1,16 +1,14 @@
 /**
- * One provider's editor card, hand-written per adapter family: the primary
- * field is a single write-only **API key** input (the page never asks for an
- * environment-variable name — a typed key stores through `credentials/set`
+ * One provider's editor card exposes the base URL and a write-only API key.
+ * A typed key stores through `credentials/set`
  * under the profile's reference, deriving `<ROUTE>_API_KEY` when the profile
  * has none. The pi-ai profile records that derivation as `apiKeyEnv` only when
  * a key is entered; a blank key materializes a reference-free profile for
- * provider-native authentication);
- * the collapsed 自定义设置 area carries the per-family extras (`baseURL` for
- * both families, DeepSeek's id/name/context-window model catalog, and the
+ * provider-native authentication.
+ * The collapsed advanced area carries the per-family extras, including the model catalog and the
  * display name and wire protocol of a pi-ai route the adapter does not ship —
  * the two fields the create card asked that route for, editable here for the
- * same reason).
+ * same reason.
  * Reasoning effort is deliberately absent: it is a per-MODEL capability, and
  * the models under one provider disagree about it, so a provider-scoped
  * control can only be set to a value some of them reject. The composer's
@@ -31,6 +29,7 @@ import {
 } from './DeepSeekModelsEditor.tsx'
 import type { DeepSeekModelsValidationFailure } from './DeepSeekModelsEditor.tsx'
 import { apiKeyFailure } from './apiKey.ts'
+import { isHttpUrl } from './base-url.ts'
 import { EditorFooter } from './EditorFooter.tsx'
 import { ModelListEditor } from './ModelListEditor.tsx'
 import { validateReasoningEfforts } from './ModelReasoningEfforts.tsx'
@@ -86,8 +85,8 @@ export interface ProviderEditorProps {
   t: (key: keyof typeof en) => string
   /** Disable writes (read-only settings provider). */
   readOnly: boolean
-  /** Render only the credential field and actions, without provider settings. */
-  credentialOnly?: boolean
+  /** Render only the endpoint, credential, and actions. */
+  connectionOnly?: boolean
   /** Require a newly entered credential before this editor can submit. */
   credentialRequired?: boolean
   /** Give the credential field initial focus when this editor mounts. */
@@ -246,10 +245,12 @@ export function ProviderEditor(props: ProviderEditorProps): ReactNode {
     ? 'keyRequired' as const
     : undefined
   const shownKeyFailure = credentialRequiredFailure ?? keyFailure
+  const endpointDraft = stringAt(draft, 'baseURL')
+  const endpointInvalid = endpointDraft !== undefined && !isHttpUrl(endpointDraft)
   // What the form currently shows, which is what an interrogation must ask:
   // an edited-but-unsaved endpoint, and a key typed but not yet stored.
   const probeApi = stringAt(draft, 'api') ?? stringAt(fallback, 'api')
-  const probeBaseURL = stringAt(draft, 'baseURL') ?? stringAt(fallback, 'baseURL')
+  const probeBaseURL = endpointDraft ?? stringAt(fallback, 'baseURL')
   const probe = {
     settingsNs: namespace.ns,
     // Naming the route lets an adapter that already describes it answer from
@@ -273,7 +274,7 @@ export function ProviderEditor(props: ProviderEditorProps): ReactNode {
       && stringAt(fallback, 'apiKeyEnv') === undefined && keyValue.length > 0
       ? schema.setPath(draft, ['apiKeyEnv'], keyRef)
       : draft
-    if (props.credentialOnly !== true) {
+    if (props.connectionOnly !== true) {
       // The same checker gates the submit button, so a card cannot reach this
       // with a bad row; it stays because the schema check below would refuse
       // the write with a message naming a path instead of the row, and because
@@ -285,7 +286,7 @@ export function ProviderEditor(props: ProviderEditorProps): ReactNode {
       }
     }
     /* v8 ignore next -- apply is only reachable from the rendered card, which required a resolved node */
-    if (props.credentialOnly !== true && node !== undefined && settingsPath.length === 0) {
+    if (props.connectionOnly !== true && node !== undefined && settingsPath.length === 0) {
       const sectionError = schema.validate(node, next)
       if (sectionError !== undefined) return sectionError
     }
@@ -293,11 +294,9 @@ export function ProviderEditor(props: ProviderEditorProps): ReactNode {
       && fallback === undefined
       && committedOriginal === undefined
       && Object.keys(next).length === 0
-    const ops: SettingsPathOpView[] = props.credentialOnly === true
-      ? []
-      : materializesNativeProfile
-        ? [{ op: 'set', path: [...settingsPath], value: {} }]
-        : pathOps(settingsPath, committedOriginal, next)
+    const ops: SettingsPathOpView[] = materializesNativeProfile
+      ? [{ op: 'set', path: [...settingsPath], value: {} }]
+      : pathOps(settingsPath, committedOriginal, next)
     if (ops.length > 0) {
       const written = await operations.writeSettings(ns, ops, expectedRevision)
       if (written.kind !== 'written') return written.kind === 'conflict' ? t('conflict') : written.message
@@ -391,7 +390,9 @@ export function ProviderEditor(props: ProviderEditorProps): ReactNode {
         .replace('{hint}', () => detectedVisibleRef ?? keyHint)
     const keyHelp = visibleRefs.length === 0
       ? undefined
-      : t('keyHelp').replace('{env}', () => visibleRefs.join(' / '))
+      : t('keyHelp').replace('{env}', () => visibleRefs.join(' / ')).replace('{projectEnv}', '$cwd/.env')
+        .replace('{homeEnv}', (globalThis as { __PANOPTIC_PROJECT_HOME__?: boolean }).__PANOPTIC_PROJECT_HOME__ === true
+          ? '$PCS_HOME/.env' : '$DSH_HOME/.env')
     const authHelp = keyHelp === undefined ? null : (
       <Tooltip label={keyHelp} side="right" delayMs={0} focusDelayMs={0} portal openOnClick>
         <button type="button" className={styles['helpButton']} aria-label={t('authHelp')}>?</button>
@@ -437,7 +438,30 @@ export function ProviderEditor(props: ProviderEditorProps): ReactNode {
             {credentialHint === undefined ? null : <p id={`${props.provider}-credential-hint`} className={styles[missingRefs ? 'notice' : detectedRef === undefined ? 'advancedHint' : 'savedNotice']}>{credentialHint}</p>}
             {shownKeyFailure === undefined ? null : <p className={styles['error']}>{t(shownKeyFailure)}</p>}
           </div>}
-        {props.credentialOnly === true ? null : <details className={styles['customized']}>
+        <div className={styles['field']}>
+          <span className={styles['fieldLabel']}>{t('baseUrl')}</span>
+          <input
+            className={styles['input']}
+            type="text"
+            inputMode="url"
+            spellCheck={false}
+            value={endpointDraft ?? ''}
+            placeholder={family === 'deepseek' ? t('deepSeekBaseUrl')
+              : baseURL === undefined ? t(endpointEnv.length > 0 ? 'baseUrlConfigured' : 'baseUrlDefault')
+                : t('baseUrlPlaceholder').replace('{url}', () => baseURL)}
+            aria-describedby={endpointInvalid || endpointHint !== undefined ? `${props.provider}-endpoint-hint` : undefined}
+            aria-label={t('baseUrl')}
+            aria-invalid={endpointInvalid}
+            disabled={disabled}
+            onChange={(event) => { setField('baseURL', event.target.value.trim()) }}
+          />
+          {endpointInvalid || endpointHint !== undefined
+            ? <span id={`${props.provider}-endpoint-hint`} className={styles[endpointInvalid ? 'error' : 'advancedHint']}>
+              {endpointInvalid ? t('customBaseUrlInvalid') : endpointHint}
+            </span>
+            : null}
+        </div>
+        {props.connectionOnly === true ? null : <details className={styles['customized']}>
           <summary className={styles['customizedSummary']}>{t('customized')}</summary>
           <div className={styles['customizedBody']}>
             {/* The name and the protocol are the create card's two remaining
@@ -467,27 +491,6 @@ export function ProviderEditor(props: ProviderEditorProps): ReactNode {
                 </div>
               )
               : null}
-            <div className={styles['field']}>
-              <span className={styles['fieldLabel']}>{t('baseUrl')}</span>
-              <input
-                className={styles['input']}
-                type="text"
-                value={stringAt(draft, 'baseURL') ?? ''}
-                placeholder={family === 'deepseek'
-                  ? t('deepSeekBaseUrl')
-                  : baseURL === undefined ? t(endpointEnv.length > 0 ? 'baseUrlConfigured' : 'baseUrlDefault')
-                    : t('baseUrlPlaceholder').replace('{url}', () => baseURL)}
-                aria-describedby={endpointHint === undefined ? undefined : `${props.provider}-endpoint-hint`}
-                aria-label={t('baseUrl')}
-                disabled={disabled}
-                onChange={(event) => {
-                  setField('baseURL', event.target.value === '' ? undefined : event.target.value)
-                }}
-              />
-              {endpointHint === undefined ? null : <span id={`${props.provider}-endpoint-hint`} className={styles['advancedHint']}>{endpointHint}</span>}
-            </div>
-            {/* The protocol sits beside the endpoint it describes, as it does
-                on the create card. */}
             {ownsIdentity
               ? (
                 <div className={styles['field']}>
@@ -531,7 +534,7 @@ export function ProviderEditor(props: ProviderEditorProps): ReactNode {
                   reasoningLevels={reasoningLevels}
                   defaultInput={Array.isArray(defaultInput) ? defaultInput : undefined}
                   probe={probe}
-                  probeBlocked={keyFailure}
+                  probeBlocked={endpointInvalid ? 'customBaseUrlInvalid' : keyFailure}
                   operations={operations}
                   onBusyChange={setListBusy}
                 />
@@ -543,7 +546,7 @@ export function ProviderEditor(props: ProviderEditorProps): ReactNode {
   }
 
   return (
-    <div className={props.credentialOnly === true ? styles['addBlock'] : styles['editor']}>
+    <div className={props.connectionOnly === true ? styles['addBlock'] : styles['editor']}>
       {props.hideTitle === true
         ? null
         : (
@@ -558,7 +561,7 @@ export function ProviderEditor(props: ProviderEditorProps): ReactNode {
         ? <p className={styles['advancedHint']}>{`${t('advancedHint')} (${namespace.ns})`}</p>
         : curatedFields(layout)}
       {failure !== undefined ? <p className={styles['error']}>{failure}</p> : null}
-      {props.credentialOnly === true || modelFailure === undefined
+      {props.connectionOnly === true || modelFailure === undefined
         ? null
         : (
           <p className={styles['advancedHint']}>
@@ -569,7 +572,8 @@ export function ProviderEditor(props: ProviderEditorProps): ReactNode {
         t={t}
         busy={busy}
         submitDisabled={disabled || layout === 'unknown'
-          || (props.credentialOnly !== true && modelFailure !== undefined)
+          || (props.connectionOnly !== true && modelFailure !== undefined)
+          || endpointInvalid
           || shownKeyFailure !== undefined
           || (props.credentialRequired === true && keyValue.length === 0)}
         submitLabelKey={props.submitLabelKey ?? 'apply'}

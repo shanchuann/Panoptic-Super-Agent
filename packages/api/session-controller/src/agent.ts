@@ -12,6 +12,7 @@ import type { Session, SessionId } from '@deepseek-ai/dsh-session'
 import { SessionQueryError, type SessionObservation } from '@deepseek-ai/dsh-session-query'
 import { RemoteError, remoteErrorOf } from '@deepseek-ai/dsh-typert-protocol'
 import type {} from '@deepseek-ai/dsh-typert-registry'
+import { installProjectConversation } from './project-conversation.ts'
 
 /** Cold Session identity absent from persistence. */
 export class ApiSessionNotFound extends Error {}
@@ -243,6 +244,26 @@ export class ApiSessionAgentController {
   }
 
   /**
+   * Open a reserved Session, creating it under that exact id only on a definite miss.
+   * @param sessionId - durable reserved identity.
+   * @param cwd - expected canonical directory.
+   * @returns the Agent and its recorded preset.
+   */
+  openReservedSession(sessionId: SessionId, cwd: string): Promise<ApiSessionCreated> {
+    return this.inOrder(sessionId, async () => {
+      const existing = await this.resolveAgent(sessionId)
+      if ('error' in existing) {
+        if (remoteErrorOf(existing.error)?.code !== 'session/not-found') throw existing.error
+        return this.created(await this.createAgent(sessionId, cwd, await this.composeAgent(undefined)))
+      }
+      if (existing.agent.session.header.cwd !== cwd) {
+        throw new ApiSessionCwdConflict(sessionId, cwd, existing.agent.session.header.cwd)
+      }
+      return this.created(existing.agent)
+    })
+  }
+
+  /**
    * Read the current Agent preset from the Session projection.
    * @param session - live Session whose projection state is available.
    * @returns the current preset, or undefined without a preset service or recorded selection.
@@ -271,14 +292,18 @@ export class ApiSessionAgentController {
   async composeAgent(presetId: string | undefined): Promise<ApiSessionComposition> {
     const presets = this.ctx.get('agentPresets')
     if (presets === undefined) {
-      return { setup: (agentCtx) => { installModelSelection(agentCtx) } }
+      return { setup: async (agentCtx, agent) => {
+        installModelSelection(agentCtx)
+        await installProjectConversation(agentCtx, agent)
+      } }
     }
     const resolvedId = (await presets.resolve(presetId)).id
     return {
       agentPreset: resolvedId,
-      setup: async (agentCtx) => {
+      setup: async (agentCtx, agent) => {
         installModelSelection(agentCtx)
         await presets.mount(agentCtx, resolvedId)
+        await installProjectConversation(agentCtx, agent)
       },
     }
   }

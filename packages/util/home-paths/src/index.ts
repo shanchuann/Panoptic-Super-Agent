@@ -6,7 +6,7 @@
 
 import { opendir, realpath } from 'node:fs/promises'
 import { homedir } from 'node:os'
-import { basename, dirname, join, resolve } from 'node:path'
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path'
 
 /** Directory name for the default DeepSeek Harness home under the OS home. */
 export const DSH_HOME_DIR_NAME = '.dsh'
@@ -16,6 +16,33 @@ export const DEFAULT_DSH_HOME_DISPLAY = `~/${DSH_HOME_DIR_NAME}`
 
 /** Environment variable that overrides the default DeepSeek Harness home. */
 export const DSH_HOME_ENV = 'DSH_HOME'
+
+/** Default personal data directory for Panoptic Super. */
+export const PCS_HOME_DIR_NAME = '.pcs'
+
+/**
+ * Prepare the standalone product process before any profile or `.env` is loaded.
+ * @param env - environment of the product process or its dedicated child.
+ * @returns the absolute Panoptic data directory.
+ */
+export function configurePanopticEnvironment(env: NodeJS.ProcessEnv = process.env): string {
+  const home = resolve(expandHomePath(env.PCS_HOME?.trim() || env.PANOPTIC_HOME?.trim() || join(homedir(), PCS_HOME_DIR_NAME)))
+  const oldHomes = [join(homedir(), '.dsh'), ...(env.PANOPTIC_STANDALONE !== '1' && env.DSH_HOME !== undefined ? [resolve(expandHomePath(env.DSH_HOME))] : [])]
+  if (oldHomes.some((path) => {
+    const suffix = relative(path, home)
+    return !isAbsolute(suffix) && suffix !== '..' && !suffix.startsWith(`..${sep}`)
+  })) throw new Error('PCS_HOME must be separate from the existing application data directory')
+  for (const key of Object.keys(env)) {
+    if (/^(DSH_|DEEPSEEK_|OPENAI_|ANTHROPIC_|GEMINI_|AZURE_OPENAI_|OPENROUTER_|MISTRAL_|AWS_|CODEX_HOME$)/iu.test(key)
+      || /_(?:API_KEY|ACCESS_TOKEN|TOKEN|SECRET|PASSWORD)$/iu.test(key)) Reflect.deleteProperty(env, key)
+  }
+  env.PANOPTIC_STANDALONE = '1'
+  env.PCS_HOME = home
+  env.DSH_HOME = home
+  env.DSH_AGENTS_HOME = join(home, 'agents')
+  env.DSH_TELEMETRY_DISABLED = '1'
+  return home
+}
 
 /** Directory name for the default shared agent configuration root under the OS home. */
 export const AGENTS_HOME_DIR_NAME = '.agents'
@@ -181,6 +208,9 @@ export function dshCachePath(optionsOrSegment: { dshHome?: string } | string = {
  * @returns `~/.dsh` for the default home, otherwise `$DSH_HOME`.
  */
 export function dshHomeDisplay(resolvedHome: string): string {
+  if (process.env.PANOPTIC_STANDALONE === '1') {
+    return rootDisplay(resolvedHome, join(homedir(), PCS_HOME_DIR_NAME), `~/${PCS_HOME_DIR_NAME}`, 'PCS_HOME')
+  }
   return rootDisplay(resolvedHome, defaultDshHome(), DEFAULT_DSH_HOME_DISPLAY, DSH_HOME_ENV)
 }
 

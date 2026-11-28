@@ -645,6 +645,25 @@
   display: flex;
 }
 
+.settingsArea[data-project-settings] {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.settingsTrigger {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .root[data-project-sidebar] .wide { animation: wide-in 220ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .root[data-project-sidebar].fading > * { transition: opacity 122ms cubic-bezier(0.32, 0, 0.67, 0); }
+  .root[data-project-sidebar].railIn :is(.iconButton, .newSession, .panelList, .regionArea, .footArea) {
+    animation: rail-fade-in 128ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+}
+
 .collapsed .footArea {
   align-items: center;
 }
@@ -654,6 +673,56 @@
   display: flex;
   justify-content: center;
   width: auto;
+}
+
+/* Panoptic uses the AI Sidebar's flat navigation rows. */
+.root[data-project-sidebar] {
+  background: var(--panoptic-sidebar-surface, var(--dsw-specific-sidebar-fill));
+}
+
+:global([data-platform='darwin']) .root[data-project-sidebar] {
+  background: transparent;
+}
+
+.root[data-project-sidebar]:not(.collapsed) .logoRow {
+  padding-inline-start: 12px;
+}
+
+.root[data-project-sidebar]:not(.collapsed) .newSession {
+  height: 38px;
+  margin-inline: 0;
+  margin-bottom: 4px;
+  border: 0;
+  border-radius: var(--dsw-radius-md);
+  background: transparent;
+}
+
+.root[data-project-sidebar]:not(.collapsed) .newSessionContent {
+  width: auto;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.root[data-project-sidebar]:not(.collapsed) .panelRow {
+  min-height: 38px;
+  margin-inline: 0;
+  padding-inline: 12px;
+  gap: 12px;
+}
+
+.root[data-project-sidebar] :is(.newSession, .panelRow, .iconButton) {
+  corner-shape: round;
+}
+
+@media (hover: hover) {
+  .root[data-project-sidebar]:not(.collapsed) .newSession:hover {
+    background: var(--dsw-alias-interactive-bg-hover);
+  }
+}
+
+.root[data-project-sidebar]:not(.collapsed) .footArea {
+  padding-top: 6px;
+  border-top: 1px solid var(--dsw-alias-border-l1);
 }
 
 @media (prefers-reduced-motion: reduce) {

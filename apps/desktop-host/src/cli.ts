@@ -13,6 +13,7 @@ import { installOfficeEngineResolution, runtimeArchivePath } from './office-engi
 export async function runDesktopCli(runtimeDir: string, supportDir: string): Promise<void> {
   installOfficeEngineResolution(runtimeDir)
   await runCli({
+    standalone: true,
     manageDesktopProfile: true,
     packageManager: {
       command: process.execPath,

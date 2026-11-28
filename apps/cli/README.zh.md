@@ -6,6 +6,8 @@
 
 ## 入口模式
 
+在万象超级智能体的源码仓库中运行 `pnpm pcs web`，也可通过桌面安装的命令运行 `pcs web`。PCS 沿用同样的 profile 语法，并从 `PCS_HOME` 或 `~/.pcs` 加载自己的数据。
+
 | 命令 | 用途 |
 |---|---|
 | `dsh <name>` / `dsh --profile <name>` | 启动位于 `$DSH_HOME/profiles/<name>` 的指定 profile。 |

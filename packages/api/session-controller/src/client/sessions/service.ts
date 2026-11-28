@@ -437,6 +437,7 @@ export class ClientSessions implements ISessions {
    */
   async create(opts: {
     workspaceId?: WorkspaceId
+    projectConversation?: true
     cwd?: string
     sessionId?: SessionId
     agentPreset?: string

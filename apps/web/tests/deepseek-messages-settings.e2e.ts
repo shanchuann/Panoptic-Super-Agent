@@ -80,6 +80,7 @@ describe.skipIf(webSnapshotMode() === 'record')('web e2e: DeepSeek Messages sett
     expect(scaffold.ctx.agentDefaultModel.currentSelection()).toEqual({ provider: 'deepseek-official', model: 'deepseek-flash' })
     await page.getByRole('dialog', { name: '开始使用', exact: true }).getByRole('button', { name: '添加 API Key', exact: true }).click()
     const onboarding = page.getByRole('dialog', { name: '添加一个 API Key 开始使用' })
+    await onboarding.getByLabel('API 地址', { exact: true }).waitFor()
     await onboarding.getByLabel('API 密钥', { exact: true }).fill('sk-messages-onboarding')
     await onboarding.getByRole('button', { name: '保存并继续' }).click()
     await onboarding.waitFor({ state: 'detached' })
